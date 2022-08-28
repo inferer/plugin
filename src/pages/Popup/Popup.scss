@@ -1,0 +1,182 @@
+* {
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.w-360 {
+  width: 360px;
+  height: 600px;
+}
+
+.nav-bar {
+  height: 59px;
+  border-top: 1px solid rgba(63, 70, 100, 0.1);
+}
+
+.page-root {
+  padding: 30px;
+  padding-bottom: 60px;
+  height: 600px;
+}
+
+.search-input {
+  height: 49px;
+  background: #F8F9FF;
+  border-radius: 4px;
+  width: 228px;
+  padding-left: 16px;
+}
+
+.search-btn {
+  width: 52px;
+  height: 49px;
+  background: linear-gradient(133.61deg, #3555FF 44.55%, #A157FF 244.59%);
+  border-radius: 0px 4px 4px 0px;
+}
+
+.select-chain {
+  position: absolute;
+  width: 110px;
+  height: 28px;
+  left: 230px;
+  top: 20px;
+  padding: 1px;
+  border-radius: 4px;
+}
+
+.chain-content {
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.border-image {
+  border-image: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+}
+
+.bg-image {
+  background-image: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+}
+
+.color-image {
+  background: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.chain-list {
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 112px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  z-index: 99;
+}
+
+.chain-item {
+  height: 30px;
+  padding-left: 8px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &.item1 {
+    color: rgba(63, 70, 100, 0.5);
+  }
+
+  &.active {
+    background: #D7E4FD;
+  }
+}
+
+.chain-mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.page-title {
+  // font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 36px;
+  /* identical to box height */
+  text-transform: uppercase;
+  background: linear-gradient(124.16deg, #3555FF 8.05%, #A157FF 66.68%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.setting-list {
+  margin-top: 12px;
+}
+
+.setting-item {
+  height: 66px;
+  background: #F8F9FF;
+  border-radius: 4px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    background: #D7E4FD;
+
+    .icon-box {
+      background: #ffffff;
+    }
+  }
+
+  .item-text1 {
+    color: #3F4664;
+    font-size: 16px;
+  }
+
+  .item-text2 {
+    color: rgba(63, 70, 100, 0.5);
+    font-size: 12px;
+  }
+
+  .icon-box {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
+    border-radius: 8px;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.page-language {
+  .setting-item {
+    height: 48px;
+
+    .item-text1 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}
