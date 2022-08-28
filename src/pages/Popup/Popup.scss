@@ -64,6 +64,10 @@
 
 .border-image {
   border-image: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+  border-image: -webkit-linear-gradient(#3555FF, #A157FF) 30 30;
+  border-image: -moz-linear-gradient(#3555FF, #A157FF) 30 30;
+  border-image: linear-gradient(#3555FF, #A157FF) 30 30;
+
 }
 
 .bg-image {
@@ -72,6 +76,22 @@
 
 .color-image {
   background: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.color-image2 {
+  background: linear-gradient(280.16deg, #F73B47 8.51%, #FF7E35 142.08%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.color-image3 {
+  background: linear-gradient(270deg, #16C5FF -75.6%, #3821FF 131.2%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -115,7 +135,22 @@
   // font-family: 'Poppins';
   font-style: normal;
   font-weight: 700;
-  font-size: 26px;
+  font-size: 24px;
+  line-height: 36px;
+  /* identical to box height */
+  text-transform: uppercase;
+  background: linear-gradient(124.16deg, #3555FF 0.05%, #A157FF 26.68%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.page-title2 {
+  // font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
   line-height: 36px;
   /* identical to box height */
   text-transform: uppercase;
@@ -177,6 +212,241 @@
     .item-text1 {
       font-size: 16px;
       font-weight: 700;
+    }
+  }
+}
+
+.wallet-card {
+  padding-top: 24px;
+  padding-left: 24px;
+  background-image: url('./pages/setting/images/wallet_bg.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 8px;
+}
+
+.submit-btn {
+  width: 166px;
+  height: 40px;
+  background: linear-gradient(133.61deg, #3555FF 44.55%, #A157FF 244.59%);
+  border-radius: 4px;
+}
+
+.collection-page {
+  .text-title {
+    color: rgba(63, 70, 100, 0.5);
+  }
+
+  .collection-header {
+    cursor: pointer;
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+    }
+  }
+
+  .collection-item {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    margin-bottom: 12px;
+
+    &.bg1 {
+      background-image: url('./pages/collection/images/bg1.png');
+    }
+
+    &.bg2 {
+      background-image: url('./pages/collection/images/bg2.png');
+    }
+
+    &.bg3 {
+      background-image: url('./pages/collection/images/bg3.png');
+    }
+
+    &.bg4 {
+      background-image: url('./pages/collection/images/bg4.png');
+    }
+
+    &.bg5 {
+      background-image: url('./pages/collection/images/bg5.png');
+    }
+
+    &.bg6 {
+      background-image: url('./pages/collection/images/bg6.png');
+    }
+
+    .text {
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .text1 {
+      background: linear-gradient(280.16deg, #F73B47 8.51%, #FF7E35 142.08%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .text2 {
+      background: linear-gradient(270deg, #D640B8 0%, #FB6AAB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .text3 {
+      background: linear-gradient(270deg, #01A4FF 0%, #436AFE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .text4 {
+      background: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .text5 {
+      background: linear-gradient(268.16deg, #FFD428 1.37%, #FD4702 194.17%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+
+  }
+
+  &.tickets-page {
+    .collection-item {
+      &.bg1 {
+        background-image: url('./pages/tickets/images/bg1.png');
+      }
+
+      &.bg2 {
+        background-image: url('./pages/tickets/images/bg2.png');
+      }
+
+      &.bg3 {
+        background-image: url('./pages/tickets/images/bg3.png');
+      }
+
+      &.bg4 {
+        background-image: url('./pages/tickets/images/bg4.png');
+      }
+
+      &.bg5 {
+        background-image: url('./pages/tickets/images/bg5.png');
+      }
+    }
+
+    .btn-start {
+      width: 116px;
+      height: 31px;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-image: url('./pages/tickets/images/btn_bg.png');
+    }
+  }
+}
+
+.home-page-content {
+  height: 476px;
+  overflow: auto;
+}
+
+.recommend-page {
+  .collection-header {
+    cursor: pointer;
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+    }
+
+    .text-title {
+      color: rgba(63, 70, 100, 0.5);
+    }
+  }
+
+  .setting-item {
+    .icon-box {
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
+      border-radius: 26px;
+
+      img {
+        width: 17px;
+        height: 17px;
+      }
+    }
+
+    &:hover {
+      .icon-box {
+        background: #ffffff;
+      }
+    }
+  }
+
+  .setting-item2 {
+    height: 44px;
+    width: 144px;
+    padding-left: 9px;
+
+    .item-text1 {
+      font-size: 12px;
+    }
+  }
+
+  .select-box {
+    width: 300px;
+    height: 86px;
+    background-image: url('./pages/labels/images/bg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: left top;
+    padding: 8px;
+    cursor: pointer;
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+    }
+
+    .text1 {
+      color: rgba(255, 255, 255, 1);
+      font-size: 12px;
+    }
+  }
+
+  .info-box {
+    right: 30px;
+    top: 78px;
+    padding: 10px;
+    background: rgba(44, 52, 146, 0.89);
+    border-radius: 4px;
+    width: 300px;
+
+    .items-center {
+      margin-bottom: 6px;
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
     }
   }
 }

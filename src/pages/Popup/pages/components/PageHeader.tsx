@@ -20,7 +20,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           }
         }}
       />
-      <div className="page-title w-full flex justify-center">
+      <div className="page-title2 w-full flex justify-center pr-6">
         {title}
       </div>
     </div>

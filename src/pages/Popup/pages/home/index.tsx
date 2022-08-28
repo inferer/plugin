@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { APP_STATE } from '../../config/constants';
 import Search from '../search';
+import Tickets from '../tickets';
 import Setting from '../setting';
+import Recommend from '../recommend'
+import Labels from '../labels'
+
 const { PopupAPI } = require('../../../../api')
 
 const searchPng = require('./images/search.png');
@@ -34,8 +38,17 @@ const Popup: React.FC<{
         {
           appState === APP_STATE.SETTING && <Setting />
         }
+        {
+          appState === APP_STATE.TICKET && <Tickets />
+        }
+        {
+          appState === APP_STATE.RECOMMEND && <Recommend />
+        }
+        {
+          appState === APP_STATE.LABELS && <Labels />
+        }
 
-        <div className='flex justify-around items-center fixed w-full bottom-0 left-0 right-0 nav-bar'>
+        <div className='flex justify-around items-center fixed w-full bottom-0 left-0 z-30 right-0 nav-bar bg-white'>
           <div className=''
             onClick={() => navOnClick(APP_STATE.SEARCH)}
           >

@@ -40,6 +40,11 @@ const backgroundScript = {
     });
     duplex.on('setLanguage', (e) => this.service.setLanguage(e.data))
 
+    duplex.on('getsearchnum', ({ resolve }) => {
+      resolve(this.service.getSearchNum())
+    })
+    duplex.on('setsearchnum', (e) => this.service.setSearchNum(e.data))
+
     duplex.on('updateContextmenu', (e) => {
       chrome.contextMenus.update(
         'inferer',
@@ -58,9 +63,11 @@ const backgroundScript = {
     this.service.on('setLanguage', language => {
       BackgroundAPI.setLanguage(language)
     })
-
     this.service.on('newState', appState => {
       BackgroundAPI.setState(appState)
+    })
+    this.service.on('setSearchNum', num => {
+      BackgroundAPI.setSearchNum(num)
     })
   }
 }

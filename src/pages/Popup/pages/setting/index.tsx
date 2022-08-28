@@ -11,19 +11,18 @@ const languagePng = require('./images/language.png')
 
 const Setting: React.FC<any> = () => {
 
-  const onItemClick = (type: string) => {
-    if (type === 'language') {
-      PopupAPI.changeState(APP_STATE.LANGUAGE)
-    }
+  const onItemClick = (page: number) => {
+    PopupAPI.changeState(page)
   }
   return (
     <div className="page-root">
-      <div className="page-title">
+      <div className="page-title color-image">
         Settings
       </div>
       <div className="page-content">
         <div className="setting-list">
           <div className="setting-item flex justify-between items-center"
+            onClick={() => onItemClick(APP_STATE.WALLET)}
           >
             <div className="flex items-center ">
               <div className="flex icon-box justify-center items-center mr-3">
@@ -36,7 +35,9 @@ const Setting: React.FC<any> = () => {
             </div>
             <img src={leftPng} style={{ width: 6, height: 8 }} alt="" />
           </div>
-          <div className="setting-item flex justify-between items-center">
+          <div className="setting-item flex justify-between items-center"
+            onClick={() => onItemClick(APP_STATE.COLLECTION)}
+          >
             <div className="flex items-center ">
               <div className="flex icon-box justify-center items-center mr-3">
                 <img src={favPng} alt="" />
@@ -48,7 +49,9 @@ const Setting: React.FC<any> = () => {
             </div>
             <img src={leftPng} style={{ width: 6, height: 8 }} alt="" />
           </div>
-          <div className="setting-item flex justify-between items-center">
+          <div className="setting-item flex justify-between items-center"
+            onClick={() => onItemClick(APP_STATE.SETSEARCH)}
+          >
             <div className="flex items-center ">
               <div className="flex icon-box justify-center items-center mr-3">
                 <img src={searchPng} alt="" />
@@ -61,7 +64,7 @@ const Setting: React.FC<any> = () => {
             <img src={leftPng} style={{ width: 6, height: 8 }} alt="" />
           </div>
           <div className="setting-item flex justify-between items-center"
-            onClick={() => onItemClick('language')}
+            onClick={() => onItemClick(APP_STATE.LANGUAGE)}
           >
             <div className="flex items-center ">
               <div className="flex icon-box justify-center items-center mr-3">

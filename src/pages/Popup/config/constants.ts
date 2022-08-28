@@ -6,5 +6,9 @@ export const APP_STATE = {
   LABELS: 3,
   SETTING: 4,
   SEARCH: 0,
-  LANGUAGE: 6
+  LANGUAGE: 6,
+  SETSEARCH: 7,
+  WALLET: 8,
+  FEEDBACK: 9,
+  COLLECTION: 10
 }

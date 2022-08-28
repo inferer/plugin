@@ -4,11 +4,13 @@ import { AppState } from './type'
 
 const initialState: AppState = {
   appState: APP_STATE.HOME,
-  language: 'en'
+  language: 'en',
+  searchnum: 20
 }
 
 export const setAppState = createAction('setAppState')
 export const setLanguage = createAction('setLanguage')
+export const setSearchNum = createAction('setSearchNum')
 
 export const appReucer = createReducer(initialState, (builder) => {
 
@@ -18,6 +20,9 @@ export const appReucer = createReducer(initialState, (builder) => {
   })
   builder.addCase(setLanguage, (state, { payload }: any) => {
     state.language = payload
+  })
+  builder.addCase(setSearchNum, (state, { payload }: any) => {
+    state.searchnum = payload
   })
 })
 

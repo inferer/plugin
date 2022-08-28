@@ -18,13 +18,18 @@ import { RootState } from './reducers/type';
 import { APP_STATE } from './config/constants';
 import Home from './pages/home'
 import Language from './pages/language'
+import SetSearch from './pages/setsearch'
+import Wallet from './pages/wallet'
+import FeedBack from './pages/feedback'
+import Collection from './pages/collection'
 
 import enMessages from './translations/en.json'
 import zhMessages from './translations/zh.json'
 
 export type PopupProps = {
   appState: number,
-  language: string
+  language: string,
+  searchNum: number
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
@@ -34,7 +39,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     zh: zhMessages
   } as any
 
-  const { appState, language } = props
+  const { appState, language, searchNum } = props
 
   let dom = null
 
@@ -49,6 +54,18 @@ const Popup: React.FC<PopupProps> = (props) => {
     case APP_STATE.LANGUAGE:
       dom = <Language language={language} />
       break
+    case APP_STATE.SETSEARCH:
+      dom = <SetSearch searchNum={searchNum} />
+      break
+    case APP_STATE.WALLET:
+      dom = <Wallet searchNum={searchNum} />
+      break
+    case APP_STATE.FEEDBACK:
+      dom = <FeedBack searchNum={searchNum} />
+      break
+    case APP_STATE.COLLECTION:
+      dom = <Collection searchNum={searchNum} />
+      break
   }
   return (
     <IntlProvider locale={props.language || 'en'} messages={messages[props.language]}>
@@ -60,5 +77,6 @@ const Popup: React.FC<PopupProps> = (props) => {
 
 export default connect((state: RootState) => ({
   language: state.app.language,
-  appState: state.app.appState
+  appState: state.app.appState,
+  searchNum: state.app.searchnum
 }))(Popup);

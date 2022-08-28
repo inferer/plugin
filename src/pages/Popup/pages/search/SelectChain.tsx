@@ -14,10 +14,10 @@ const SelectChain: React.FC<any> = () => {
   const [show, setShow] = useState(false)
 
   const onMouseEnter = (chainId: number) => {
-    // setChainId(chainId)
+    setChainId(chainId)
   }
   const onMouseClick = (chainId: number) => {
-    PopupAPI.setLanguage(chainId === 1 ? 'en' : 'zh')
+    setChainId(chainId)
   }
 
   // const searchPlace = intl.formatMessage('')

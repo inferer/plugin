@@ -8,6 +8,11 @@ class Service extends EventEmitter {
     super()
     this.state = APP_STATE.SEARCH
   }
+  changeState(appState) {
+    if (this.state === appState) return
+    this.state = appState
+    this.emit('newState', appState)
+  }
   getLanguage() {
     return StorageService.language
   }
@@ -15,11 +20,15 @@ class Service extends EventEmitter {
     StorageService.setLanguage(language);
     this.emit('setLanguage', language);
   }
-  changeState(appState) {
-    if (this.state === appState) return
-    this.state = appState
-    this.emit('newState', appState)
+  getSearchNum() {
+    return StorageService.searchnum || 20
   }
+  setSearchNum(num) {
+    StorageService.setSearchNum(num);
+    this.emit('setSearchNum', num);
+  }
+
+
 }
 
 export default new Service()

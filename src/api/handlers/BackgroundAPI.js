@@ -11,6 +11,9 @@ export default {
   },
   setLanguage(language) {
     this.duplex.send('popup', 'setLanguage', language, false);
+  },
+  setSearchNum(num) {
+    this.duplex.send('popup', 'setSearchNum', num, false);
   }
 
 };
