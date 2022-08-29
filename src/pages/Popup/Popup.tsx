@@ -22,6 +22,7 @@ import SetSearch from './pages/setsearch'
 import Wallet from './pages/wallet'
 import FeedBack from './pages/feedback'
 import Collection from './pages/collection'
+import TxInfo from './pages/txinfo'
 
 import enMessages from './translations/en.json'
 import zhMessages from './translations/zh.json'
@@ -65,6 +66,9 @@ const Popup: React.FC<PopupProps> = (props) => {
       break
     case APP_STATE.COLLECTION:
       dom = <Collection searchNum={searchNum} />
+      break
+    case APP_STATE.TXINFO:
+      dom = <TxInfo language={language} />
       break
   }
   return (

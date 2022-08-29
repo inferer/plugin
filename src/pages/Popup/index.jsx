@@ -39,7 +39,7 @@ export const app = {
       PopupAPI.getSearchNum(),
     ])
 
-    this.store.dispatch(setAppState(APP_STATE.LABELS))
+    this.store.dispatch(setAppState(APP_STATE.SEARCH))
     this.store.dispatch(setLanguage(language))
     this.store.dispatch(setSearchNum(searchnum))
   },

@@ -10,5 +10,6 @@ export const APP_STATE = {
   SETSEARCH: 7,
   WALLET: 8,
   FEEDBACK: 9,
-  COLLECTION: 10
+  COLLECTION: 10,
+  TXINFO: 11
 }
