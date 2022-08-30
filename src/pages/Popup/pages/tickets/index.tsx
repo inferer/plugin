@@ -34,6 +34,11 @@ const Collection: React.FC<any> = () => {
   const [tickets, setTickets] = useState(ticketsList)
 
   const [active, setActive] = useState(1)
+  PopupAPI.getTickets(0)
+    .then((res: any) => {
+      console.log(res)
+    })
+
   return (
     <div className="w-360 page-root collection-page tickets-page">
       <div className="page-title">

@@ -2,6 +2,11 @@ import MessageDuplex from '../../MessageDuplex';
 import { BackgroundAPI } from '../../api';
 import Service from './Service'
 
+// chrome.identity.getProfileUserInfo(function (res) {
+//   console.log(res, 11111)
+// })
+// console.log(chrome.identity, 111111)
+
 const infererId = chrome.contextMenus.create({
   type: 'normal',
   title: 'Inferer search: ',
@@ -25,10 +30,15 @@ const backgroundScript = {
   },
   bindPopupDuplex() {
     //refresh the wallet data
-    duplex.on('refresh', (e) => {
-      console.log(e)
+    duplex.on('refresh', ({ resolve }) => {
+      // console.log(e)
+      // Service.initData()
+      console.log(11111)
+      resolve()
     });
-
+    duplex.on('initData', async ({ resolve }) => {
+      resolve(await this.service.initData())
+    })
     // Getter methods
     duplex.on('requestState', ({ resolve }) => {
       resolve(this.service.state)
@@ -44,6 +54,11 @@ const backgroundScript = {
       resolve(this.service.getSearchNum())
     })
     duplex.on('setsearchnum', (e) => this.service.setSearchNum(e.data))
+
+    duplex.on('searchByAddress', (e) => this.service.searchByAddress(e.data))
+    duplex.on('getTickets', (e) => this.service.getTickets(e.data))
+    duplex.on('getRecommend', (e) => this.service.getRecommend(e.data))
+    duplex.on('getLabels', (e) => this.service.getLabels(e.data))
 
     duplex.on('updateContextmenu', (e) => {
       chrome.contextMenus.update(

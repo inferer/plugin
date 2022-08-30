@@ -46,6 +46,13 @@ const StorageService = {
   setSearchNum(num) {
     this.searchnum = num;
     this.save('searchnum');
+  },
+  setChromeUserInfo(chrome_id, userInfo) {
+    this[chrome_id] = userInfo
+    this.save(chrome_id)
+  },
+  getChromeUserInfo(chrome_id) {
+    return this.getStorage(chrome_id)
   }
 }
 

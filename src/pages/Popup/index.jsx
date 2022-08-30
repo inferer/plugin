@@ -29,6 +29,7 @@ export const app = {
   },
   async getAppState() {
     PopupAPI.init(this.duplex)
+    await PopupAPI.initData()
     const [
       appState,
       language,

@@ -13,3 +13,5 @@ export const APP_STATE = {
   COLLECTION: 10,
   TXINFO: 11
 }
+
+export const API_URL = 'http://119.8.117.37:12999'

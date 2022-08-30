@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants"
 import DataItem1 from "./DataItem1"
@@ -21,9 +21,13 @@ const Search = () => {
 
   const [focus, setFocus] = useState(false)
   const [showResult, setShowResult] = useState(false)
+  const [address, setAddress] = useState('0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8')
 
-  const onSearch = () => {
-    setShowResult(!showResult)
+
+  const onSearch = async () => {
+    // setShowResult(!showResult)
+    const searchRet = await PopupAPI.searchByAddress(address)
+    console.log(searchRet)
   }
 
   return (
@@ -37,6 +41,10 @@ const Search = () => {
 
       <div className={`flex justify-center search-wrap ${focus ? 'left-position' : ''}`}>
         <input type="text" className=" outline-none search-input " placeholder={holder}
+          value={address}
+          onChange={(e) => {
+            setAddress(e.target.value)
+          }}
           onFocus={() => setFocus(true)}
         />
         <div className="search-btn flex justify-center items-center hover:opacity-80"

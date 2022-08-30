@@ -20,7 +20,10 @@ const Recommend: React.FC<any> = () => {
     PopupAPI.changeState(page)
   }
   const [active, setActive] = useState(1)
-
+  PopupAPI.getRecommend('0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8')
+    .then((res: any) => {
+      console.log(res)
+    })
   return (
     <div className="page-root recommend-page">
       <div className="page-title">
