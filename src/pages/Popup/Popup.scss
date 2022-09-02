@@ -1,6 +1,8 @@
-* {
+.page-content {
   box-sizing: border-box;
   font-size: 14px;
+  font-family: DM Sans;
+
 }
 
 @keyframes App-logo-spin {
@@ -13,6 +15,83 @@
   }
 }
 
+#app-container {
+  width: 360px;
+  height: 600px;
+  position: relative;
+  // background-image: url('../../assets/img/page_bg.png');
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
+  // background-position: 0 0;
+}
+
+.pop-root-page {
+  will-change: transform;
+  transition: all 500ms;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
+  top: 0;
+  left: 100%;
+  opacity: 1;
+}
+
+.pop-root-page-in {
+  left: 0;
+}
+
+.pop-root-page-out {
+  left: -100%;
+  opacity: 0;
+}
+
+.pop-root-page-right {
+  left: 100%;
+  opacity: 0;
+}
+
+.pop-out-enter-active,
+.pop-out-leave-active,
+.pop-in-enter-active,
+.pop-in-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
+  top: 0;
+}
+
+.pop-out-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.pop-out-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.pop-in-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.pop-in-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.page-root {
+  padding: 30px;
+  padding-bottom: 60px;
+  height: 600px;
+  width: 360px;
+}
+
+
 .w-360 {
   width: 360px;
   height: 600px;
@@ -23,14 +102,12 @@
   border-top: 1px solid rgba(63, 70, 100, 0.1);
 }
 
-.page-root {
-  padding: 30px;
-  padding-bottom: 60px;
-  height: 600px;
-}
-
 .search-page {
   overflow: hidden;
+  background-image: url('../../assets/img/page_bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 0 0;
 
   .img-logo {
     position: absolute;
@@ -65,10 +142,18 @@
   .search-wrap {
     position: absolute;
     width: 280px;
-    height: 49px;
+    height: 51px;
     left: 40px;
     top: 263px;
     transition: all .3s ease-out;
+    background: #F8F9FF;
+    border-radius: 4px;
+    padding: 0;
+
+    &.bg-image {
+      background-image: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+      padding: 1px;
+    }
 
     &.left-position {
       top: 77px;
@@ -77,12 +162,24 @@
     }
   }
 
+  .search-loading {
+    left: 140px;
+    top: 270px;
+    transition: all 0.3s ease-in;
+
+    &.hide {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+  }
+
   .search-result {
     position: absolute;
     left: 30px;
     // top: 139px;
-    top: 350px;
-    transition: all 0.3s ease-in;
+    top: 316px;
+    transition: all 0.25s ease-in;
     opacity: 0;
 
   }
@@ -114,6 +211,22 @@
     }
   }
 
+  .txinfoitem2 {
+    .datacontent {
+      background-color: #ffffff;
+      border-right: 1px solid rgba(63, 70, 100, 0.1);
+      border-bottom: 1px solid rgba(63, 70, 100, 0.1);
+    }
+
+    &:hover {
+      background: rgba(215, 228, 253, 0.5);
+
+      .datacontent {
+        background: #D7E4FD;
+      }
+    }
+  }
+
   .itemleft {
     width: 64px;
     height: 64px;
@@ -132,16 +245,24 @@
 .search-input {
   height: 49px;
   background: #F8F9FF;
-  border-radius: 4px;
   width: 100%;
-  padding-left: 16px;
+  padding-left: 8px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 .search-btn {
-  width: 52px;
-  height: 49px;
+  width: 51px;
+  height: 51px;
   background: linear-gradient(133.61deg, #3555FF 44.55%, #A157FF 244.59%);
   border-radius: 0px 4px 4px 0px;
+  flex: 0 0 51px;
+
+  &.focus {
+    width: 49px;
+    height: 49px;
+    flex: 0 0 49px;
+  }
 }
 
 .select-chain {
@@ -232,7 +353,7 @@
 }
 
 .page-title {
-  // font-family: 'Poppins';
+  // font-family: Poppins;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -247,7 +368,7 @@
 }
 
 .page-title2 {
-  // font-family: 'Poppins';
+  // font-family: DMSans-Bold;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -259,6 +380,11 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 210px;
+  text-align: center;
 }
 
 .setting-list {
@@ -355,22 +481,29 @@
 
     &.bg1 {
       background-image: url('./pages/collection/images/bg1.png');
+
     }
 
     &.bg2 {
       background-image: url('./pages/collection/images/bg2.png');
+
     }
 
     &.bg3 {
       background-image: url('./pages/collection/images/bg3.png');
+
+
     }
 
     &.bg4 {
       background-image: url('./pages/collection/images/bg4.png');
+
+
     }
 
     &.bg5 {
       background-image: url('./pages/collection/images/bg5.png');
+
     }
 
     &.bg6 {
@@ -427,28 +560,136 @@
 
   &.tickets-page {
     .collection-item {
+      cursor: pointer;
+
       &.bg1 {
         background-image: url('./pages/tickets/images/bg1.png');
+
+        .text-text {
+          display: none;
+          color: #ffffff;
+        }
+
+        .text1 {
+          display: inline;
+        }
+
+        &:hover {
+          background-image: url('./pages/tickets/images/bg11.png');
+
+          .text1 {
+            display: none;
+          }
+
+          .text-text {
+            display: inline-block;
+          }
+        }
       }
 
       &.bg2 {
         background-image: url('./pages/tickets/images/bg2.png');
+
+        .text-text {
+          display: none;
+          color: #ffffff;
+        }
+
+        .text2 {
+          display: inline;
+        }
+
+        &:hover {
+          background-image: url('./pages/tickets/images/bg12.png');
+
+          .text2 {
+            display: none;
+          }
+
+          .text-text {
+            display: inline-block;
+          }
+        }
       }
 
       &.bg3 {
         background-image: url('./pages/tickets/images/bg3.png');
+
+        .text-text {
+          display: none;
+          color: #ffffff;
+        }
+
+        .text3 {
+          display: inline;
+        }
+
+        &:hover {
+          background-image: url('./pages/tickets/images/bg13.png');
+
+          .text3 {
+            display: none;
+          }
+
+          .text-text {
+            display: inline-block;
+          }
+        }
       }
 
       &.bg4 {
         background-image: url('./pages/tickets/images/bg4.png');
+
+        .text-text {
+          display: none;
+          color: #ffffff;
+        }
+
+        .text4 {
+          display: inline;
+        }
+
+        &:hover {
+          background-image: url('./pages/tickets/images/bg14.png');
+
+          .text4 {
+            display: none;
+          }
+
+          .text-text {
+            display: inline-block;
+          }
+        }
       }
 
       &.bg5 {
         background-image: url('./pages/tickets/images/bg5.png');
+
+        .text-text {
+          display: none;
+          color: #ffffff;
+        }
+
+        .text5 {
+          display: inline;
+        }
+
+        &:hover {
+          background-image: url('./pages/tickets/images/bg15.png');
+
+          .text5 {
+            display: none;
+          }
+
+          .text-text {
+            display: inline-block;
+          }
+        }
       }
     }
 
     .btn-start {
+      font-family: 'Poppins';
       width: 116px;
       height: 31px;
       background-size: 100% 100%;
@@ -457,6 +698,11 @@
       background-image: url('./pages/tickets/images/btn_bg.png');
     }
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
+  /* Chrome Safari */
 }
 
 .home-page-content {
@@ -507,7 +753,19 @@
     .item-text1 {
       font-size: 12px;
     }
+
+    .shoucanglabels {
+      opacity: 0;
+      background-color: #D7E4FD;
+    }
+
+    &:hover {
+      .shoucanglabels {
+        opacity: 1;
+      }
+    }
   }
+
 
   .select-box {
     width: 300px;
@@ -549,4 +807,10 @@
       margin-right: 8px;
     }
   }
+
+  // .labels-item{
+  //   .shoucanglabels{
+  //     background-color: ;
+  //   }
+  // }
 }

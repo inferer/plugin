@@ -1,0 +1,14 @@
+@font-face {
+  font-family: Poppins;
+  src: url('./fonts/Poppins-Bold.ttf');
+}
+
+@font-face {
+  font-family: DMSans-Bold;
+  src: url('./fonts/DMSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: DM Sans;
+  src: url('./fonts/DMSans-Regular.ttf');
+}

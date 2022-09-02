@@ -45,6 +45,21 @@ export default {
   getLabels(local_address_info) {
     return this.duplex.send('getLabels', local_address_info)
   },
+  getCollectTickets(data) {
+    return this.duplex.send('getCollectTickets', data)
+  },
+  getCollectLabels(data) {
+    return this.duplex.send('getCollectLabels', data)
+  },
+  collectLabel(data) {
+    return this.duplex.send('collectLabel', data)
+  },
+  collectTicket(data) {
+    return this.duplex.send('collectTicket', data)
+  },
+  feedBack(data) {
+    return this.duplex.send('feedBack', data)
+  },
 
 
 }

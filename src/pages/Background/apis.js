@@ -5,7 +5,7 @@ export function fetcher(url, data) {
   if (data) {
     let paramsArr = []
     Object.keys(data).forEach(key => paramsArr.push(key + '=' + data[key]))
-    fetchUrl += '?' + paramsArr.join('')
+    fetchUrl += '?' + paramsArr.join('&')
   }
   return fetch(fetchUrl)
     .then(res => res.json())
@@ -15,5 +15,8 @@ export function poster(url, data, options = {}) {
   return fetch(API_URL + url, {
     method: 'POST',
     body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    },
   }).then(res => res.json())
 }

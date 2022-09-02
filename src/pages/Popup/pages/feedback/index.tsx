@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import { Toast } from 'antd-mobile'
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import PageHeader from '../components/PageHeader'
@@ -18,6 +19,7 @@ const FeedBack: React.FC<FeedBackProps> = ({
 
   const [text, setText] = useState('')
   const [focus, setFocus] = useState(false)
+  const [feedSuccess, setFeedSuccess] = useState(false)
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value)
@@ -27,37 +29,61 @@ const FeedBack: React.FC<FeedBackProps> = ({
     setFocus(flag)
   }
 
+  const handleFeedBack = async () => {
+    const res = await PopupAPI.feedBack({
+      address: '0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8',
+      content: text,
+      chainid: 1
+    })
+    if (res.status === 200) {
+      setFeedSuccess(true)
+    } else {
+      Toast.show(res.message)
+    }
+  }
+
   return (
     <div className="w-360 page-root page-language">
       <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.SETTING)} />
       <div className="page-content pt-3">
-        <div>
-          <div className="flex items-center">
-            <img src={userPng} alt="" style={{ width: 28, height: 28 }} />
-            <div className="text-md font-bold ml-2" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>0x8eb8.....3f23</div>
-          </div>
-          <div className={`mt-4 border rounded ${focus ? 'bg-image' : ''}`} style={{ padding: 1 }}>
-            <div className="bg-white" style={{ borderRadius: 2 }}>
-              <textarea className=" w-full p-3 outline-none " placeholder="Please input your feedback content here" style={{ height: 114 }}
-                onChange={(e) => handleChange(e)}
-                onFocus={() => handeFocus(true)}
-                onBlur={() => handeFocus(false)}
-              />
+        {
+          !feedSuccess &&
+          <div>
+            <div className="flex items-center">
+              <img src={userPng} alt="" style={{ width: 28, height: 28 }} />
+              <div className="text-md font-bold ml-2" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>0x8eb8.....3f23</div>
+            </div>
+            <div className={`mt-4 border rounded ${focus ? 'bg-image' : ''}`} style={{ padding: 1 }}>
+              <div className="bg-white" style={{ borderRadius: 2 }}>
+                <textarea className=" w-full p-3 outline-none " placeholder="Please input your feedback content here" style={{ height: 114 }}
+                  onChange={(e) => handleChange(e)}
+                  onFocus={() => handeFocus(true)}
+                  onBlur={() => handeFocus(false)}
+                />
+              </div>
+            </div>
+            <div className=" flex items-center justify-center mt-5">
+              <button className="submit-btn text-white text-base font-bold flex items-center justify-center"
+                onClick={() => handleFeedBack()}
+              >
+                Submit
+              </button>
             </div>
           </div>
-          <div className=" flex items-center justify-center mt-5">
-            <button className="submit-btn text-white text-base font-bold flex items-center justify-center">
-              Submit
+        }
+        {
+          feedSuccess &&
+          <div className="feedback-success flex justify-center flex-col items-center">
+            <img src={successPng} alt="" style={{ width: 80, height: 80, marginTop: 90 }} />
+            <div className=" text-sm font-medium mt-4 mb-3" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>Submit Sucessfully</div>
+            <button className="submit-btn text-white text-base font-bold flex items-center justify-center"
+              onClick={() => PopupAPI.changeState(APP_STATE.SEARCH)}
+            >
+              Back
             </button>
           </div>
-        </div>
-        <div className="feedback-success flex justify-center flex-col items-center">
-          <img src={successPng} alt="" style={{ width: 80, height: 80, marginTop: 90 }} />
-          <div className=" text-sm font-medium mt-4 mb-3" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>Submit Sucessfully</div>
-          <button className="submit-btn text-white text-base font-bold flex items-center justify-center">
-            Back
-          </button>
-        </div>
+        }
+
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { APP_STATE } from "../../config/constants";
 import Others from "./Others";
 
@@ -13,18 +13,62 @@ const user6Png = require('./images/user5.png')
 const infoPng = require('./images/info.png')
 const userPng = require('./images/user.png')
 
-const Labels: React.FC<any> = () => {
+const userKey = {
+  '1': 'new_users',
+  '2': 'real_users',
+  '3': 'interacted_users',
+  '4': 'nft_active_users',
+  '5': 'large_balance_users',
+  '6': 'poap_users',
+}
+
+const Labels: React.FC<any> = ({ appState }) => {
 
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
   }
   const [active, setActive] = useState(1)
+  const [activeKey, setActiveKey] = useState('')
   const [showInfo, setShowInfo] = useState(false)
+  const [userData, setUserData] = useState<any>({})
+  const [showData, setShowData] = useState([])
 
-  PopupAPI.getLabels('0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8')
-    .then((res: any) => {
-      console.log(res)
-    })
+  useEffect(() => {
+    if (appState === APP_STATE.LABELS) {
+      PopupAPI.getLabels(['0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8'].join(','))
+        .then((res: any) => {
+          console.log(res)
+          if (res.status === 200) {
+            setUserData(res.result)
+          }
+        })
+    }
+
+  }, [appState])
+
+  useEffect(() => {
+    if (active && userData) {
+      let userKey = 'new_users'
+      if (active === 2) {
+        userKey = 'real_users'
+      }
+      if (active === 3) {
+        userKey = 'interacted_users'
+      }
+      if (active === 4) {
+        userKey = 'nft_active_users'
+      }
+      if (active === 5) {
+        userKey = 'large_balance_users'
+      }
+      if (active === 6) {
+        userKey = 'poap_users'
+      }
+      setActiveKey(userKey)
+      setShowData(userData[userKey])
+    }
+  }, [active, userData])
+
 
   return (
     <div className="page-root recommend-page">
@@ -33,14 +77,16 @@ const Labels: React.FC<any> = () => {
       </div>
       <div className="page-content page-home-content pt-3 relative">
         <img src={infoPng} className="w-4 h-4 absolute right-2 top-5" alt=""
-          onClick={() => setShowInfo(true)}
+          onMouseEnter={() => setShowInfo(true)}
         />
         {
           showInfo &&
-          <div className="info-box fixed z-50 top-5 right-2 text-white text-xs font-medium">
-            <img src={infoPng} className="w-4 h-4 absolute right-0 top-2" alt=""
+          <div className="info-box fixed z-50 top-5 right-2 text-white text-xs font-medium"
+            onMouseLeave={() => setShowInfo(false)}
+          >
+            {/* <img src={infoPng} className="w-4 h-4 absolute right-0 top-2" alt=""
               onClick={() => setShowInfo(false)}
-            />
+            /> */}
             <div className="flex items-center">
               <img src={userPng} alt="" />
               local users on web page
@@ -121,7 +167,7 @@ const Labels: React.FC<any> = () => {
           </div>
         </div>
         <div className="list-wrap overflow-auto" style={{ height: 380 }} >
-          <Others />
+          <Others showData={showData} activeKey={activeKey} />
         </div>
       </div>
     </div>

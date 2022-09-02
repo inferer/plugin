@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
@@ -35,7 +35,7 @@ const labelsList = [
   { level: 6 },
 ]
 
-const Collection: React.FC<any> = () => {
+const Collection: React.FC<any> = ({ appState }) => {
 
   const onItemClick = (type: string) => {
     if (type === 'language') {
@@ -59,6 +59,21 @@ const Collection: React.FC<any> = () => {
 
   const [active, setActive] = useState(1)
 
+  useEffect(() => {
+    if (appState === APP_STATE.COLLECTION) {
+      if (active === 1) {
+        PopupAPI.getCollectTickets({ page_index: 0 })
+          .then((res: any) => {
+            console.log(res, 1111111111)
+          })
+      } else {
+        PopupAPI.getCollectLabels({ page_index: 0 })
+          .then((res: any) => {
+            console.log(res, 1111111111)
+          })
+      }
+    }
+  }, [active, appState])
 
   return (
     <div className="w-360 page-root collection-page">

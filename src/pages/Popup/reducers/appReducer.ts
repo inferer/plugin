@@ -5,18 +5,38 @@ import { AppState } from './type'
 const initialState: AppState = {
   appState: APP_STATE.HOME,
   language: 'en',
-  searchnum: 20
+  searchnum: 20,
+  pageStack: [0]
 }
 
 export const setAppState = createAction('setAppState')
 export const setLanguage = createAction('setLanguage')
 export const setSearchNum = createAction('setSearchNum')
+export const setPageStack = createAction('setPagesStack')
 
 export const appReucer = createReducer(initialState, (builder) => {
 
   builder.addCase(setAppState, (state, { payload }: any) => {
-    console.log(payload)
     state.appState = payload
+
+    switch (state.appState) {
+      case APP_STATE.SEARCH:
+      case APP_STATE.TICKET:
+      case APP_STATE.RECOMMEND:
+      case APP_STATE.LABELS:
+      case APP_STATE.SETTING:
+        state.pageStack = [APP_STATE.HOME]
+        break
+      default:
+        if (payload !== state.pageStack[state.pageStack.length - 1]) {
+          state.pageStack = [payload, ...state.pageStack]
+        } else {
+          state.pageStack = state.pageStack.splice(0, state.pageStack.length - 1)
+        }
+
+    }
+    console.log(state.pageStack)
+
   })
   builder.addCase(setLanguage, (state, { payload }: any) => {
     state.language = payload

@@ -1,43 +1,45 @@
 import React, { useState } from "react";
-const iconPng = require('./images/icon.png')
+import { Toast } from 'antd-mobile'
 
-const Others: React.FC<any> = () => {
-  const [likesList, setLikesList] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 10 },
-    { id: 11 },
-    { id: 12 },
-    { id: 13 },
-    { id: 14 },
-    { id: 15 },
-    { id: 16 },
-    { id: 17 },
-    { id: 18 },
-    { id: 19 },
-    { id: 131 },
-    { id: 141 },
-    { id: 151 },
-  ])
+const { PopupAPI } = require('../../../../api')
+
+const iconPng = require('./images/icon.png')
+const copyPng = require('./images/copy.png')
+const favPng = require('./images/fav.png')
+
+const Others: React.FC<any> = ({ showData = [], activeKey = '' }) => {
+  const collectLabel = async (item: any) => {
+    console.log(item)
+    const res = await PopupAPI.collectLabel({
+      collect_address: item.address,
+      timestamp: Date.now(),
+      collect_info: activeKey
+    })
+    console.log(res)
+    if (res.status === 200) {
+      Toast.show('Success')
+    } else {
+      Toast.show('Error')
+    }
+  }
   return (
-    <div className="setting-list flex flex-wrap justify-between">
+    <div className="setting-list flex flex-wrap justify-between labels-item">
       {
-        likesList.map(item => (
-          <div key={item.id} className="setting-item setting-item2 flex justify-between items-center w-1/2"
+        showData.map((item: any, key: number) => (
+          <div key={key} className="setting-item setting-item2 flex justify-between items-center w-1/2 relative"
           >
+            <div className=" absolute top-0 right-0 h-full flex items-center shoucanglabels">
+              <img src={copyPng} alt="" style={{ width: 16, height: 16, marginLeft: 8 }} />
+              <img src={favPng} alt="" style={{ width: 16, height: 16, marginLeft: 4, marginRight: 8 }}
+                onClick={() => collectLabel(item)}
+              />
+            </div>
             <div className="flex items-center ">
               <div className="flex icon-box justify-center items-center mr-2">
                 <img src={iconPng} alt="" />
               </div>
               <div className="">
-                <div className="item-text1 text-xs">0x8eb8......3f23</div>
+                <div className="item-text1 text-xs">{item.address.slice(0, 6) + '.....' + item.address.slice(-4)}</div>
               </div>
             </div>
           </div>

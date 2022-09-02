@@ -55,10 +55,42 @@ const backgroundScript = {
     })
     duplex.on('setsearchnum', (e) => this.service.setSearchNum(e.data))
 
-    duplex.on('searchByAddress', (e) => this.service.searchByAddress(e.data))
-    duplex.on('getTickets', (e) => this.service.getTickets(e.data))
-    duplex.on('getRecommend', (e) => this.service.getRecommend(e.data))
-    duplex.on('getLabels', (e) => this.service.getLabels(e.data))
+    duplex.on('searchByAddress', async (e) => {
+      const data = await this.service.searchByAddress(e.data)
+      e.resolve(data)
+    })
+    duplex.on('getTickets', async (e) => {
+      const data = await this.service.getTickets(e.data)
+      e.resolve(data)
+    })
+    duplex.on('getRecommend', async (e) => {
+      const data = await this.service.getRecommend(e.data)
+      e.resolve(data)
+    })
+    duplex.on('getLabels', async (e) => {
+      const data = await this.service.getLabels(e.data)
+      e.resolve(data)
+    })
+    duplex.on('getCollectTickets', async (e) => {
+      const data = await this.service.getCollectTickets(e.data)
+      e.resolve(data)
+    })
+    duplex.on('getCollectLabels', async (e) => {
+      const data = await this.service.getCollectLabels(e.data)
+      e.resolve(data)
+    })
+    duplex.on('collectLabel', async (e) => {
+      const data = await this.service.collectLabel(e.data)
+      e.resolve(data)
+    })
+    duplex.on('collectTicket', async (e) => {
+      const data = await this.service.collectTicket(e.data)
+      e.resolve(data)
+    })
+    duplex.on('feedBack', async (e) => {
+      const data = await this.service.feedBack(e.data)
+      e.resolve(data)
+    })
 
     duplex.on('updateContextmenu', (e) => {
       chrome.contextMenus.update(

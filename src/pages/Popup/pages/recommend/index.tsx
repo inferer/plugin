@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { APP_STATE } from "../../config/constants";
 import Likes from './Likes'
 import Others from "./Others";
@@ -14,16 +14,26 @@ const other1Png = require('./images/other1.png')
 const other2Png = require('./images/other2.png')
 
 
-const Recommend: React.FC<any> = () => {
+const Recommend: React.FC<any> = ({ appState }) => {
 
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
   }
   const [active, setActive] = useState(1)
-  PopupAPI.getRecommend('0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8')
-    .then((res: any) => {
-      console.log(res)
-    })
+  const [recommentData, setRecommentData] = useState({ like: [], other: [], risk: [] })
+  useEffect(() => {
+    if (appState === APP_STATE.RECOMMEND) {
+      PopupAPI.getRecommend(['0xde818aEbD0B99e8b9d5D04a7b8824d749ba6FbB9'].join(','))
+        .then((res: any) => {
+          console.log(res)
+          if (res.status === 200) {
+            setRecommentData({ like: res.result.like || [], other: res.result.other || [], risk: res.result.risk || [] })
+          }
+        })
+    }
+
+  }, [appState])
+
   return (
     <div className="page-root recommend-page">
       <div className="page-title">
@@ -64,13 +74,13 @@ const Recommend: React.FC<any> = () => {
         </div>
         <div className="list-wrap overflow-auto" style={{ height: 440 }}>
           {
-            active === 1 && <Likes />
+            active === 1 && <Likes data={recommentData.like} />
           }
           {
-            active === 2 && <Risks />
+            active === 2 && <Risks data={recommentData.risk} />
           }
           {
-            active === 3 && <Others />
+            active === 3 && <Others data={recommentData.other} />
           }
         </div>
         {/* <div className="setting-list">

@@ -20,19 +20,39 @@ const settingPng = require('./images/setting.png');
 const settingActivePng = require('./images/setting_active.png');
 
 const Popup: React.FC<{
-  appState: number
+  appState: number,
+  onChangeState: (key: number, data: any) => void
+  onTicketChangeState: (key: number, data: any) => void
 }> = ({
-  appState
+  onChangeState,
+  onTicketChangeState
 }) => {
-    console.log(appState)
-    // const [appState, setAppState] = useState(APP_STATE.SEARCH)
+
+    const [appState, setAppState] = useState(APP_STATE.SEARCH)
+    const [nowState, setNowState] = useState(-1)
     const navOnClick = (type: number) => {
-      // setAppState(type)
-      PopupAPI.changeState(type)
+      setAppState(type)
+      // PopupAPI.changeState(type)
     }
     return (
       <div className="w-360">
-        {
+        <div className={`${appState === APP_STATE.SEARCH ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <Search onChangeState={onChangeState} />
+        </div>
+        <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <Tickets appState={appState} onChangeState={onTicketChangeState} />
+        </div>
+        <div className={`${appState === APP_STATE.RECOMMEND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <Recommend appState={appState} onChangeState={onChangeState} />
+        </div>
+        <div className={`${appState === APP_STATE.LABELS ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <Labels appState={appState} onChangeState={onChangeState} />
+        </div>
+        <div className={`${appState === APP_STATE.SETTING ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <Setting appState={appState} onChangeState={onChangeState} />
+        </div>
+
+        {/* {
           appState === APP_STATE.SEARCH && <Search />
         }
         {
@@ -46,7 +66,7 @@ const Popup: React.FC<{
         }
         {
           appState === APP_STATE.LABELS && <Labels />
-        }
+        } */}
 
         <div className='flex justify-around items-center fixed w-full bottom-0 left-0 z-30 right-0 nav-bar bg-white'>
           <div className=''

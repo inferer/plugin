@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
+import { transformTime } from "../../utils";
 import PageHeader from "../components/PageHeader";
 import NoData from "./NoData";
+import { levelInfo } from '../search/index'
 
 const { PopupAPI } = require('../../../../api')
 
@@ -21,7 +23,7 @@ const ticketsList = [
   { id: 10, level: 1 },
 ]
 
-const Collection: React.FC<any> = () => {
+const Collection: React.FC<any> = ({ appState, onChangeState }) => {
 
   const onItemClick = (type: string) => {
     if (type === 'language') {
@@ -31,13 +33,37 @@ const Collection: React.FC<any> = () => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.collection', defaultMessage: 'COLLECTION' })
 
-  const [tickets, setTickets] = useState(ticketsList)
+  const [tickets, setTickets] = useState([])
 
   const [active, setActive] = useState(1)
-  PopupAPI.getTickets(0)
-    .then((res: any) => {
-      console.log(res)
-    })
+  useEffect(() => {
+    if (appState === APP_STATE.TICKET) {
+      PopupAPI.getTickets(0)
+        .then((res: any) => {
+          console.log(res)
+          if (res.status === 200) {
+            const result = res.result || []
+            const tmpList = result.map((item: any) => {
+              const contentJson = JSON.parse(item.content)
+              return {
+                chainid: item.chainid,
+                search_address: item.search_address,
+                timestamp: transformTime(new Date(item.timestamp).getTime()),
+                level: levelInfo[contentJson.level.toLocaleLowerCase()],
+                result: contentJson
+              }
+            })
+            setTickets(tmpList)
+          }
+        })
+    }
+  }, [appState])
+
+  const openTicketInfer = (item: any) => {
+
+    // PopupAPI.changeState(APP_STATE.TICKETINFER)
+    onChangeState(APP_STATE.TICKETINFER, item)
+  }
 
   return (
     <div className="w-360 page-root collection-page tickets-page">
@@ -47,11 +73,31 @@ const Collection: React.FC<any> = () => {
       <div className="page-content pt-3 home-page-content">
         <div className="setting-list">
           {
-            tickets.map(item =>
-              <div key={item.id} className={`collection-item hover:opacity-80 flex items-center h-16 bg${item.level}`}
+            tickets.map((item: any, key) =>
+              <div key={key} className={`collection-item flex items-center h-16 bg${item.level}`}
+                onClick={() => openTicketInfer(item)}
               >
                 <div className="flex justify-center items-center w-16 h-16">
                   <div className={`text text${item.level}`}>{item.level}.0</div>
+                  <div className={`text text-text`}>{item.level}.0</div>
+                </div>
+                <div className="ml-4 ">
+                  <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
+                    {item.search_address.slice(0, 6) + '.....' + item.search_address.slice(-4)}
+                    <img src={copyImg} alt="" className="w-4 h-4 ml-1" />
+                  </div>
+                  <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>{item.timestamp}</div>
+                </div>
+              </div>
+
+            )
+          }
+          {/* <div key={item.id} className={`collection-item flex items-center h-16 bg${item.level}`}
+                onClick={() => openTicketInfer()}
+              >
+                <div className="flex justify-center items-center w-16 h-16">
+                  <div className={`text text${item.level}`}>{item.level}.0</div>
+                  <div className={`text text-text`}>{item.level}.0</div>
                 </div>
                 <div className="ml-4 ">
                   <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
@@ -60,9 +106,7 @@ const Collection: React.FC<any> = () => {
                   </div>
                   <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>15:00 7/22 2022</div>
                 </div>
-              </div>
-            )
-          }
+              </div> */}
         </div>
 
         <NoData />

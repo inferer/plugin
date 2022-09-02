@@ -4,7 +4,8 @@ import { APP_STATE } from "../config/constants"
 export type AppState = {
   appState: number,
   language: string,
-  searchnum: number
+  searchnum: number,
+  pageStack: number[]
 }
 
 export type RootState = {
