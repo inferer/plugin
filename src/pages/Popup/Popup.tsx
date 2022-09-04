@@ -48,37 +48,20 @@ const Popup: React.FC<PopupProps> = (props) => {
   const [pagesStack, setPageStack] = useState([])
   const [txinfoData, setTxinfoData] = useState<any>({ key: '', data: {} })
   const [ticketInfo, setTicketInfo] = useState<any>({ level: 1, searchList: [] })
-  let dom = null
-  switch (props.appState) {
-    case APP_STATE.SEARCH:
-    case APP_STATE.TICKET:
-    case APP_STATE.RECOMMEND:
-    case APP_STATE.LABELS:
-    case APP_STATE.SETTING:
-      // dom = <Home appState={appState} />
-      // setPageStack([...pagesStack, APP_STATE.HOME])
-      break;
-    case APP_STATE.LANGUAGE:
-      // dom = <Language language={language} />
-      break
-    case APP_STATE.SETSEARCH:
-      // dom = <SetSearch searchNum={searchNum} />
-      break
-    case APP_STATE.WALLET:
-      // dom = <Wallet searchNum={searchNum} />
-      break
-    case APP_STATE.FEEDBACK:
-      // dom = <FeedBack searchNum={searchNum} />
-      break
-    case APP_STATE.COLLECTION:
-      // dom = <Collection searchNum={searchNum} />
-      break
-    case APP_STATE.TXINFO:
-      // dom = <TxInfo language={language} />
-      break
-  }
+  const [recommendData, setRecommendData] = useState<any>({})
+  const [toTxInfo, setToTxInfo] = useState('')
+  const [toTxInfer, setToTxInfer] = useState('')
   const onChangeState = (appState: number, data: any) => {
+
     setTxinfoData(data)
+    if (appState === APP_STATE.TXINFO) {
+      setToTxInfo('searchpage')
+    }
+    PopupAPI.changeState(appState)
+  }
+  const onChangeState2 = (appState: number, data: any) => {
+    setTxinfoData(data)
+    setToTxInfo('')
     PopupAPI.changeState(appState)
   }
   const onTicketChangeState = (appState: number, searchRet: any) => {
@@ -87,14 +70,32 @@ const Popup: React.FC<PopupProps> = (props) => {
       const info = searchRet.result.info || {}
       infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
     }
+
     setTicketInfo({ level: searchRet.level, searchList: infoList })
+    setRecommendData({})
+    setToTxInfo('')
+    setToTxInfer('')
     PopupAPI.changeState(appState)
+  }
+  const onClickRecommend = (data: any) => {
+    setTicketInfo({ level: 0, searchList: [] })
+    setRecommendData(data)
+    setToTxInfo('')
+    setToTxInfer('')
+    PopupAPI.changeState(APP_STATE.TICKETINFER)
+  }
+  const onCollectionClick = (data: any) => {
+    setToTxInfer('collection')
+    PopupAPI.changeState(APP_STATE.TICKETINFER)
   }
   return (
     <IntlProvider locale={props.language || 'en'} messages={messages[props.language]}>
       <>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.HOME ? 'pop-root-page-in' : 'pop-root-page-out'}`}>
-          <Home appState={appState} onChangeState={onChangeState} onTicketChangeState={onTicketChangeState} />
+          <Home appState={appState} onChangeState={onChangeState}
+            onTicketChangeState={onTicketChangeState}
+            onClickRecommend={onClickRecommend}
+          />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.LANGUAGE ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Language language={language} />
@@ -105,18 +106,28 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.WALLET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Wallet searchNum={searchNum} address={address} />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
+          style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
+        >
           <FeedBack searchNum={searchNum} />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.COLLECTION ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <Collection appState={appState} searchNum={searchNum} />
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.COLLECTION || pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <Collection appState={appState} searchNum={searchNum}
+            onClick={onCollectionClick}
+          />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TXINFO ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <TxInfo language={language} txinfoData={txinfoData} />
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TXINFO ? 'pop-root-page-in' : 'pop-root-page-right'}`}
+          style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
+        >
+          <TxInfo language={language} txinfoData={txinfoData} toTxInfo={toTxInfo} />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TICKETINFER || pageStack[0] === APP_STATE.TXINFO || pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
+          style={{ zIndex: 900, background: '#ffffff', opacity: 1 }}
+        >
           <TicketInfer
-            onChangeState={onChangeState}
+            toTxInfer={toTxInfer}
+            onChangeState={onChangeState2}
+            recommendData={recommendData}
             ticketInfo={{
               level: ticketInfo.level
             }}

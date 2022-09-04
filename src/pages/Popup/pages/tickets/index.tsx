@@ -35,7 +35,8 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
 
   const [tickets, setTickets] = useState([])
 
-  const [active, setActive] = useState(1)
+  const [showResult, setShowResult] = useState(false)
+
   useEffect(() => {
     if (appState === APP_STATE.TICKET) {
       PopupAPI.getTickets(0)
@@ -54,6 +55,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
               }
             })
             setTickets(tmpList)
+            setShowResult(true)
           }
         })
     }
@@ -108,8 +110,10 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
                 </div>
               </div> */}
         </div>
+        {
+          showResult && tickets.length <= 0 && <NoData />
+        }
 
-        <NoData />
       </div>
     </div>
   )

@@ -44,7 +44,7 @@ const FeedBack: React.FC<FeedBackProps> = ({
 
   return (
     <div className="w-360 page-root page-language">
-      <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.SETTING)} />
+      <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.TICKETINFER)} />
       <div className="page-content pt-3">
         {
           !feedSuccess &&

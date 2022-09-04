@@ -71,6 +71,10 @@ export default {
   },
   setAddress() {
     this.duplex.send('setAddress', { address: '' })
+  },
+  matchAddress(addressList) {
+    console.log(addressList)
+    this.duplex.send('setMatchAddress', { addressList })
   }
 
 }

@@ -1,5 +1,6 @@
 import MessageDuplex from '../../MessageDuplex'
 import EventChannel from '../../MessageDuplex/EventChannel';
+import { initDom } from './modules/insertDom';
 
 
 const contentScript = {
@@ -19,7 +20,7 @@ const contentScript = {
           await this.duplex.send('tabRequest', data)
         );
       } catch (ex) {
-        logger.info('Ta b request failed:', ex);
+        console.log('Ta b request failed:', ex);
       }
     });
 
@@ -46,11 +47,6 @@ const contentScript = {
 
 contentScript.init();
 
-document.addEventListener('selectionchange', function (e) {
-  const selectStr = window.getSelection().toString()
-  if (selectStr) {
-    PopupAPI.updateContextmenu(selectStr)
-  }
-})
+
 
 

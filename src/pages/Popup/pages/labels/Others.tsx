@@ -13,7 +13,8 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '' }) => {
     const res = await PopupAPI.collectLabel({
       collect_address: item.address,
       timestamp: Date.now(),
-      collect_info: activeKey
+      label_info: activeKey,
+      chainid: 1
     })
     console.log(res)
     if (res.status === 200) {
@@ -35,7 +36,7 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '' }) => {
               />
             </div>
             <div className="flex items-center ">
-              <div className="flex icon-box justify-center items-center mr-2">
+              <div className={`flex icon-box justify-center items-center mr-2 ${item.isLocal ? 'label-user' : ''}`}>
                 <img src={iconPng} alt="" />
               </div>
               <div className="">

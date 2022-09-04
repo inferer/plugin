@@ -21,6 +21,7 @@ body,
   width: 360px;
   height: 600px;
   position: relative;
+  overflow: hidden;
   // background-image: url('../../assets/img/page_bg.png');
   // background-repeat: no-repeat;
   // background-size: 100% 100%;
@@ -64,6 +65,9 @@ body,
   backface-visibility: hidden;
   perspective: 1000;
   top: 0;
+  left: 0;
+  z-index: 999;
+  opacity: 1;
 }
 
 .pop-out-enter {
@@ -78,7 +82,7 @@ body,
 
 .pop-in-enter {
   opacity: 0;
-  transform: translate3d(100%, 0, 0);
+  z-index: 1;
 }
 
 .pop-in-leave-active {
@@ -423,8 +427,9 @@ body,
   .icon-box {
     width: 36px;
     height: 36px;
-    background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
+    // background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
     border-radius: 8px;
+
 
     img {
       width: 20px;
@@ -733,6 +738,13 @@ body,
       height: 26px;
       background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
       border-radius: 26px;
+
+      &.label-user {
+        background-image: url('./pages/labels/images/border-bg.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: left right;
+      }
 
       img {
         width: 17px;

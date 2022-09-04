@@ -22,15 +22,18 @@ const settingActivePng = require('./images/setting_active.png');
 const Popup: React.FC<{
   appState: number,
   onChangeState: (key: number, data: any) => void
-  onTicketChangeState: (key: number, data: any) => void
+  onTicketChangeState: (key: number, data: any) => void,
+  onClickRecommend: (data: any) => void
 }> = ({
   onChangeState,
-  onTicketChangeState
+  onTicketChangeState,
+  onClickRecommend
 }) => {
 
     const [appState, setAppState] = useState(APP_STATE.SEARCH)
     const [nowState, setNowState] = useState(-1)
     const navOnClick = (type: number) => {
+      console.log(type)
       setAppState(type)
       // PopupAPI.changeState(type)
     }
@@ -43,7 +46,9 @@ const Popup: React.FC<{
           <Tickets appState={appState} onChangeState={onTicketChangeState} />
         </div>
         <div className={`${appState === APP_STATE.RECOMMEND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          <Recommend appState={appState} onChangeState={onChangeState} />
+          <Recommend appState={appState} onChangeState={onChangeState} onClick={(e: any) => {
+            onClickRecommend && onClickRecommend(e)
+          }} />
         </div>
         <div className={`${appState === APP_STATE.LABELS ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Labels appState={appState} onChangeState={onChangeState} />
@@ -68,7 +73,9 @@ const Popup: React.FC<{
           appState === APP_STATE.LABELS && <Labels />
         } */}
 
-        <div className='flex justify-around items-center fixed w-full bottom-0 left-0 z-30 right-0 nav-bar bg-white'>
+        <div className='flex justify-around items-center fixed w-full bottom-0 left-0 right-0 nav-bar bg-white'
+          style={{ zIndex: 999999 }}
+        >
           <div className=''
             onClick={() => navOnClick(APP_STATE.SEARCH)}
           >

@@ -1,18 +1,33 @@
-import { data } from 'autoprefixer';
+import jQuery from '../../assets/js/jquery-3.6.0.min.js';
 import EventChannel from '../../MessageDuplex/EventChannel'
 
 import RequestHandler from '../../MessageDuplex/RequestHandler';
+
+export const matchAddress = (injectPlugin) => {
+  document.addEventListener('selectionchange', function (e) {
+    const selectStr = window.getSelection().toString()
+    if (selectStr) {
+      injectPlugin.updateContextmenu(selectStr)
+    }
+  })
+  setTimeout(() => {
+    const bodyStr = $('body').text()
+    const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
+    injectPlugin.setMatchAddress(addressList)
+  }, 5000)
+}
 
 const injectPlugin = {
   init() {
     this._bindInjectPlugin();
     this._bindEventChannel();
     this._bindEvents();
+    matchAddress(injectPlugin)
 
     this.request('init').then((params) => {
 
     }).catch(err => {
-      logger.error('Failed to initialise VisionWeb', err);
+      console.log('Failed to initialise Plugin', err);
     });
   },
 
@@ -50,7 +65,26 @@ const injectPlugin = {
       console.log(err)
     })
   },
+  updateContextmenu(str) {
+    this.request('updateContextmenu', {
+      str
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  setMatchAddress(addressList) {
+    this.request('setMatchAddress', {
+      addressList
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
 };
 
 injectPlugin.init();
+

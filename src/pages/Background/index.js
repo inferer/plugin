@@ -1,6 +1,7 @@
 import MessageDuplex from '../../MessageDuplex';
 import { BackgroundAPI } from '../../api';
 import Service from './Service'
+import StorageService from './StorageService'
 
 console.log(chrome.action)
 chrome.runtime.onInstalled.addListener(function () {
@@ -26,6 +27,8 @@ chrome.runtime.onInstalled.addListener(function () {
               height: 660,
               type: 'popup',
               url: 'popup.html',
+              left: 1500,
+              top: 0
 
               // incognito: true,
               // setSelfAsOpener: true
@@ -79,6 +82,10 @@ const backgroundScript = {
       resolve(this.service.getSearchNum())
     })
     duplex.on('setsearchnum', (e) => this.service.setSearchNum(e.data))
+    duplex.on('setMatchAddress', (e) => {
+      console.log(e)
+      // this.service.setMatchAddress(e.data)
+    })
 
     duplex.on('searchByAddress', async (e) => {
       const data = await this.service.searchByAddress(e.data)
@@ -143,7 +150,47 @@ const backgroundScript = {
   bindTabDuplex() {
     duplex.on('tabRequest', async ({ hostname, resolve, data: request }) => {
       const { action, data, uuid } = request
-      Service.setAddress(data)
+      switch (action) {
+        case 'connectWallet':
+          Service.setAddress(data)
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break
+        case 'updateContextmenu':
+          chrome.contextMenus.update(
+            'inferer',
+            {
+              type: 'normal',
+              contexts: ['all'],
+              title: 'Inferer search: ' + data.str
+            },
+            function (e) {
+              console.log(e)
+            }
+          )
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break
+        case 'setMatchAddress':
+          console.log(request)
+          const newAddress = data.addressList.slice(0, 12)
+          // console.log(StorageService.getStorage('searchnum'))
+          Service.setMatchAddress(newAddress)
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break
+
+      }
+
     })
   },
   bindServiceEvents() {

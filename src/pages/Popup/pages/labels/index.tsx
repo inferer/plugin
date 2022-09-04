@@ -32,13 +32,15 @@ const Labels: React.FC<any> = ({ appState }) => {
   const [showInfo, setShowInfo] = useState(false)
   const [userData, setUserData] = useState<any>({})
   const [showData, setShowData] = useState([])
+  const [matchAddress, setMatchAddress] = useState<any>([])
 
   useEffect(() => {
     if (appState === APP_STATE.LABELS) {
-      PopupAPI.getLabels(['0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8'].join(','))
+      PopupAPI.getLabels()
         .then((res: any) => {
           console.log(res)
           if (res.status === 200) {
+            setMatchAddress(res.matchAddress)
             setUserData(res.result)
           }
         })
@@ -64,10 +66,21 @@ const Labels: React.FC<any> = ({ appState }) => {
       if (active === 6) {
         userKey = 'poap_users'
       }
+      const newData = userData[userKey] || []
+      const newDataLocal = newData.map((item: any) => {
+        let isLocal = false
+        if (matchAddress.includes(item.address)) {
+          isLocal = true
+        }
+        return {
+          ...item,
+          isLocal
+        }
+      })
       setActiveKey(userKey)
-      setShowData(userData[userKey])
+      setShowData(newDataLocal)
     }
-  }, [active, userData])
+  }, [active, userData, matchAddress])
 
 
   return (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
+import { transformTime } from "../../utils"
 
 const { PopupAPI } = require('../../../../api')
 
@@ -35,7 +36,16 @@ const labelsList = [
   { level: 6 },
 ]
 
-const Collection: React.FC<any> = ({ appState }) => {
+const userKey: any = {
+  'new_users': '1',
+  'real_users': '2',
+  'interacted_users': '3',
+  'nft_active_users': '4',
+  'large_balance_users': '5',
+  'poap_users': '6',
+}
+
+const Collection: React.FC<any> = ({ appState, onClick }) => {
 
   const onItemClick = (type: string) => {
     if (type === 'language') {
@@ -45,10 +55,19 @@ const Collection: React.FC<any> = ({ appState }) => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.collection', defaultMessage: 'COLLECTION' })
 
-  const [tickets, setTickets] = useState(ticketsList)
-  const [labels, setLabels] = useState(labelsList)
+  const [tickets, setTickets] = useState<any>([])
+  const [labels, setLabels] = useState<any>([])
 
   const getLabelImg = (level: number) => {
+    if (level === 1) return l1Png
+    if (level === 2) return l2Png
+    if (level === 3) return l3Png
+    if (level === 4) return l4Png
+    if (level === 5) return l5Png
+    if (level === 6) return l6Png
+  }
+
+  const getUserImg = (level: number) => {
     if (level === 1) return l1Png
     if (level === 2) return l2Png
     if (level === 3) return l3Png
@@ -64,12 +83,29 @@ const Collection: React.FC<any> = ({ appState }) => {
       if (active === 1) {
         PopupAPI.getCollectTickets({ page_index: 0 })
           .then((res: any) => {
-            console.log(res, 1111111111)
+            if (res.status === 200) {
+              const newList = (res.result || []).map((item: any) => {
+                return {
+                  ...item,
+                  date: transformTime(item.timestamp)
+                }
+              })
+              setTickets(newList)
+            }
           })
       } else {
         PopupAPI.getCollectLabels({ page_index: 0 })
           .then((res: any) => {
-            console.log(res, 1111111111)
+            if (res.status === 200) {
+              const newList = (res.result || []).map((item: any) => {
+                return {
+                  ...item,
+                  date: transformTime(item.timestamp),
+                  level: Number(userKey[item.label])
+                }
+              })
+              setLabels(newList)
+            }
           })
       }
     }
@@ -105,8 +141,11 @@ const Collection: React.FC<any> = ({ appState }) => {
           active === 1 &&
           <div className="setting-list">
             {
-              tickets.map(item =>
-                <div key={item.level} className={`collection-item flex items-center h-16 bg${item.level}`}
+              tickets.map((item: any, key: number) =>
+                <div key={key} className={`collection-item cursor-pointer flex items-center h-16 bg${item.level}`}
+                  onClick={() => {
+                    onClick && onClick(item)
+                  }}
                 >
                   <div className="flex justify-center items-center w-16 h-16">
                     <div className={`text text${item.level}`}>{item.level}.0</div>
@@ -127,11 +166,14 @@ const Collection: React.FC<any> = ({ appState }) => {
           active === 2 &&
           <div className="setting-list">
             {
-              labels.map(item =>
-                <div key={item.level} className={`collection-item flex items-center h-16 bg${item.level}`}
+              labels.map((item: any, key: number) =>
+                <div key={key} className={`collection-item cursor-pointer flex items-center h-16 bg${item.level}`}
+                  onClick={() => {
+                    onClick && onClick(item)
+                  }}
                 >
                   <div className="flex justify-center items-center w-16 h-16">
-                    <img src={getLabelImg(item.level)} alt="" style={{ width: 24, height: 24 }} />
+                    <img src={getUserImg(item.level)} alt="" style={{ width: 24, height: 24 }} />
                   </div>
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>

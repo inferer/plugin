@@ -9,6 +9,7 @@ class Service extends EventEmitter {
     super()
     this.state = APP_STATE.SEARCH
     this.profileUserInfo = { email: '', user_id: '', chrome_id: '' }
+    this.matchAddress = []
   }
   async initData() {
     await StorageService.init()
@@ -17,8 +18,12 @@ class Service extends EventEmitter {
     this.profileUserInfo.chrome_id = userInfo.id
     const chromeUserInfo = await StorageService.getChromeUserInfo(userInfo.id)
     if (!chromeUserInfo || !chromeUserInfo.user_id) {
+      let registerRet
+      registerRet = await this.getUserID(userInfo.email)
+      if (!registerRet) {
+        registerRet = await this.register(userInfo.email)
+      }
       // register
-      const registerRet = await this.register(userInfo.email)
       if (registerRet) {
         this.profileUserInfo.user_id = registerRet
         StorageService.setChromeUserInfo(userInfo.id, { ...userInfo, user_id: registerRet })
@@ -35,7 +40,7 @@ class Service extends EventEmitter {
       })
     })
   }
-  setAddress(address) {
+  async setAddress(address) {
     this.currentAddress = address.address
     StorageService.setAddress(address.address)
     if (address.address && !this.profileUserInfo.user_id) {
@@ -68,6 +73,11 @@ class Service extends EventEmitter {
     StorageService.setSearchNum(num);
     this.emit('setSearchNum', num);
   }
+  setMatchAddress(data) {
+    console.log(data)
+    this.matchAddress = data
+    this.emit('setMatchAddress', data);
+  }
   connectWallet(data) {
     this.emit('connectWallect', data)
   }
@@ -81,7 +91,17 @@ class Service extends EventEmitter {
     } catch (e) {
       return false
     }
+  }
 
+  async getUserID(chrome_id) {
+    try {
+      const res = await fetcher('/plugin/getUserID', { chrome_id })
+      if (res.status === 200 && res.result) {
+        return res.result.user_id || false
+      }
+    } catch (e) {
+      return false
+    }
   }
 
   async searchByAddress(address) {
@@ -106,7 +126,7 @@ class Service extends EventEmitter {
 
   async getRecommend(local_address_info) {
     try {
-      const res = await poster('/plugin/recommend', { user_id: this.profileUserInfo.user_id, local_address_info })
+      const res = await poster('/plugin/recommend', { user_id: this.profileUserInfo.user_id, local_address_info: this.matchAddress.join(',') })
       return res
     } catch (e) {
       return false
@@ -115,8 +135,8 @@ class Service extends EventEmitter {
 
   async getLabels(local_address_info) {
     try {
-      const res = await poster('/plugin/getLabels', { user_id: this.profileUserInfo.user_id, local_address_info })
-      return res
+      const res = await poster('/plugin/getLabels', { user_id: this.profileUserInfo.user_id, local_address_info: this.matchAddress.join(',') })
+      return { ...res, matchAddress: this.matchAddress }
     } catch (e) {
       return false
     }

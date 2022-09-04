@@ -8,22 +8,22 @@ const { PopupAPI } = require('../../../../api')
 
 export type TxInfoProps = {
   language: string,
-  txinfoData: { key: string, data: any }
+  txinfoData: { key: string, data: any },
+  toTxInfo: string
 }
 
 const TxInfo: React.FC<TxInfoProps> = ({
   language,
-  txinfoData
+  txinfoData,
+  toTxInfo
 }) => {
   const intl = useIntl()
   // const title = intl.formatMessage({ id: 'title.txinfo', defaultMessage: 'TX INFO' })
-
-  console.log(txinfoData)
   const txinfoList = Object.keys(txinfoData.data).map(key => ({ key, data: txinfoData.data[key] }))
 
   return (
     <div className="w-360 page-root search-page ">
-      <PageHeader title={txinfoData.key} onBack={() => PopupAPI.changeState(APP_STATE.SEARCH)} />
+      <PageHeader title={txinfoData.key} onBack={() => PopupAPI.changeState('searchpage' === toTxInfo ? APP_STATE.SEARCH : APP_STATE.TICKETINFER)} />
 
       <div className="page-content">
         <div className="setting-list">

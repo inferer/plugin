@@ -13,8 +13,7 @@ const risk2Png = require('./images/risk2.png')
 const other1Png = require('./images/other1.png')
 const other2Png = require('./images/other2.png')
 
-
-const Recommend: React.FC<any> = ({ appState }) => {
+const Recommend: React.FC<any> = ({ appState, onClick }) => {
 
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
@@ -23,7 +22,7 @@ const Recommend: React.FC<any> = ({ appState }) => {
   const [recommentData, setRecommentData] = useState({ like: [], other: [], risk: [] })
   useEffect(() => {
     if (appState === APP_STATE.RECOMMEND) {
-      PopupAPI.getRecommend(['0xde818aEbD0B99e8b9d5D04a7b8824d749ba6FbB9'].join(','))
+      PopupAPI.getRecommend()
         .then((res: any) => {
           console.log(res)
           if (res.status === 200) {
@@ -74,7 +73,9 @@ const Recommend: React.FC<any> = ({ appState }) => {
         </div>
         <div className="list-wrap overflow-auto" style={{ height: 440 }}>
           {
-            active === 1 && <Likes data={recommentData.like} />
+            active === 1 && <Likes data={recommentData.like} onClick={(e: any) => {
+              onClick && onClick(e)
+            }} />
           }
           {
             active === 2 && <Risks data={recommentData.risk} />

@@ -17,6 +17,8 @@ const StorageService = {
 
         this[key] = encrypted;
       }
+      this['searchnum'] = 12
+      this.save('searchnum')
     } catch (ex) {
       return 'ERRORS.INVALID_PASSWORD';
     }
