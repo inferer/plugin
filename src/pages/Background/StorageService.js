@@ -2,7 +2,8 @@ import extensionizer from 'extensionizer'
 const StorageService = {
   storageKeys: [
     'language',
-    'searchnum'
+    'searchnum',
+    'address'
   ],
   storage: extensionizer.storage.local,
   async init() {
@@ -42,6 +43,10 @@ const StorageService = {
   setLanguage(language) {
     this.language = language;
     this.save('language');
+  },
+  setAddress(address) {
+    this.address = address;
+    this.save('address');
   },
   setSearchNum(num) {
     this.searchnum = num;

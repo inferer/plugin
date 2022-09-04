@@ -2,22 +2,45 @@ import MessageDuplex from '../../MessageDuplex';
 import { BackgroundAPI } from '../../api';
 import Service from './Service'
 
-// chrome.identity.getProfileUserInfo(function (res) {
-//   console.log(res, 11111)
-// })
-// console.log(chrome.identity, 111111)
+console.log(chrome.action)
+chrome.runtime.onInstalled.addListener(function () {
+  chrome.contextMenus.removeAll(function () {
+    chrome.contextMenus.create({
+      type: 'normal',
+      title: 'Inferer search: ',
+      id: 'inferer',
+      contexts: ['page'],
+      // onclick: function (data) {
+      //   console.log(data)
+      // }
+    }, function () {
+      console.log('contextMenus are create.');
+      chrome.contextMenus.onClicked.addListener(function (data) {
+        console.log(data)
+        chrome.management.getSelf(
+          function (info) {
+            console.log(info)
+            chrome.windows.create({
+              focused: true,
+              width: 360,
+              height: 660,
+              type: 'popup',
+              url: 'popup.html',
 
-const infererId = chrome.contextMenus.create({
-  type: 'normal',
-  title: 'Inferer search: ',
-  id: 'inferer',
-  contexts: ['all']
-}, function () {
-  console.log('contextMenus are create.');
+              // incognito: true,
+              // setSelfAsOpener: true
+            },
+              () => { })
+          }
+        )
+
+      })
+    });
+  })
+
 });
-chrome.contextMenus.onClicked.addListener(function (data) {
-  console.log(data)
-})
+
+
 
 const duplex = new MessageDuplex.Host();
 
@@ -26,6 +49,7 @@ const backgroundScript = {
   run() {
     BackgroundAPI.init(duplex)
     this.bindPopupDuplex()
+    this.bindTabDuplex()
     this.bindServiceEvents()
   },
   bindPopupDuplex() {
@@ -49,6 +73,7 @@ const backgroundScript = {
       resolve(this.service.getLanguage())
     });
     duplex.on('setLanguage', (e) => this.service.setLanguage(e.data))
+    duplex.on('setAddress', (e) => this.service.setAddress(e.data))
 
     duplex.on('getsearchnum', ({ resolve }) => {
       resolve(this.service.getSearchNum())
@@ -91,6 +116,15 @@ const backgroundScript = {
       const data = await this.service.feedBack(e.data)
       e.resolve(data)
     })
+    duplex.on('getAddress', async (e) => {
+      const data = await this.service.getAddress(e.data)
+      e.resolve(data)
+    })
+    duplex.on('bindWallet', async (e) => {
+      const data = await this.service.bindWallet(e.data)
+      e.resolve(data)
+    })
+    duplex.on('connectWallet', (e) => this.service.connectWallet(e.data))
 
     duplex.on('updateContextmenu', (e) => {
       chrome.contextMenus.update(
@@ -106,6 +140,12 @@ const backgroundScript = {
       )
     })
   },
+  bindTabDuplex() {
+    duplex.on('tabRequest', async ({ hostname, resolve, data: request }) => {
+      const { action, data, uuid } = request
+      Service.setAddress(data)
+    })
+  },
   bindServiceEvents() {
     this.service.on('setLanguage', language => {
       BackgroundAPI.setLanguage(language)
@@ -115,6 +155,12 @@ const backgroundScript = {
     })
     this.service.on('setSearchNum', num => {
       BackgroundAPI.setSearchNum(num)
+    })
+    this.service.on('connectWallect', (type) => {
+      BackgroundAPI.connectWallect(type)
+    })
+    this.service.on('setAddress', (address) => {
+      BackgroundAPI.setAddress(address)
     })
   }
 }

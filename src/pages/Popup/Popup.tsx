@@ -34,7 +34,8 @@ export type PopupProps = {
   appState: number,
   language: string,
   searchNum: number,
-  pageStack: number[]
+  pageStack: number[],
+  address: string,
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
@@ -43,12 +44,11 @@ const Popup: React.FC<PopupProps> = (props) => {
     zh: zhMessages
   } as any
 
-  const { appState, language, searchNum, pageStack } = props
+  const { appState, language, searchNum, pageStack, address } = props
   const [pagesStack, setPageStack] = useState([])
   const [txinfoData, setTxinfoData] = useState<any>({ key: '', data: {} })
   const [ticketInfo, setTicketInfo] = useState<any>({ level: 1, searchList: [] })
   let dom = null
-
   switch (props.appState) {
     case APP_STATE.SEARCH:
     case APP_STATE.TICKET:
@@ -103,7 +103,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           <SetSearch searchNum={searchNum} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.WALLET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <Wallet searchNum={searchNum} />
+          <Wallet searchNum={searchNum} address={address} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <FeedBack searchNum={searchNum} />
@@ -132,5 +132,6 @@ export default connect((state: RootState) => ({
   language: state.app.language,
   appState: state.app.appState,
   searchNum: state.app.searchnum,
-  pageStack: state.app.pageStack
+  pageStack: state.app.pageStack,
+  address: state.app.address
 }))(Popup);

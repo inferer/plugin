@@ -6,12 +6,14 @@ const initialState: AppState = {
   appState: APP_STATE.HOME,
   language: 'en',
   searchnum: 20,
-  pageStack: [0]
+  pageStack: [0],
+  address: ''
 }
 
 export const setAppState = createAction('setAppState')
 export const setLanguage = createAction('setLanguage')
 export const setSearchNum = createAction('setSearchNum')
+export const setAddress = createAction('setAddress')
 export const setPageStack = createAction('setPagesStack')
 
 export const appReucer = createReducer(initialState, (builder) => {
@@ -43,6 +45,9 @@ export const appReucer = createReducer(initialState, (builder) => {
   })
   builder.addCase(setSearchNum, (state, { payload }: any) => {
     state.searchnum = payload
+  })
+  builder.addCase(setAddress, (state, { payload }: any) => {
+    state.address = payload
   })
 })
 

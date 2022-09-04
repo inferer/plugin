@@ -9,6 +9,7 @@ import './tailwind.min.css'
 import MessageDuplex from '../../MessageDuplex'
 
 import {
+  setAddress,
   setAppState, setLanguage, setSearchNum
 } from './reducers/appReducer'
 import { APP_STATE } from './config/constants'
@@ -33,16 +34,19 @@ export const app = {
     const [
       appState,
       language,
-      searchnum
+      searchnum,
+      address,
     ] = await Promise.all([
       PopupAPI.requestState(),
       PopupAPI.getLanguage(),
       PopupAPI.getSearchNum(),
+      PopupAPI.getAddress(),
     ])
 
     this.store.dispatch(setAppState(appState))
     this.store.dispatch(setLanguage(language))
     this.store.dispatch(setSearchNum(searchnum))
+    this.store.dispatch(setAddress(address))
   },
   bindDuplexRequests() {
     this.duplex.on('setLanguage', language => this.store.dispatch(
@@ -53,6 +57,9 @@ export const app = {
     ))
     this.duplex.on('setSearchNum', num => this.store.dispatch(
       setSearchNum(num)
+    ))
+    this.duplex.on('setAddress', address => this.store.dispatch(
+      setAddress(address)
     ))
   },
 

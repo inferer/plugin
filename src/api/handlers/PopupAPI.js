@@ -60,6 +60,17 @@ export default {
   feedBack(data) {
     return this.duplex.send('feedBack', data)
   },
-
+  bindWallet(data) {
+    return this.duplex.send('bindWallet', data)
+  },
+  connectWallet(data) {
+    return this.duplex.send('connectWallet', data)
+  },
+  getAddress() {
+    return this.duplex.send('getAddress')
+  },
+  setAddress() {
+    this.duplex.send('setAddress', { address: '' })
+  }
 
 }

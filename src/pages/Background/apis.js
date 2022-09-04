@@ -8,7 +8,7 @@ export function fetcher(url, data) {
     fetchUrl += '?' + paramsArr.join('&')
   }
   return fetch(fetchUrl)
-    .then(res => res.json())
+    .then(res => res && res.json())
 }
 
 export function poster(url, data, options = {}) {
@@ -18,5 +18,5 @@ export function poster(url, data, options = {}) {
     headers: {
       'Content-Type': 'application/json'
     },
-  }).then(res => res.json())
+  }).then(res => res && res.json())
 }

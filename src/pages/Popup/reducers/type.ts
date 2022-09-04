@@ -5,7 +5,8 @@ export type AppState = {
   appState: number,
   language: string,
   searchnum: number,
-  pageStack: number[]
+  pageStack: number[],
+  address: string
 }
 
 export type RootState = {

@@ -14,6 +14,11 @@ export default {
   },
   setSearchNum(num) {
     this.duplex.send('popup', 'setSearchNum', num, false);
+  },
+  setAddress(address) {
+    this.duplex.send('popup', 'setAddress', address, false);
+  },
+  connectWallect(type) {
+    this.duplex.send('tab', 'injectPlugin', { action: 'connectWallect', data: type }, false)
   }
-
 };
