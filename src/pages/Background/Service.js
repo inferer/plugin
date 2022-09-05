@@ -117,7 +117,7 @@ class Service extends EventEmitter {
 
   async getTickets(page_index) {
     try {
-      const res = await fetcher('/plugin/getTickets', { user_id: this.profileUserInfo.user_id, page_index })
+      const res = await fetcher('/plugin/getTickets', { user_id: this.profileUserInfo.user_id, page_index, page_size: 10 })
       return res
     } catch (e) {
       return false

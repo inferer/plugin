@@ -13,7 +13,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div className="relative flex justify-center items-center">
-      <img src={backtPng} className="w-6 h-6" alt=""
+      <img src={backtPng} className="w-6 h-6 relative -ml-2" alt=""
         onClick={(e) => {
           e.stopPropagation()
           if (onBack) {

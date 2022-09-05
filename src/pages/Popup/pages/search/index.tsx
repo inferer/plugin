@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useCallback, useState } from "react"
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { useIntl } from 'react-intl'
 import { Toast } from 'antd-mobile'
+import { getAddress } from '@ethersproject/address'
 import { APP_STATE } from "../../config/constants"
 import DataItem1 from "./DataItem1"
 import DataItem2 from "./DataItem2"
@@ -20,6 +21,14 @@ const ttipPng = require('../../../../assets/img/ttip.png')
 const star1Png = require('../../../../assets/img/star1.png')
 const star2Png = require('../../../../assets/img/star2.png')
 
+const isAddress = (address: string) => {
+  try {
+    return getAddress(address)
+  } catch (e) {
+    return false
+  }
+}
+
 export const levelInfo = {
   'exceptional': 5.0,
   'very good': 4.0,
@@ -37,10 +46,11 @@ const Search: React.FC<{
 
     const [focus, setFocus] = useState(false)
     const [showResult, setShowResult] = useState(false)
-    const [address, setAddress] = useState('0xde818aEbD0B99e8b9d5D04a7b8824d749ba6FbB9')
+    const [address, setAddress] = useState('')
     const [searchList, setSearchList] = useState<{ key: string, data: any }[]>([])
     const [ticketInfo, setTicketInfo] = useState({ level: 0, ticket_id: 0 })
     const [isLoading, setIsLoading] = useState(false)
+    const [isValidAddress, setIsValidAddress] = useState(true)
     const onSearch = async () => {
       if (!focus) {
         setFocus(true)
@@ -76,6 +86,18 @@ const Search: React.FC<{
       }
     }, [address, ticketInfo])
 
+    useEffect(() => {
+      if (address === '') {
+        setIsValidAddress(true)
+        return
+      }
+      if (isAddress(address)) {
+        setIsValidAddress(true)
+      } else {
+        setIsValidAddress(false)
+      }
+    }, [address])
+
     return (
       <div className="page-root search-page">
         {
@@ -85,8 +107,8 @@ const Search: React.FC<{
         <img src={logoPng} className={`img-logo ${focus ? 'left-position' : ''}`} alt="" />
         <img src={logoTPng} className={`img-logo2 ${focus ? 'left-position' : ''}`} alt="" />
 
-        <div className={`flex justify-center search-wrap ${focus ? 'bg-image left-position' : ''}`}>
-          <input type="text" className={`outline-none search-input`} placeholder={holder}
+        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''}`}>
+          <input type="text" className={`outline-none search-input `} placeholder={holder}
             value={address}
             onChange={(e) => {
               setAddress(e.target.value)
@@ -101,6 +123,10 @@ const Search: React.FC<{
             <img src={searchPng} className=" w-6 h-6" alt="" />
           </div>
         </div>
+        {
+          !isValidAddress && <div className="text-sm font-medium absolute invalid-address">Invalid Address</div>
+        }
+
         <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`}>
           <Loading size={60} />
         </div>

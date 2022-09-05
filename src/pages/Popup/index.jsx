@@ -21,7 +21,6 @@ export const app = {
     await this.getAppState()
     this.bindDuplexRequests()
     this.render()
-
   },
   createStore() {
     this.store = configureStore({
@@ -43,7 +42,7 @@ export const app = {
       PopupAPI.getAddress(),
     ])
 
-    this.store.dispatch(setAppState(appState))
+    this.store.dispatch(setAppState(APP_STATE.SEARCH))
     this.store.dispatch(setLanguage(language))
     this.store.dispatch(setSearchNum(searchnum))
     this.store.dispatch(setAddress(address))

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
@@ -77,39 +77,94 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   }
 
   const [active, setActive] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [noData, setNodata] = useState(false)
+  const [noData2, setNodata2] = useState(false)
+
+  const getCollectTickets = (pageNo: number) => {
+    if (isLoading || noData) return
+    PopupAPI.getCollectTickets({ page_index: pageNo, page_size: 10 })
+      .then((res: any) => {
+        if (res.status === 200) {
+          const newList = (res.result || []).map((item: any) => {
+            return {
+              ...item,
+              date: transformTime(item.timestamp)
+            }
+          })
+          if (newList.length < 10) {
+            setNodata(true)
+            setIsLoading(false)
+          }
+          setTickets([...tickets, ...newList])
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 500)
+        }
+      })
+  }
+  const getCollectLabels = (pageNo: number) => {
+    if (isLoading || noData2) return
+    PopupAPI.getCollectLabels({ page_index: pageNo, page_size: 10 })
+      .then((res: any) => {
+        if (res.status === 200) {
+          const newList = (res.result || []).map((item: any) => {
+            return {
+              ...item,
+              date: transformTime(item.timestamp),
+              level: Number(userKey[item.label])
+            }
+          })
+          if (newList.length < 10) {
+            setNodata2(true)
+            setIsLoading(false)
+          }
+          setLabels([...labels, ...newList])
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 500)
+        }
+      })
+  }
 
   useEffect(() => {
     if (appState === APP_STATE.COLLECTION) {
       if (active === 1) {
-        PopupAPI.getCollectTickets({ page_index: 0 })
-          .then((res: any) => {
-            if (res.status === 200) {
-              const newList = (res.result || []).map((item: any) => {
-                return {
-                  ...item,
-                  date: transformTime(item.timestamp)
-                }
-              })
-              setTickets(newList)
-            }
-          })
+        getCollectTickets(0)
       } else {
-        PopupAPI.getCollectLabels({ page_index: 0 })
-          .then((res: any) => {
-            if (res.status === 200) {
-              const newList = (res.result || []).map((item: any) => {
-                return {
-                  ...item,
-                  date: transformTime(item.timestamp),
-                  level: Number(userKey[item.label])
-                }
-              })
-              setLabels(newList)
-            }
-          })
+        getCollectLabels(0)
       }
     }
   }, [active, appState])
+  const listRef = useRef<HTMLDivElement | null>(null)
+  const pageNoRef = useRef<number>(0)
+  const onTicketsSroll = async () => {
+    if (listRef.current) {
+      const listDom = listRef.current
+      const scrollTop = listDom.scrollTop;
+      const scrollHeight = listDom.scrollHeight;
+      const clientHeight = listDom.clientHeight;
+      if (scrollHeight - clientHeight - scrollTop <= 5 && !isLoading) {
+        pageNoRef.current++
+        getCollectTickets(pageNoRef.current)
+      }
+    }
+  }
+  const listRef2 = useRef<HTMLDivElement | null>(null)
+  const pageNoRef2 = useRef<number>(0)
+  const onTicketsSroll2 = async () => {
+    if (listRef2.current) {
+      const listDom = listRef2.current
+      const scrollTop = listDom.scrollTop;
+      const scrollHeight = listDom.scrollHeight;
+      const clientHeight = listDom.clientHeight;
+      console.log(scrollHeight - clientHeight - scrollTop)
+      if (scrollHeight - clientHeight - scrollTop <= 2 && !isLoading) {
+        pageNoRef2.current++
+        getCollectLabels(pageNoRef2.current)
+      }
+    }
+  }
 
   return (
     <div className="w-360 page-root collection-page">
@@ -139,7 +194,10 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
         </div>
         {
           active === 1 &&
-          <div className="setting-list">
+          <div className="setting-list" style={{ height: 470, overflow: 'auto' }}
+            ref={listRef}
+            onScroll={() => onTicketsSroll()}
+          >
             {
               tickets.map((item: any, key: number) =>
                 <div key={key} className={`collection-item cursor-pointer flex items-center h-16 bg${item.level}`}
@@ -152,19 +210,25 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   </div>
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
-                      0x8eb8.....3f23
+                      {item.collect_address.slice(0, 6) + '.....' + item.collect_address.slice(-6)}
                       <img src={copyImg} alt="" className="w-4 h-4 ml-1" />
                     </div>
-                    <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on 15:00 7/22 2022</div>
+                    <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on {item.date}</div>
                   </div>
                 </div>
               )
+            }
+            {
+              noData && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
             }
           </div>
         }
         {
           active === 2 &&
-          <div className="setting-list">
+          <div className="setting-list" style={{ height: 470, overflow: 'auto' }}
+            ref={listRef2}
+            onScroll={() => onTicketsSroll2()}
+          >
             {
               labels.map((item: any, key: number) =>
                 <div key={key} className={`collection-item cursor-pointer flex items-center h-16 bg${item.level}`}
@@ -177,13 +241,16 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   </div>
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
-                      0x8eb8.....3f23
+                      {item.collect_address.slice(0, 6) + '.....' + item.collect_address.slice(-6)}
                       <img src={copyImg} alt="" className="w-4 h-4 ml-1" />
                     </div>
-                    <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on 15:00 7/22 2022</div>
+                    <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on {item.date}</div>
                   </div>
                 </div>
               )
+            }
+            {
+              noData2 && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
             }
           </div>
         }

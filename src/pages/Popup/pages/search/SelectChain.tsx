@@ -5,6 +5,7 @@ const { PopupAPI } = require('../../../../api')
 const eth = require('./images/eth2.png')
 const platon = require('./images/platon2.png')
 const up = require('./images/up2.png')
+const down = require('./images/down.png')
 const select = require('./images/select2.png')
 
 
@@ -14,7 +15,7 @@ const SelectChain: React.FC<any> = () => {
   const [show, setShow] = useState(false)
 
   const onMouseEnter = (chainId: number) => {
-    setChainId(chainId)
+    // setChainId(chainId)
   }
   const onMouseClick = (chainId: number) => {
     setChainId(chainId)
@@ -30,8 +31,10 @@ const SelectChain: React.FC<any> = () => {
         }}
       >
         <img src={eth} alt="" style={{ width: 18, height: 18 }} />
-        <span>Ethereum</span>
-        <img src={up} alt="" style={{ width: 10, height: 6 }} />
+        <span>{chainId === 1 ? 'Ethereum' : 'PlatON'} </span>
+        {
+          show ? <img src={up} alt="" style={{ width: 10, height: 6 }} /> : <img src={down} alt="" style={{ width: 10, height: 6 }} />
+        }
       </div>
       {
         show &&

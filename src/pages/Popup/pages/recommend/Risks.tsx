@@ -2,13 +2,16 @@ import React, { useState } from "react";
 const iconPng = require('./images/icon2.png')
 const leftPng = require('./images/left.png')
 
-const Risks: React.FC<any> = ({ data }) => {
+const Risks: React.FC<any> = ({ data, onClick }) => {
 
   return (
     <div className="setting-list">
       {
         data.map((item: any, key: number) => (
           <div key={key} className="setting-item flex justify-between items-center"
+            onClick={() => {
+              onClick && onClick(item)
+            }}
           >
             <div className="flex items-center ">
               <div className="flex icon-box justify-center items-center mr-3">

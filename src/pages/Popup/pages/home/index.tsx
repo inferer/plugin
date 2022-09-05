@@ -21,13 +21,15 @@ const settingActivePng = require('./images/setting_active.png');
 
 const Popup: React.FC<{
   appState: number,
+  address: string,
   onChangeState: (key: number, data: any) => void
   onTicketChangeState: (key: number, data: any) => void,
   onClickRecommend: (data: any) => void
 }> = ({
   onChangeState,
   onTicketChangeState,
-  onClickRecommend
+  onClickRecommend,
+  address
 }) => {
 
     const [appState, setAppState] = useState(APP_STATE.SEARCH)
@@ -46,9 +48,14 @@ const Popup: React.FC<{
           <Tickets appState={appState} onChangeState={onTicketChangeState} />
         </div>
         <div className={`${appState === APP_STATE.RECOMMEND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          <Recommend appState={appState} onChangeState={onChangeState} onClick={(e: any) => {
-            onClickRecommend && onClickRecommend(e)
-          }} />
+          <Recommend
+            appState={appState}
+            address={address}
+            onChangeState={onChangeState}
+            onClick={(e: any) => {
+              onClickRecommend && onClickRecommend(e)
+            }}
+          />
         </div>
         <div className={`${appState === APP_STATE.LABELS ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Labels appState={appState} onChangeState={onChangeState} />

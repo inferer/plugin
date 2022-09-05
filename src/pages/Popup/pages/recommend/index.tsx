@@ -12,13 +12,16 @@ const risk1Png = require('./images/risk1.png')
 const risk2Png = require('./images/risk2.png')
 const other1Png = require('./images/other1.png')
 const other2Png = require('./images/other2.png')
+const walletPng = require('./images/wallet.png')
+const closePng = require('./images/close.png')
 
-const Recommend: React.FC<any> = ({ appState, onClick }) => {
+const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
 
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
   }
   const [active, setActive] = useState(1)
+  const [showWallet, setShowWallet] = useState(true)
   const [recommentData, setRecommentData] = useState({ like: [], other: [], risk: [] })
   useEffect(() => {
     if (appState === APP_STATE.RECOMMEND) {
@@ -71,17 +74,43 @@ const Recommend: React.FC<any> = ({ appState, onClick }) => {
             <div className={`text-base font-bold ${active === 3 ? 'color-image3' : 'text-title'}`}>Other</div>
           </div>
         </div>
+        {
+          !address && showWallet &&
+          <div className="connect-wallet flex items-center relative cursor-pointer"
+            onClick={() => PopupAPI.changeState(APP_STATE.WALLET)}
+          >
+            <img
+              onClick={(e) => {
+                e.stopPropagation()
+                setShowWallet(false)
+              }}
+              src={closePng} className=" absolute w-4 h-4" alt="" style={{ top: 6, right: 6 }} />
+            <img className="walletimg" src={walletPng} alt="" />
+            <div className="right-text">
+              <div className=" text-sm font-bold text-white">Connect your wallet </div>
+              <div className=" text-xs text-white opacity-50 mt-1">for better recommendation </div>
+            </div>
+          </div>
+        }
+
         <div className="list-wrap overflow-auto" style={{ height: 440 }}>
           {
-            active === 1 && <Likes data={recommentData.like} onClick={(e: any) => {
-              onClick && onClick(e)
-            }} />
+            active === 1 && <Likes data={recommentData.like}
+              onClick={(e: any) => {
+                onClick && onClick(e)
+              }} />
           }
           {
-            active === 2 && <Risks data={recommentData.risk} />
+            active === 2 && <Risks data={recommentData.risk}
+              onClick={(e: any) => {
+                onClick && onClick(e)
+              }} />
           }
           {
-            active === 3 && <Others data={recommentData.other} />
+            active === 3 && <Others data={recommentData.other}
+              onClick={(e: any) => {
+                onClick && onClick(e)
+              }} />
           }
         </div>
         {/* <div className="setting-list">

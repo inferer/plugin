@@ -86,6 +86,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   }
   const onCollectionClick = (data: any) => {
     setToTxInfer('collection')
+    setRecommendData({ ...data, address: data.collect_address })
     PopupAPI.changeState(APP_STATE.TICKETINFER)
   }
   return (
@@ -95,6 +96,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           <Home appState={appState} onChangeState={onChangeState}
             onTicketChangeState={onTicketChangeState}
             onClickRecommend={onClickRecommend}
+            address={address}
           />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.LANGUAGE ? 'pop-root-page-in' : 'pop-root-page-right'}`}>

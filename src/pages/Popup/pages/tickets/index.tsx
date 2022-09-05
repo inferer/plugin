@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import { transformTime } from "../../utils";
@@ -33,38 +33,62 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.collection', defaultMessage: 'COLLECTION' })
 
-  const [tickets, setTickets] = useState([])
-
+  const [tickets, setTickets] = useState<any>([])
   const [showResult, setShowResult] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [noData, setNodata] = useState(false)
+  const getTickets = (pageNo: number) => {
+    setIsLoading(true)
+    if (isLoading || noData) return
+    PopupAPI.getTickets(pageNo)
+      .then((res: any) => {
+        if (res && res.status === 200) {
+          const result = res.result || []
+          const tmpList = result.map((item: any) => {
+            const contentJson = JSON.parse(item.content)
+            return {
+              chainid: item.chainid,
+              search_address: item.search_address,
+              timestamp: transformTime(new Date(item.timestamp).getTime()),
+              level: levelInfo[contentJson.level.toLocaleLowerCase()],
+              result: contentJson
+            }
+          })
+          if (tmpList.length < 10) {
+            setNodata(true)
+            setIsLoading(false)
+          }
+          setTickets([...tickets, ...tmpList])
+          setShowResult(true)
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 500)
+        }
+      })
+  }
 
   useEffect(() => {
     if (appState === APP_STATE.TICKET) {
-      PopupAPI.getTickets(0)
-        .then((res: any) => {
-          console.log(res)
-          if (res && res.status === 200) {
-            const result = res.result || []
-            const tmpList = result.map((item: any) => {
-              const contentJson = JSON.parse(item.content)
-              return {
-                chainid: item.chainid,
-                search_address: item.search_address,
-                timestamp: transformTime(new Date(item.timestamp).getTime()),
-                level: levelInfo[contentJson.level.toLocaleLowerCase()],
-                result: contentJson
-              }
-            })
-            setTickets(tmpList)
-            setShowResult(true)
-          }
-        })
+      getTickets(0)
     }
   }, [appState])
 
   const openTicketInfer = (item: any) => {
-
-    // PopupAPI.changeState(APP_STATE.TICKETINFER)
     onChangeState(APP_STATE.TICKETINFER, item)
+  }
+  const listRef = useRef<HTMLDivElement | null>(null)
+  const pageNoRef = useRef<number>(0)
+  const onSroll = async () => {
+    if (listRef.current) {
+      const listDom = listRef.current
+      const scrollTop = listDom.scrollTop;
+      const scrollHeight = listDom.scrollHeight;
+      const clientHeight = listDom.clientHeight;
+      if (scrollHeight - clientHeight - scrollTop <= 5 && !isLoading) {
+        pageNoRef.current++
+        getTickets(pageNoRef.current)
+      }
+    }
   }
 
   return (
@@ -72,10 +96,13 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
       <div className="page-title">
         TICKETS
       </div>
-      <div className="page-content pt-3 home-page-content">
+      <div className="page-content pt-3 home-page-content"
+        ref={listRef}
+        onScroll={() => onSroll()}
+      >
         <div className="setting-list">
           {
-            tickets.map((item: any, key) =>
+            tickets.map((item: any, key: number) =>
               <div key={key} className={`collection-item flex items-center h-16 bg${item.level}`}
                 onClick={() => openTicketInfer(item)}
               >
@@ -109,6 +136,10 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
                   <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>15:00 7/22 2022</div>
                 </div>
               </div> */}
+          {
+            noData && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+          }
+
         </div>
         {
           showResult && tickets.length <= 0 && <NoData />

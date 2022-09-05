@@ -161,6 +161,11 @@ body,
       padding: 1px;
     }
 
+    &.valid {
+      background-image: linear-gradient(268.46deg, #FF000F 1.15%, #E00D00 100.11%);
+
+    }
+
     &.left-position {
       top: 77px;
       left: 30px;
@@ -715,6 +720,35 @@ body,
 .home-page-content {
   height: 476px;
   overflow: auto;
+}
+
+.invalid-address {
+  line-height: 18px;
+  background: linear-gradient(268.46deg, #FF000F 1.15%, #E00D00 100.11%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  top: 134px;
+  width: 100%;
+}
+
+.connect-wallet {
+  background: linear-gradient(136.4deg, #BD47FF -45.67%, #FF844C 80.09%, #FF844B 118.78%);
+  border-radius: 4px;
+  height: 60px;
+  padding-left: 13px;
+  padding-right: 13px;
+  margin-top: 17px;
+
+  .walletimg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .right-text {
+    margin-left: 10px;
+  }
 }
 
 .recommend-page {
