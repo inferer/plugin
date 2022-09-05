@@ -23,7 +23,7 @@ const ticketsList = [
   { id: 10, level: 1 },
 ]
 
-const Collection: React.FC<any> = ({ appState, onChangeState }) => {
+const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
 
   const onItemClick = (type: string) => {
     if (type === 'language') {
@@ -142,7 +142,10 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
 
         </div>
         {
-          showResult && tickets.length <= 0 && <NoData />
+          showResult && tickets.length <= 0 && <NoData onClick={() => {
+            console.log(3333333)
+            toSearch()
+          }} />
         }
 
       </div>

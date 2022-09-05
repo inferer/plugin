@@ -45,7 +45,7 @@ const Popup: React.FC<{
           <Search onChangeState={onChangeState} />
         </div>
         <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          <Tickets appState={appState} onChangeState={onTicketChangeState} />
+          <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
         </div>
         <div className={`${appState === APP_STATE.RECOMMEND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Recommend

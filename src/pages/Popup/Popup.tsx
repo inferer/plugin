@@ -51,6 +51,9 @@ const Popup: React.FC<PopupProps> = (props) => {
   const [recommendData, setRecommendData] = useState<any>({})
   const [toTxInfo, setToTxInfo] = useState('')
   const [toTxInfer, setToTxInfer] = useState('')
+
+  console.log(appState, 1111111)
+
   const onChangeState = (appState: number, data: any) => {
 
     setTxinfoData(data)
