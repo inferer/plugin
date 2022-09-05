@@ -137,7 +137,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
                 </div>
               </div> */}
           {
-            noData && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+            noData && tickets.length > 0 && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
           }
 
         </div>
