@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
 import { transformTime } from "../../utils"
+import { levelInfo } from "../search";
 
 const { PopupAPI } = require('../../../../api')
 
@@ -89,7 +90,8 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
           const newList = (res.result || []).map((item: any) => {
             return {
               ...item,
-              date: transformTime(item.timestamp)
+              date: transformTime(item.timestamp),
+              level: levelInfo[item.ticket_level.toLowerCase()]
             }
           })
           if (newList.length < 10) {

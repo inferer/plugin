@@ -43,7 +43,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState }) => {
     PopupAPI.getTickets(pageNo)
       .then((res: any) => {
         if (res && res.status === 200) {
-          const result = res.result || []
+          const result = typeof res.result === 'string' ? [] : res.result
           const tmpList = result.map((item: any) => {
             const contentJson = JSON.parse(item.content)
             return {
