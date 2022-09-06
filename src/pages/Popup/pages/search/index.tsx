@@ -52,8 +52,8 @@ const Search: React.FC<{
     const [isLoading, setIsLoading] = useState(false)
     const [isValidAddress, setIsValidAddress] = useState(true)
     const onSearch = async () => {
-      if (!focus) {
-        setFocus(true)
+      if (!focus && address.length <= 0) {
+        // setFocus(true)
         return
       }
       if (showResult) {
@@ -88,8 +88,12 @@ const Search: React.FC<{
 
     useEffect(() => {
       if (address === '') {
+        setFocus(false)
         setIsValidAddress(true)
         return
+      }
+      if (address.length > 0) {
+        setFocus(true)
       }
       if (isAddress(address)) {
         setIsValidAddress(true)
@@ -113,7 +117,7 @@ const Search: React.FC<{
             onChange={(e) => {
               setAddress(e.target.value)
             }}
-            onFocus={() => setFocus(true)}
+          // onFocus={() => setFocus(true)}
           />
           <div className={`search-btn flex justify-center items-center hover:opacity-80  ${focus ? 'focus' : ''}`}
             onClick={() => {
@@ -122,10 +126,11 @@ const Search: React.FC<{
           >
             <img src={searchPng} className=" w-6 h-6" alt="" />
           </div>
+          {
+            !isValidAddress && <div className="text-sm font-medium absolute invalid-address">Invalid Address</div>
+          }
         </div>
-        {
-          !isValidAddress && <div className="text-sm font-medium absolute invalid-address">Invalid Address</div>
-        }
+
 
         <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`}>
           <Loading size={60} />

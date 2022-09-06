@@ -29,7 +29,7 @@ class Service extends EventEmitter {
         StorageService.setChromeUserInfo(userInfo.id, { ...userInfo, user_id: registerRet })
       }
     } else {
-      this.profileUserInfo.user_id = chromeUserInfo.user_id
+      this.profileUserInfo.user_id = chromeUserInfo.user_id || await StorageService.getUserId()
     }
     return true
   }
@@ -41,12 +41,15 @@ class Service extends EventEmitter {
     })
   }
   async setAddress(address) {
-    this.currentAddress = address.address
-    StorageService.setAddress(address.address)
+
     if (address.address && !this.profileUserInfo.user_id) {
-      const res = await this.bindWallet({ wallet_address: address.address, chrome_id: this.profileUserInfo.email })
+      const res = await this.bindWallet({ wallet_address: address.address })
       if (res.status === 200) {
         this.profileUserInfo.user_id = res.result.user_id
+        StorageService.setUserId(res.result.user_id)
+        this.currentAddress = address.address
+        StorageService.setAddress(address.address)
+        chrome.runtime.reload()
       }
     }
     this.emit('setAddress', address.address)
@@ -105,9 +108,16 @@ class Service extends EventEmitter {
   }
 
   async searchByAddress(address) {
-    // 0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8
     try {
       const res = await fetcher('/api/infer', { user_id: this.profileUserInfo.user_id, address })
+      if (res.status === 200) {
+        StorageService.setSearchResult({
+          chainid: 1,
+          content: JSON.stringify(res.result),
+          search_address: address,
+          timestamp: new Date().toString()
+        })
+      }
       return res
     } catch (e) {
       return false
@@ -118,6 +128,13 @@ class Service extends EventEmitter {
   async getTickets(page_index) {
     try {
       const res = await fetcher('/plugin/getTickets', { user_id: this.profileUserInfo.user_id, page_index, page_size: 10 })
+      if (typeof res.result === 'string') {
+        const searchResult = await StorageService.getStorage('searchResult')
+        return {
+          ...res,
+          result: searchResult || []
+        }
+      }
       return res
     } catch (e) {
       return false
@@ -189,7 +206,7 @@ class Service extends EventEmitter {
 
   async bindWallet(data = {}) {
     try {
-      const res = await poster('/plugin/bindWallet', { chrome_id: this.profileUserInfo.email, ...data })
+      const res = await poster('/plugin/bindWallet', { ...data })
       return res
     } catch (e) {
       return false

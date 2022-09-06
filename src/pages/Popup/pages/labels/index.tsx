@@ -23,7 +23,7 @@ const userKey = {
 }
 
 const Labels: React.FC<any> = ({ appState }) => {
-
+  console.log(1111111111)
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
   }
@@ -82,6 +82,13 @@ const Labels: React.FC<any> = ({ appState }) => {
     }
   }, [active, userData, matchAddress])
 
+  const onCollectSuccess = (idx: number) => {
+    const newData = [...userData[activeKey]];
+    (newData[idx] as any).is_collected = true
+    userData[activeKey] = newData
+    setShowData(newData as any)
+    setUserData(userData)
+  }
 
   return (
     <div className="page-root recommend-page">
@@ -180,7 +187,7 @@ const Labels: React.FC<any> = ({ appState }) => {
           </div>
         </div>
         <div className="list-wrap overflow-auto" style={{ height: 380 }} >
-          <Others showData={showData} activeKey={activeKey} />
+          <Others showData={showData} activeKey={activeKey} active={active} onCollectSuccess={onCollectSuccess} />
         </div>
       </div>
     </div>

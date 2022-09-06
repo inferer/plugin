@@ -3,7 +3,9 @@ const StorageService = {
   storageKeys: [
     'language',
     'searchnum',
-    'address'
+    'address',
+    'searchResult',
+    'user_id'
   ],
   storage: extensionizer.storage.local,
   async init() {
@@ -60,7 +62,24 @@ const StorageService = {
   },
   getChromeUserInfo(chrome_id) {
     return this.getStorage(chrome_id)
+  },
+  setSearchResult(data) {
+    if (this.searchResult) {
+      this.searchResult.push(data)
+    } else {
+      this.searchResult = []
+      this.searchResult.push(data)
+    }
+    this.save('searchResult')
+  },
+  setUserId(user_id) {
+    this.user_id = user_id
+    this.save('user_id')
+  },
+  getUserId() {
+    return this.getStorage('user_id')
   }
+
 }
 
 export default StorageService

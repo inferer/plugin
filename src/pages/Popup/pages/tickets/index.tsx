@@ -43,6 +43,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
     PopupAPI.getTickets(pageNo)
       .then((res: any) => {
         if (res && res.status === 200) {
+          console.log(res)
           const result = typeof res.result === 'string' ? [] : res.result
           const tmpList = result.map((item: any) => {
             const contentJson = JSON.parse(item.content)
@@ -143,7 +144,6 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
         </div>
         {
           showResult && tickets.length <= 0 && <NoData onClick={() => {
-            console.log(3333333)
             toSearch()
           }} />
         }

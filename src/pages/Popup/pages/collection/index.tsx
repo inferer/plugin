@@ -87,7 +87,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
     PopupAPI.getCollectTickets({ page_index: pageNo, page_size: 10 })
       .then((res: any) => {
         if (res.status === 200) {
-          const newList = (res.result || []).map((item: any) => {
+          const newList = (typeof res.result === 'string' ? [] : res.result).map((item: any) => {
             return {
               ...item,
               date: transformTime(item.timestamp),
@@ -110,7 +110,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
     PopupAPI.getCollectLabels({ page_index: pageNo, page_size: 10 })
       .then((res: any) => {
         if (res.status === 200) {
-          const newList = (res.result || []).map((item: any) => {
+          const newList = (typeof res.result === 'string' ? [] : res.result).map((item: any) => {
             return {
               ...item,
               date: transformTime(item.timestamp),
@@ -160,7 +160,6 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
       const scrollTop = listDom.scrollTop;
       const scrollHeight = listDom.scrollHeight;
       const clientHeight = listDom.clientHeight;
-      console.log(scrollHeight - clientHeight - scrollTop)
       if (scrollHeight - clientHeight - scrollTop <= 2 && !isLoading) {
         pageNoRef2.current++
         getCollectLabels(pageNoRef2.current)
