@@ -38,14 +38,25 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollec
     }
   })(active)
   const collectLabel = async (item: any, key: number) => {
-    const res = await PopupAPI.collectLabel({
-      collect_address: item.address,
-      timestamp: Date.now(),
-      label_info: activeKey,
-      chainid: 1
-    })
+    let res
+    if (item.is_collected) {
+      res = await PopupAPI.cancelCollectLabel({
+        collect_address: item.address,
+        timestamp: Date.now(),
+        label_info: activeKey,
+        chainid: 1
+      })
+    } else {
+      res = await PopupAPI.collectLabel({
+        collect_address: item.address,
+        timestamp: Date.now(),
+        label_info: activeKey,
+        chainid: 1
+      })
+    }
+
     if (res.status === 200) {
-      onCollectSuccess && onCollectSuccess(key)
+      onCollectSuccess && onCollectSuccess(key, item.is_collected)
       Toast.show('Success')
     } else {
       Toast.show('Error')
@@ -59,7 +70,16 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollec
           <div key={key} className="setting-item setting-item2 flex justify-between items-center w-1/2 relative"
           >
             <div className=" absolute top-0 right-0 h-full flex items-center shoucanglabels">
-              <img src={copyPng} alt="" style={{ width: 16, height: 16, marginLeft: 8 }} />
+
+              <img src={copyPng} alt="" style={{ width: 16, height: 16, marginLeft: 8 }}
+                onClick={() => {
+                  navigator.clipboard.writeText(item.address)
+                    .then(() => {
+                      Toast.show({ content: 'Copied', position: 'bottom' })
+                    })
+                }}
+              />
+
               <img src={item.is_collected ? copiedPng : favPng} alt="" style={{ width: 16, height: 16, marginLeft: 4, marginRight: 8 }}
                 onClick={() => collectLabel(item, key)}
               />

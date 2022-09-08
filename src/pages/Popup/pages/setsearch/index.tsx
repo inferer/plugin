@@ -12,6 +12,7 @@ export type SetSearchProps = {
 const SetSearch: React.FC<SetSearchProps> = ({
   searchNum
 }) => {
+  console.log(searchNum)
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.setsearch', defaultMessage: 'SEARCH' })
 

@@ -15,7 +15,7 @@ const { PopupAPI } = require('../../../../api')
 
 const TicketInfer: React.FC<{
   toTxInfer: string,
-  ticketInfo: { level: number },
+  ticketInfo: { level: any, ticket_level: any, address: any },
   searchList: any[],
   recommendData: any,
   onChangeState: (appState: number, data: any) => void
@@ -26,7 +26,7 @@ const TicketInfer: React.FC<{
   recommendData,
   onChangeState
 }) => {
-    const [newTicketInfo, setNewTicketInfo] = useState<any>({ level: 0, ticket_id: '' })
+    const [newTicketInfo, setNewTicketInfo] = useState<any>({ level: 0, ticket_id: '', ticket_level: '' })
     const [newSearchList, setNewSearchList] = useState<any>([])
     const [isLoading, setIsLoading] = useState(false)
     const [showResult, setShowResult] = useState(false)
@@ -41,20 +41,18 @@ const TicketInfer: React.FC<{
       fetch()
 
     }, [ticketInfo, searchList, recommendData])
-
     useEffect(() => {
       const fetch = async () => {
         if (recommendData.address) {
           setIsLoading(true)
           setShowResult(false)
           const searchRet = await PopupAPI.searchByAddress(recommendData.address)
-          console.log(searchRet)
           if (searchRet.status === 200 && searchRet.result) {
             const info = searchRet.result.info || {}
             const infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
             setNewSearchList(infoList)
             const level = (searchRet.result.level as string).toLocaleLowerCase()
-            setNewTicketInfo({ level: levelInfo[level], ticket_id: searchRet.result.ticket_id })
+            setNewTicketInfo({ level: levelInfo[level], ticket_level: searchRet.result.level, ticket_id: searchRet.result.ticket_id })
             setShowResult(true)
           } else {
             Toast.show(searchRet.message)
@@ -64,21 +62,22 @@ const TicketInfer: React.FC<{
       }
       fetch()
     }, [recommendData.address])
-
     const collectTicket = useCallback(async () => {
       const collectRes = await PopupAPI.collectTicket({
-        collect_address: recommendData.address,
+        collect_address: recommendData.address || newTicketInfo.address,
         chainid: 1,
-        ticket_id: newTicketInfo.ticket_id
+        ticket_id: newTicketInfo.ticket_id,
+        ticket_level: newTicketInfo.ticket_level
       })
       if (collectRes.status === 200) {
         Toast.show('Success')
       } else {
         Toast.show('Error')
       }
-    }, [recommendData.address])
+    }, [recommendData.address, newTicketInfo])
+
     return (
-      <div className='page-root search-page'>
+      <div className='page-root search-page inferer'>
         <PageHeader title={'INFERER'} onBack={() => PopupAPI.changeState(toTxInfer === 'collection' ? APP_STATE.COLLECTION : APP_STATE.TICKET)} />
         <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`} style={{ left: 160 }}>
           <Loading size={40} />

@@ -1,3 +1,4 @@
+import { Toast } from "antd-mobile";
 import React from "react";
 
 const item1Png = require('../../../../assets/img/item1.png')
@@ -6,7 +7,7 @@ const copyPng = require('../../../../assets/img/copy.png')
 const DataItem1: React.FC<{
   itemData: { key: string, data: string }
 }> = ({ itemData }) => {
-  const dataList = itemData.data.split(',').map(item => item.slice(0, 6) + '.....' + item.slice(-4))
+  const dataList = itemData.data.split(',').map(item => item)
   return (
     <div className="dataitem dataitem1 txinfoitem2 flex justify-between mt-3 cursor-pointer" style={{ height: 104 }}>
       <div className="itemleft flex items-center justify-center" style={{ flex: '0 0 64px', height: 104 }}>
@@ -17,8 +18,16 @@ const DataItem1: React.FC<{
         <div className="text-sm font-bold  mt-1 flex pl-3 flex-wrap justify-start datacontent" style={{ color: '#3F4664', height: 64 }}>
           {
             dataList.map(item => <div className="flex items-center flex-1 text-xs " style={{ flex: '0 0 110px', color: '#7F8792' }}>
-              {item}
-              <img src={copyPng} style={{ width: 12, height: 12 }} alt="" />
+              {item.slice(0, 6) + '.....' + item.slice(-4)}
+              <img src={copyPng} style={{ width: 12, height: 12 }} alt=""
+                onClick={(e) => {
+                  e.stopPropagation()
+                  navigator.clipboard.writeText(item)
+                    .then(() => {
+                      Toast.show({ content: 'Copied', position: 'bottom' })
+                    })
+                }}
+              />
             </div>)
           }
         </div>

@@ -115,6 +115,10 @@ body,
   background-size: 100% 100%;
   background-position: 0 0;
 
+  &.inferer {
+    background-image: none;
+  }
+
   .img-logo {
     position: absolute;
     width: 62px;
@@ -154,7 +158,7 @@ body,
     transition: all .3s ease-out;
     background: #F8F9FF;
     border-radius: 4px;
-    padding: 0;
+    padding: 1px;
 
     &.bg-image {
       background-image: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
@@ -257,17 +261,17 @@ body,
   height: 49px;
   background: #F8F9FF;
   width: 100%;
-  padding-left: 8px;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  padding-left: 16px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
 }
 
 .search-btn {
-  width: 51px;
-  height: 51px;
+  width: 49px;
+  height: 49px;
   background: linear-gradient(133.61deg, #3555FF 44.55%, #A157FF 244.59%);
-  border-radius: 0px 4px 4px 0px;
-  flex: 0 0 51px;
+  border-radius: 0px 7px 7px 0px;
+  flex: 0 0 49px;
 
   &.focus {
     width: 49px;
@@ -364,7 +368,7 @@ body,
 }
 
 .page-title {
-  font-family: Poppins;
+  // font-family: Poppins;
   // font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -432,13 +436,29 @@ body,
   .icon-box {
     width: 36px;
     height: 36px;
-    // background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
     border-radius: 8px;
-
 
     img {
       width: 20px;
       height: 20px;
+    }
+  }
+
+  &.likes {
+    .icon-box {
+      background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
+    }
+  }
+
+  &.risks {
+    .icon-box {
+      background: linear-gradient(283.81deg, rgba(249, 74, 74, 0.1) 11.05%, rgba(255, 214, 66, 0.1) 208.23%), #FFFFFF;
+    }
+  }
+
+  &.others {
+    .icon-box {
+      background: linear-gradient(270deg, rgba(22, 197, 255, 0.1) -75.6%, rgba(56, 33, 255, 0.1) 131.2%), #FFFFFF;
     }
   }
 }
@@ -739,7 +759,7 @@ body,
   height: 60px;
   padding-left: 13px;
   padding-right: 13px;
-  margin-top: 17px;
+  margin-top: 12px;
 
   .walletimg {
     width: 36px;

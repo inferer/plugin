@@ -47,12 +47,10 @@ const Popup: React.FC<PopupProps> = (props) => {
   const { appState, language, searchNum, pageStack, address } = props
   const [pagesStack, setPageStack] = useState([])
   const [txinfoData, setTxinfoData] = useState<any>({ key: '', data: {} })
-  const [ticketInfo, setTicketInfo] = useState<any>({ level: 1, searchList: [] })
+  const [ticketInfo, setTicketInfo] = useState<any>({ level: 1, searchList: [], ticket_level: '' })
   const [recommendData, setRecommendData] = useState<any>({})
   const [toTxInfo, setToTxInfo] = useState('')
   const [toTxInfer, setToTxInfer] = useState('')
-
-  console.log(appState, 1111111)
 
   const onChangeState = (appState: number, data: any) => {
 
@@ -73,15 +71,16 @@ const Popup: React.FC<PopupProps> = (props) => {
       const info = searchRet.result.info || {}
       infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
     }
+    console.log(searchRet, 444444)
 
-    setTicketInfo({ level: searchRet.level, searchList: infoList })
+    setTicketInfo({ level: searchRet.level, searchList: infoList, ticket_level: searchRet.result.level, search_address: searchRet.search_address })
     setRecommendData({})
     setToTxInfo('')
     setToTxInfer('')
     PopupAPI.changeState(appState)
   }
   const onClickRecommend = (data: any) => {
-    setTicketInfo({ level: 0, searchList: [] })
+    setTicketInfo({ level: 0, searchList: [], ticket_level: '' })
     setRecommendData(data)
     setToTxInfo('')
     setToTxInfer('')
@@ -114,7 +113,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
         >
-          <FeedBack searchNum={searchNum} />
+          <FeedBack searchNum={searchNum} address={address} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.COLLECTION || pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Collection appState={appState} searchNum={searchNum}
@@ -134,7 +133,9 @@ const Popup: React.FC<PopupProps> = (props) => {
             onChangeState={onChangeState2}
             recommendData={recommendData}
             ticketInfo={{
-              level: ticketInfo.level
+              level: ticketInfo.level,
+              ticket_level: ticketInfo.ticket_level,
+              address: ticketInfo.search_address
             }}
             searchList={ticketInfo.searchList ?? []} />
         </div>

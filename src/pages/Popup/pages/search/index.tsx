@@ -48,12 +48,19 @@ const Search: React.FC<{
     const [showResult, setShowResult] = useState(false)
     const [address, setAddress] = useState('')
     const [searchList, setSearchList] = useState<{ key: string, data: any }[]>([])
-    const [ticketInfo, setTicketInfo] = useState({ level: 0, ticket_id: 0 })
+    const [ticketInfo, setTicketInfo] = useState({ level: 0, ticket_id: 0, ticket_level: '' })
     const [isLoading, setIsLoading] = useState(false)
     const [isValidAddress, setIsValidAddress] = useState(true)
     const onSearch = async () => {
       if (!focus && address.length <= 0) {
-        // setFocus(true)
+        setFocus(true)
+        return
+      }
+      if (isAddress(address)) {
+        setIsValidAddress(true)
+      } else {
+        setIsValidAddress(false)
+        setShowResult(false)
         return
       }
       if (showResult) {
@@ -66,7 +73,7 @@ const Search: React.FC<{
         const infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
         setSearchList(infoList)
         const level = (searchRet.result.level as string).toLocaleLowerCase()
-        setTicketInfo({ level: levelInfo[level], ticket_id: searchRet.result.ticket_id })
+        setTicketInfo({ level: levelInfo[level], ticket_level: searchRet.result.level, ticket_id: searchRet.result.ticket_id })
       }
       setShowResult(true)
       setIsLoading(false)
@@ -77,47 +84,48 @@ const Search: React.FC<{
       const collectRes = await PopupAPI.collectTicket({
         collect_address: address,
         chainid: 1,
-        ticket_id: ticketInfo.ticket_id
+        ticket_id: ticketInfo.ticket_id,
+        ticket_level: ticketInfo.ticket_level
       })
+      console.log(collectRes)
       if (collectRes.status === 200) {
         Toast.show('Success')
       } else {
         Toast.show('Error')
       }
     }, [address, ticketInfo])
+    const checkoutAddress = useCallback(() => {
 
+    }, [address])
     useEffect(() => {
       if (address === '') {
-        setFocus(false)
         setIsValidAddress(true)
+        setShowResult(false)
         return
       }
       if (address.length > 0) {
         setFocus(true)
       }
-      if (isAddress(address)) {
-        setIsValidAddress(true)
-      } else {
-        setIsValidAddress(false)
-      }
+
     }, [address])
 
     return (
       <div className="page-root search-page">
         {
-          !focus && <SelectChain />
+          address.length === 0 && <SelectChain />
         }
 
-        <img src={logoPng} className={`img-logo ${focus ? 'left-position' : ''}`} alt="" />
-        <img src={logoTPng} className={`img-logo2 ${focus ? 'left-position' : ''}`} alt="" />
+        <img src={logoPng} className={`img-logo ${focus && address.length > 0 ? 'left-position' : ''}`} alt="" />
+        <img src={logoTPng} className={`img-logo2 ${focus && address.length > 0 ? 'left-position' : ''}`} alt="" />
 
-        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''}`}>
+        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image' : ''}  ${focus && address.length > 0 ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''}`} style={{ borderRadius: 8 }}>
           <input type="text" className={`outline-none search-input `} placeholder={holder}
             value={address}
             onChange={(e) => {
               setAddress(e.target.value)
             }}
-          // onFocus={() => setFocus(true)}
+            onFocus={() => setFocus(true)}
+            onBlur={() => (address.length === 0 && setFocus(false))}
           />
           <div className={`search-btn flex justify-center items-center hover:opacity-80  ${focus ? 'focus' : ''}`}
             onClick={() => {

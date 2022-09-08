@@ -7,7 +7,7 @@ const Likes: React.FC<any> = ({ data, onClick }) => {
     <div className="setting-list">
       {
         data.map((item: any, key: number) => (
-          <div key={key} className="setting-item flex justify-between items-center"
+          <div key={key} className="setting-item flex justify-between items-center likes"
             onClick={() => {
               onClick && onClick(item)
             }}

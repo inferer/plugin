@@ -60,7 +60,6 @@ const backgroundScript = {
     duplex.on('refresh', ({ resolve }) => {
       // console.log(e)
       // Service.initData()
-      console.log(11111)
       resolve()
     });
     duplex.on('initData', async ({ resolve }) => {
@@ -113,6 +112,10 @@ const backgroundScript = {
     })
     duplex.on('collectLabel', async (e) => {
       const data = await this.service.collectLabel(e.data)
+      e.resolve(data)
+    })
+    duplex.on('cancelCollectLabel', async (e) => {
+      const data = await this.service.cancelCollectLabel(e.data)
       e.resolve(data)
     })
     duplex.on('collectTicket', async (e) => {
@@ -178,8 +181,7 @@ const backgroundScript = {
           })
           break
         case 'setMatchAddress':
-          console.log(request)
-          const newAddress = data.addressList.slice(0, 12)
+          const newAddress = data.addressList ? data.addressList.slice(0, 12) : []
           // console.log(StorageService.getStorage('searchnum'))
           Service.setMatchAddress(newAddress)
           resolve({

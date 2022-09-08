@@ -1,7 +1,9 @@
+
 import jQuery from '../../assets/js/jquery-3.6.0.min.js';
 import EventChannel from '../../MessageDuplex/EventChannel'
 
 import RequestHandler from '../../MessageDuplex/RequestHandler';
+
 
 export const matchAddress = (injectPlugin) => {
   document.addEventListener('selectionchange', function (e) {
@@ -11,7 +13,7 @@ export const matchAddress = (injectPlugin) => {
     }
   })
   setTimeout(() => {
-    const bodyStr = $('body').text()
+    const bodyStr = jQuery('body').text()
     const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
     injectPlugin.setMatchAddress(addressList)
   }, 5000)

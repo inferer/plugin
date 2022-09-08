@@ -54,6 +54,9 @@ export default {
   collectLabel(data) {
     return this.duplex.send('collectLabel', data)
   },
+  cancelCollectLabel(data) {
+    return this.duplex.send('cancelCollectLabel', data)
+  },
   collectTicket(data) {
     return this.duplex.send('collectTicket', data)
   },

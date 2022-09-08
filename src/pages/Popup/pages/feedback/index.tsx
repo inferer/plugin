@@ -9,10 +9,12 @@ const successPng = require('../setting/images/success.png')
 
 export type FeedBackProps = {
   searchNum: number,
+  address: string
 }
 
 const FeedBack: React.FC<FeedBackProps> = ({
-  searchNum
+  searchNum,
+  address
 }) => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.feedback', defaultMessage: 'FEEDBACK' })
@@ -30,8 +32,12 @@ const FeedBack: React.FC<FeedBackProps> = ({
   }
 
   const handleFeedBack = async () => {
+    if (!address) {
+      Toast.show('Please connect wallet')
+      return
+    }
     const res = await PopupAPI.feedBack({
-      address: '0xAe8F020eC7154E6155a2D17144CE89c054e5dBb8',
+      address: address,
       content: text,
       chainid: 1
     })
@@ -51,7 +57,9 @@ const FeedBack: React.FC<FeedBackProps> = ({
           <div>
             <div className="flex items-center">
               <img src={userPng} alt="" style={{ width: 28, height: 28 }} />
-              <div className="text-md font-bold ml-2" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>0x8eb8.....3f23</div>
+              <div className="text-md font-bold ml-2" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>
+                {address && address.slice(0, 6) + '.....' + address.slice(-4)}
+              </div>
             </div>
             <div className={`mt-4 border rounded ${focus ? 'bg-image' : ''}`} style={{ padding: 1 }}>
               <div className="bg-white" style={{ borderRadius: 2 }}>

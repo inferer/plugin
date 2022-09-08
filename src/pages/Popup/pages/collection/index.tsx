@@ -4,6 +4,7 @@ import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
 import { transformTime } from "../../utils"
 import { levelInfo } from "../search";
+import { Toast } from "antd-mobile";
 
 const { PopupAPI } = require('../../../../api')
 
@@ -91,7 +92,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
             return {
               ...item,
               date: transformTime(item.timestamp),
-              level: levelInfo[item.ticket_level.toLowerCase()]
+              level: item.ticket_level ? levelInfo[item.ticket_level.toLowerCase()] : 1
             }
           })
           if (newList.length < 10) {
@@ -132,12 +133,21 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   useEffect(() => {
     if (appState === APP_STATE.COLLECTION) {
       if (active === 1) {
+        setLabels([])
         getCollectTickets(0)
       } else {
+        setTickets([])
         getCollectLabels(0)
       }
+    } {
+      setIsLoading(false)
+      setNodata(false)
+      setNodata2(false)
+      setLabels([])
+      setTickets([])
     }
   }, [active, appState])
+
   const listRef = useRef<HTMLDivElement | null>(null)
   const pageNoRef = useRef<number>(0)
   const onTicketsSroll = async () => {
@@ -212,7 +222,15 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
                       {item.collect_address.slice(0, 6) + '.....' + item.collect_address.slice(-6)}
-                      <img src={copyImg} alt="" className="w-4 h-4 ml-1" />
+                      <img src={copyImg} alt="" className="w-4 h-4 ml-1"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          navigator.clipboard.writeText(item.collect_address)
+                            .then(() => {
+                              Toast.show({ content: 'Copied', position: 'bottom' })
+                            })
+                        }}
+                      />
                     </div>
                     <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on {item.date}</div>
                   </div>
@@ -243,7 +261,15 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
                       {item.collect_address.slice(0, 6) + '.....' + item.collect_address.slice(-6)}
-                      <img src={copyImg} alt="" className="w-4 h-4 ml-1" />
+                      <img src={copyImg} alt="" className="w-4 h-4 ml-1"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          navigator.clipboard.writeText(item.collect_address)
+                            .then(() => {
+                              Toast.show({ content: 'Copied', position: 'bottom' })
+                            })
+                        }}
+                      />
                     </div>
                     <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on {item.date}</div>
                   </div>

@@ -9,6 +9,7 @@ class Service extends EventEmitter {
     super()
     this.state = APP_STATE.SEARCH
     this.profileUserInfo = { email: '', user_id: '', chrome_id: '' }
+    this.chainid = 1
     this.matchAddress = []
   }
   async initData() {
@@ -60,7 +61,7 @@ class Service extends EventEmitter {
     this.emit('newState', appState)
   }
   getLanguage() {
-    return StorageService.language
+    return StorageService.language || 'en'
   }
   getAddress() {
     return StorageService.address
@@ -152,7 +153,7 @@ class Service extends EventEmitter {
 
   async getLabels(local_address_info) {
     try {
-      const res = await poster('/plugin/getLabels', { user_id: this.profileUserInfo.user_id, local_address_info: this.matchAddress.join(',') })
+      const res = await poster('/plugin/getLabels', { user_id: this.profileUserInfo.user_id || 'unknown', local_address_info: this.matchAddress.join(',') })
       return { ...res, matchAddress: this.matchAddress }
     } catch (e) {
       return false
@@ -161,16 +162,53 @@ class Service extends EventEmitter {
 
   async collectLabel(data = {}) {
     try {
-      const res = await poster('/plugin/collectLabel', { user_id: this.profileUserInfo.user_id, ...data })
+      let res = { status: 200 }
+      if (this.profileUserInfo.user_id) {
+        res = await poster('/plugin/collectLabel', { chainid: this.chainid, user_id: this.profileUserInfo.user_id, ...data })
+      } else {
+        await StorageService.setCollectLabels({
+          chainid: this.chainid,
+          label: data.label_info,
+          collect_address: data.collect_address,
+          timestamp: new Date().toString()
+        })
+      }
       return res
     } catch (e) {
       return false
     }
   }
+  async cancelCollectLabel(data = {}) {
+    try {
+      const res = await poster('/plugin/cancelCollectLabel', { chainid: this.chainid, user_id: this.profileUserInfo.user_id, ...data })
+      const collectLabels = await StorageService.getStorage('collectLabels')
+      if (collectLabels && collectLabels.length > 0) {
+        const filterList = collectLabels.filter(item => item.collect_address !== data.collect_address)
+        StorageService.storage.clear('collectLabels')
+        filterList.forEach(async (item) => {
+          await StorageService.setCollectLabels(item)
+        })
+      }
+
+      return res
+    } catch (e) {
+    }
+  }
 
   async collectTicket(data = {}) {
     try {
-      const res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data })
+      let res = { status: 200 }
+      if (this.profileUserInfo.user_id) {
+        res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data })
+      } else {
+        await StorageService.setCollectTicket({
+          chainid: this.chainid,
+          ticket_id: '',
+          ticket_level: data.ticket_level,
+          collect_address: data.collect_address,
+          timestamp: new Date().toString()
+        })
+      }
       return res
     } catch (e) {
       return false
@@ -180,7 +218,15 @@ class Service extends EventEmitter {
   async getCollectTickets(data = {}) {
     try {
       const res = await fetcher('/plugin/getCollectTickets', { user_id: this.profileUserInfo.user_id, page_size: 20, ...data })
-      return res
+      if (typeof res.result === 'string') {
+        const collectTickets = await StorageService.getStorage('collectTicket')
+        return {
+          ...res,
+          result: collectTickets || []
+        }
+      } else {
+        return res
+      }
     } catch (e) {
       return false
     }
@@ -189,7 +235,15 @@ class Service extends EventEmitter {
   async getCollectLabels(data = {}) {
     try {
       const res = await fetcher('/plugin/getCollectLabels', { user_id: this.profileUserInfo.user_id, page_size: 20, ...data })
-      return res
+      if (typeof res.result === 'string') {
+        const collectLabels = await StorageService.getStorage('collectLabels')
+        return {
+          ...res,
+          result: collectLabels || []
+        }
+      } else {
+        return res
+      }
     } catch (e) {
       return false
     }
@@ -206,7 +260,7 @@ class Service extends EventEmitter {
 
   async bindWallet(data = {}) {
     try {
-      const res = await poster('/plugin/bindWallet', { ...data })
+      const res = await poster('/plugin/bindWallet', { user_id: this.profileUserInfo.email, ...data })
       return res
     } catch (e) {
       return false

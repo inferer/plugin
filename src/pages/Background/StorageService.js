@@ -5,7 +5,8 @@ const StorageService = {
     'searchnum',
     'address',
     'searchResult',
-    'user_id'
+    'user_id',
+    'collectTicket'
   ],
   storage: extensionizer.storage.local,
   async init() {
@@ -19,8 +20,10 @@ const StorageService = {
 
         this[key] = encrypted;
       }
-      this['searchnum'] = 12
+      this['searchnum'] = 20
+      this.language = 'en'
       this.save('searchnum')
+      this.save('language')
     } catch (ex) {
       return 'ERRORS.INVALID_PASSWORD';
     }
@@ -78,6 +81,24 @@ const StorageService = {
   },
   getUserId() {
     return this.getStorage('user_id')
+  },
+  setCollectTicket(data) {
+    if (this.collectTicket) {
+      this.collectTicket.push(data)
+    } else {
+      this.collectTicket = []
+      this.collectTicket.push(data)
+    }
+    this.save('collectTicket')
+  },
+  setCollectLabels(data) {
+    if (this.collectLabels) {
+      this.collectLabels.push(data)
+    } else {
+      this.collectLabels = []
+      this.collectLabels.push(data)
+    }
+    this.save('collectLabels')
   }
 
 }

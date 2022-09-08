@@ -23,7 +23,6 @@ const userKey = {
 }
 
 const Labels: React.FC<any> = ({ appState }) => {
-  console.log(1111111111)
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
   }
@@ -82,9 +81,9 @@ const Labels: React.FC<any> = ({ appState }) => {
     }
   }, [active, userData, matchAddress])
 
-  const onCollectSuccess = (idx: number) => {
+  const onCollectSuccess = (idx: number, is_collected: boolean) => {
     const newData = [...userData[activeKey]];
-    (newData[idx] as any).is_collected = true
+    (newData[idx] as any).is_collected = !is_collected
     userData[activeKey] = newData
     setShowData(newData as any)
     setUserData(userData)

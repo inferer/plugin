@@ -1,7 +1,10 @@
-import React from "react";
+import { Toast } from "antd-mobile";
+import React, { useEffect } from "react";
 import { useIntl } from 'react-intl'
-import { APP_STATE } from "../../config/constants";
+import { APP_STATE } from "../../config/constants"
 import PageHeader from '../components/PageHeader'
+
+
 const { PopupAPI } = require('../../../../api')
 const leftPng = require('../setting/images/left.png')
 const metamaskPng = require('../setting/images/metamask.png')
@@ -9,7 +12,7 @@ const wccPng = require('../setting/images/wcc.png')
 const copyPng = require('../setting/images/copy.png')
 const dicPng = require('../setting/images/dic.png')
 
-
+// 92041db07d8142bdbc0717a0e0e34ed9
 export type WalletProps = {
   searchNum: number,
   address: string
@@ -25,9 +28,16 @@ const Wallet: React.FC<WalletProps> = ({
   const changeNum = (num: number) => {
     PopupAPI.setSearchNum(num)
   }
-  const connectWallet = (type: string) => {
-    PopupAPI.connectWallet(type)
+  const connectWallet = async (type: string) => {
+    if (type === 'walletconnect') {
+    } else {
+      PopupAPI.connectWallet(type)
+    }
   }
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <div className="w-360 page-root page-language">
@@ -60,7 +70,15 @@ const Wallet: React.FC<WalletProps> = ({
               <div className=" text-base text-white font-bold">Wallet</div>
               <div className="flex items-center">
                 <div className="text-white font-bold text-xs opacity-80 mr-1">{address.slice(0, 6) + '.....' + address.slice(-6)}</div>
-                <img src={copyPng} alt="" style={{ width: 16, height: 16 }} />
+                <img src={copyPng} alt="" style={{ width: 16, height: 16 }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigator.clipboard.writeText(address)
+                      .then(() => {
+                        Toast.show({ content: 'Copied', position: 'bottom' })
+                      })
+                  }}
+                />
               </div>
               <div className="flex mt-10 justify-end">
                 <div

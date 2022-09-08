@@ -7,7 +7,7 @@ const Others: React.FC<any> = ({ data, onClick }) => {
     <div className="setting-list flex flex-wrap justify-between">
       {
         data.map((item: any, key: number) => (
-          <div key={key} className="setting-item setting-item2 flex justify-between items-center w-1/2"
+          <div key={key} className="setting-item setting-item2 flex justify-between items-center w-1/2 others"
             onClick={() => {
               onClick && onClick(item)
             }}

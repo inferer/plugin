@@ -28,7 +28,7 @@ const TxInfo: React.FC<TxInfoProps> = ({
       <div className="page-content">
         <div className="setting-list">
           {
-            txinfoList.map(item => item.key.indexOf('Interacted Address') > -1 ? <DataItem2 key={item.key} itemData={item} /> : <DataItem1 key={item.key} itemData={item} />)
+            txinfoList.map((item: any, key: number) => item.key.indexOf('Interacted Address') > -1 ? <DataItem2 key={key} itemData={item} /> : <DataItem1 key={key} itemData={item} />)
           }
           {/* <DataItem1 key={} txinfoList={txinfoList} />
           <DataItem1 />
