@@ -262,15 +262,15 @@ body,
   background: #F8F9FF;
   width: 100%;
   padding-left: 16px;
-  border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 .search-btn {
   width: 49px;
   height: 49px;
   background: linear-gradient(133.61deg, #3555FF 44.55%, #A157FF 244.59%);
-  border-radius: 0px 7px 7px 0px;
+  border-radius: 0px 3px 3px 0px;
   flex: 0 0 49px;
 
   &.focus {

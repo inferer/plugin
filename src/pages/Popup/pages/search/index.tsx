@@ -118,7 +118,7 @@ const Search: React.FC<{
         <img src={logoPng} className={`img-logo ${focus && address.length > 0 ? 'left-position' : ''}`} alt="" />
         <img src={logoTPng} className={`img-logo2 ${focus && address.length > 0 ? 'left-position' : ''}`} alt="" />
 
-        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image' : ''}  ${focus && address.length > 0 ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''}`} style={{ borderRadius: 8 }}>
+        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image' : ''}  ${focus && address.length > 0 ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''}`} >
           <input type="text" className={`outline-none search-input `} placeholder={holder}
             value={address}
             onChange={(e) => {
