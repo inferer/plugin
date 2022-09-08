@@ -19,7 +19,7 @@ const DataItem1: React.FC<{
           {
             dataList.map(item => <div className="flex items-center flex-1 text-xs " style={{ flex: '0 0 110px', color: '#7F8792' }}>
               {item.slice(0, 6) + '.....' + item.slice(-4)}
-              <img src={copyPng} style={{ width: 12, height: 12 }} alt=""
+              <img src={copyPng} style={{ width: 12, height: 12, marginLeft: 4 }} alt=""
                 onClick={(e) => {
                   e.stopPropagation()
                   navigator.clipboard.writeText(item)
