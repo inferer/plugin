@@ -19,7 +19,7 @@ const Risks: React.FC<any> = ({ data, onClick }) => {
               </div>
               <div className="">
                 <div className="item-text1 text-sm font-bold">{item.address.slice(0, 6) + '.....' + item.address.slice(-4)}</div>
-                <div className="item-text2 text-xs">{item.risk_info}</div>
+                <div className="item-text2 text-xs">{item.reason}</div>
               </div>
             </div>
             <img src={leftPng} style={{ width: 6, height: 8 }} alt="" />
