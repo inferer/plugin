@@ -13,8 +13,9 @@ const Likes: React.FC<any> = ({ data, onClick }) => {
             }}
           >
             <div className="flex items-center ">
-              <div className="flex icon-box justify-center items-center mr-3">
+              <div className="flex icon-box justify-center items-center mr-5 relative">
                 <img src={iconPng} alt="" />
+                <div className="icon-box-line"></div>
               </div>
               <div className="">
                 <div className="item-text1 text-sm font-bold">{item.address.slice(0, 6) + '.....' + item.address.slice(-4)}</div>
