@@ -7,8 +7,14 @@ export function fetcher(url, data) {
     Object.keys(data).forEach(key => paramsArr.push(key + '=' + data[key]))
     fetchUrl += '?' + paramsArr.join('&')
   }
-  return fetch(fetchUrl)
-    .then(res => res && res.json())
+  return Promise.race([
+    fetch(fetchUrl),
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('request timeout'))
+      }, 10000)
+    })
+  ]).then(res => res && res.json())
 }
 
 export function poster(url, data, options = {}) {

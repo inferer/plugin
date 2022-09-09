@@ -13,7 +13,7 @@ const copyPng = require('./images/copy.png')
 const copiedPng = require('./images/copied.png')
 const favPng = require('./images/fav.png')
 
-const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollectSuccess }) => {
+const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollectSuccess, onClick }) => {
 
   const getIconPng = ((active: number) => {
     switch (active) {
@@ -68,6 +68,9 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollec
       {
         showData.map((item: any, key: number) => (
           <div key={key} className="setting-item setting-item2 flex justify-between items-center w-1/2 relative"
+            onClick={(e: any) => {
+              onClick && onClick(item)
+            }}
           >
             <div className=" absolute top-0 right-0 h-full flex items-center shoucanglabels">
 

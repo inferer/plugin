@@ -20,6 +20,8 @@ const ticket_scorePng = require('../../../../assets/img/ticket_score.png')
 const ttipPng = require('../../../../assets/img/ttip.png')
 const star1Png = require('../../../../assets/img/star1.png')
 const star2Png = require('../../../../assets/img/star2.png')
+const loading2Png = require('../../../../assets/img/loading2.gif')
+const nodataPng = require('../../../../assets/img/nodata.png')
 
 const isAddress = (address: string) => {
   try {
@@ -51,6 +53,7 @@ const Search: React.FC<{
     const [ticketInfo, setTicketInfo] = useState({ level: 0, ticket_id: 0, ticket_level: '' })
     const [isLoading, setIsLoading] = useState(false)
     const [isValidAddress, setIsValidAddress] = useState(true)
+    const [noData, setNodata] = useState(false)
     const onSearch = async () => {
       if (!focus && address.length <= 0) {
         setFocus(true)
@@ -60,10 +63,12 @@ const Search: React.FC<{
         setIsValidAddress(true)
       } else {
         setIsValidAddress(false)
+        setNodata(false)
         setShowResult(false)
         return
       }
       if (showResult) {
+        setNodata(false)
         setShowResult(false)
       }
       setIsLoading(true)
@@ -75,6 +80,7 @@ const Search: React.FC<{
         const level = (searchRet.result.level as string).toLocaleLowerCase()
         setTicketInfo({ level: levelInfo[level], ticket_level: searchRet.result.level, ticket_id: searchRet.result.ticket_id })
       }
+      setNodata(true)
       setShowResult(true)
       setIsLoading(false)
 
@@ -100,6 +106,7 @@ const Search: React.FC<{
     useEffect(() => {
       if (address === '') {
         setIsValidAddress(true)
+        setNodata(false)
         setShowResult(false)
         return
       }
@@ -140,58 +147,34 @@ const Search: React.FC<{
         </div>
 
 
-        <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`}>
-          <Loading size={60} />
+        <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`} style={{ left: 20, top: 212 }}>
+          {/* <Loading size={60} /> */}
+          <img src={loading2Png} alt="" style={{ width: 320, height: 182 }} />
         </div>
         <div className={`search-result overflow-auto pb-4 ${showResult ? 'show' : ''}`} style={{ height: 402 }}>
-          {/* <div className="ticket-score flex flex-col justify-center">
-            <div className="flex items-center justify-center">
-              <img src={ticket_scorePng} alt="" style={{ width: 20, height: 20 }} />
-              <div className="text-base text-white font-bold ml-2">Evaluation Ticket</div>
-            </div>
-            <div className="flex items-center justify-center mt-2">
-              <div className="flex items-center">
-                <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
-                  className={` ${ticketInfo.level < 1 ? 'opacity-30' : ''} `} />
-                <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
-                  className={` ${ticketInfo.level < 2 ? 'opacity-30' : ''} `}
-                />
-                <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
-                  className={` ${ticketInfo.level < 3 ? 'opacity-30' : ''} `}
-                />
-                <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
-                  className={` ${ticketInfo.level < 4 ? 'opacity-30' : ''} `}
-                />
-                <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
-                  className={` ${ticketInfo.level < 5 ? 'opacity-30' : ''} `}
-                />
+          {
+            noData ?
+              <>
+                <TicketScore ticketInfo={ticketInfo} collectTicket={collectTicket} />
+                <UpdateInfo />
+                <div className="result-list mt-4">
+                  {
+                    searchList.map(item => {
+                      if (typeof item.data === 'string') {
+                        return <DataItem1 key={item.key} itemData={item} />
+                      }
+                      return <DataItem2 key={item.key} itemData={item} onChangeState={onChangeState} />
+                    })
+                  }
+                </div>
+                <FeedBackUS />
+              </> :
+              <div className=" flex flex-col justify-center" style={{ marginLeft: 70, marginTop: 70 }}>
+                <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />
+                <div className=" text-center font-bold" style={{ color: 'rgba(63, 70, 100, 0.5)', marginTop: 20 }}>No result</div>
               </div>
-              <div className="text-base text-white font-bold mx-2" style={{ fontSize: 20 }}>{Number(ticketInfo.level).toFixed(1)}</div>
-              <img onClick={() => collectTicket()} src={ttipPng} alt="" style={{ width: 20, height: 20 }} />
-            </div>
-          </div> */}
-          <TicketScore ticketInfo={ticketInfo} collectTicket={collectTicket} />
-          {/* <div className="flex items-baseline mt-4">
-            <div className="text-base font-bold color-image">Key Info</div>
-            <div className="text-xs ml-1" style={{ color: 'rgba(127, 135, 146, 0.7)' }}>update: {transformTime(Date.now())}</div>
-          </div> */}
-          <UpdateInfo />
-          <div className="result-list mt-4">
-            {
-              searchList.map(item => {
-                if (typeof item.data === 'string') {
-                  return <DataItem1 key={item.key} itemData={item} />
-                }
-                return <DataItem2 key={item.key} itemData={item} onChangeState={onChangeState} />
-              })
-            }
-          </div>
-          {/* <div
-            onClick={() => PopupAPI.changeState(APP_STATE.FEEDBACK)}
-            className="text-xs mt-3 flex justify-end cursor-pointer" style={{ color: 'rgba(63, 70, 100, 0.3)' }}>
-            Incorrect? Feedback us
-          </div> */}
-          <FeedBackUS />
+          }
+
         </div>
       </div>
     )

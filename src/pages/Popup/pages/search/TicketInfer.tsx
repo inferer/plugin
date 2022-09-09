@@ -11,6 +11,8 @@ import TicketScore from './TicketScore'
 import UpdateInfo from './UpdateInfo'
 
 const logoTPng = require('../../../../assets/img/inferer.png')
+const loading2Png = require('../../../../assets/img/loading2.gif')
+const nodataPng = require('../../../../assets/img/nodata.png')
 const { PopupAPI } = require('../../../../api')
 
 const TicketInfer: React.FC<{
@@ -30,6 +32,7 @@ const TicketInfer: React.FC<{
     const [newSearchList, setNewSearchList] = useState<any>([])
     const [isLoading, setIsLoading] = useState(false)
     const [showResult, setShowResult] = useState(false)
+    const [noData, setNodata] = useState(false)
     useEffect(() => {
       const fetch = async () => {
         if (!recommendData.address) {
@@ -46,7 +49,9 @@ const TicketInfer: React.FC<{
         if (recommendData.address) {
           setIsLoading(true)
           setShowResult(false)
+          setNodata(false)
           const searchRet = await PopupAPI.searchByAddress(recommendData.address)
+          console.log(searchRet)
           if (searchRet.status === 200 && searchRet.result) {
             const info = searchRet.result.info || {}
             const infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
@@ -54,8 +59,11 @@ const TicketInfer: React.FC<{
             const level = (searchRet.result.level as string).toLocaleLowerCase()
             setNewTicketInfo({ level: levelInfo[level], ticket_level: searchRet.result.level, ticket_id: searchRet.result.ticket_id })
             setShowResult(true)
+            setNodata(false)
           } else {
-            Toast.show(searchRet.message)
+            // Toast.show(searchRet.message)
+            setNodata(true)
+            setShowResult(true)
           }
           setIsLoading(false)
         }
@@ -79,26 +87,30 @@ const TicketInfer: React.FC<{
     return (
       <div className='page-root search-page inferer'>
         <PageHeader title={'INFERER'} onBack={() => PopupAPI.changeState(toTxInfer === 'collection' ? APP_STATE.COLLECTION : APP_STATE.TICKET)} />
-        <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`} style={{ left: 160 }}>
-          <Loading size={40} />
+        <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`} style={{ left: 20, top: 212 }}>
+          <img src={loading2Png} alt="" style={{ width: 320, height: 182 }} />
         </div>
         {
-          showResult &&
-          <div className={`search-result overflow-auto pb-4 show`} style={{ height: 520, top: 78 }}>
-            <TicketScore ticketInfo={newTicketInfo} collectTicket={collectTicket} />
-            <UpdateInfo />
-            <div className="result-list mt-4">
-              {
-                newSearchList.map((item: any, key: number) => {
-                  if (typeof item.data === 'string') {
-                    return <DataItem1 key={key} itemData={item} />
-                  }
-                  return <DataItem2 key={key} itemData={item} onChangeState={onChangeState} />
-                })
-              }
-            </div>
-            <FeedBackUS />
-          </div>
+          showResult && (!noData ?
+            <div className={`search-result overflow-auto pb-4 show`} style={{ height: 520, top: 78 }}>
+              <TicketScore ticketInfo={newTicketInfo} collectTicket={collectTicket} />
+              <UpdateInfo />
+              <div className="result-list mt-4">
+                {
+                  newSearchList.map((item: any, key: number) => {
+                    if (typeof item.data === 'string') {
+                      return <DataItem1 key={key} itemData={item} />
+                    }
+                    return <DataItem2 key={key} itemData={item} onChangeState={onChangeState} />
+                  })
+                }
+              </div>
+              <FeedBackUS />
+            </div> :
+            <div className=" flex flex-col justify-center items-center" style={{ marginTop: 70 }}>
+              <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />
+              <div className=" text-center font-bold" style={{ color: 'rgba(63, 70, 100, 0.5)', marginTop: 20 }}>No result</div>
+            </div>)
         }
 
       </div>

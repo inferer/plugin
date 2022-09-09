@@ -80,6 +80,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     PopupAPI.changeState(appState)
   }
   const onClickRecommend = (data: any) => {
+    console.log(data, 2222222)
     setTicketInfo({ level: 0, searchList: [], ticket_level: '' })
     setRecommendData(data)
     setToTxInfo('')
@@ -98,6 +99,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           <Home appState={appState} onChangeState={onChangeState}
             onTicketChangeState={onTicketChangeState}
             onClickRecommend={onClickRecommend}
+            onClickLabels={onClickRecommend}
             address={address}
           />
         </div>

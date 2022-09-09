@@ -25,10 +25,12 @@ const Popup: React.FC<{
   onChangeState: (key: number, data: any) => void
   onTicketChangeState: (key: number, data: any) => void,
   onClickRecommend: (data: any) => void
+  onClickLabels: (data: any) => void
 }> = ({
   onChangeState,
   onTicketChangeState,
   onClickRecommend,
+  onClickLabels,
   address
 }) => {
 
@@ -58,7 +60,11 @@ const Popup: React.FC<{
           />
         </div>
         <div className={`${appState === APP_STATE.LABELS ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          <Labels appState={appState} onChangeState={onChangeState} />
+          <Labels appState={appState} onChangeState={onChangeState}
+            onClick={(e: any) => {
+              onClickLabels && onClickLabels(e)
+            }}
+          />
         </div>
         <div className={`${appState === APP_STATE.SETTING ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Setting appState={appState} onChangeState={onChangeState} />

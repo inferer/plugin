@@ -22,7 +22,7 @@ const userKey = {
   '6': 'poap_users',
 }
 
-const Labels: React.FC<any> = ({ appState }) => {
+const Labels: React.FC<any> = ({ appState, onClick }) => {
   const onItemClick = (page: number) => {
     PopupAPI.changeState(page)
   }
@@ -186,7 +186,11 @@ const Labels: React.FC<any> = ({ appState }) => {
           </div>
         </div>
         <div className="list-wrap overflow-auto" style={{ height: 380 }} >
-          <Others showData={showData} activeKey={activeKey} active={active} onCollectSuccess={onCollectSuccess} />
+          <Others showData={showData} activeKey={activeKey} active={active} onCollectSuccess={onCollectSuccess}
+            onClick={(e: any) => {
+              onClick && onClick(e)
+            }}
+          />
         </div>
       </div>
     </div>

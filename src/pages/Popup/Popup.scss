@@ -5,14 +5,25 @@
 
 }
 
-@keyframes App-logo-spin {
+@keyframes loadingx {
   from {
     transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
 
   to {
     transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
   }
+}
+
+.loading-wrap {
+  animation: loadingx 1.5s linear infinite;
+  -webkit-animation: loadingx 1.5s linear infinite;
+}
+
+.loading-box.hide {
+  display: none;
 }
 
 html,
@@ -383,7 +394,7 @@ body,
 }
 
 .page-title2 {
-  font-family: DMSans-Bold;
+  // font-family: DMSans-Bold;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
