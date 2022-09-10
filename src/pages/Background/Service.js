@@ -11,6 +11,7 @@ class Service extends EventEmitter {
     this.profileUserInfo = { email: '', user_id: '', chrome_id: '' }
     this.chainid = 1
     this.matchAddress = []
+    this.feedAddress = ''
   }
   async initData() {
     await StorageService.init()
@@ -110,6 +111,7 @@ class Service extends EventEmitter {
 
   async searchByAddress(address) {
     try {
+      this.feedAddress = address
       const res = await fetcher('/api/infer', { user_id: this.profileUserInfo.user_id, address })
       if (res.status === 200) {
         StorageService.setSearchResult({

@@ -115,7 +115,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
         >
-          <FeedBack searchNum={searchNum} address={address} />
+          <FeedBack searchNum={searchNum} address={address} appState={appState} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.COLLECTION || pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Collection appState={appState} searchNum={searchNum}

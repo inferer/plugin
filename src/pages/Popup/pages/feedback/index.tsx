@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Toast } from 'antd-mobile'
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
@@ -9,16 +9,17 @@ const successPng = require('../setting/images/success.png')
 
 export type FeedBackProps = {
   searchNum: number,
-  address: string
+  address: string,
+  appState: number
 }
 
 const FeedBack: React.FC<FeedBackProps> = ({
   searchNum,
-  address
+  appState
 }) => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.feedback', defaultMessage: 'FEEDBACK' })
-
+  const [address, setAddress] = useState('')
   const [text, setText] = useState('')
   const [focus, setFocus] = useState(false)
   const [feedSuccess, setFeedSuccess] = useState(false)
@@ -44,13 +45,22 @@ const FeedBack: React.FC<FeedBackProps> = ({
     if (res.status === 200) {
       setFeedSuccess(true)
     } else {
-      Toast.show(res.message)
+      Toast.show({
+        content: 'Submit failed',
+        position: "bottom"
+      })
     }
   }
+  useEffect(() => {
+    if (appState === APP_STATE.FEEDBACK) {
+      const address = localStorage.getItem('search_address') ?? ''
+      setAddress(address)
+    }
+  }, [appState])
 
   return (
     <div className="w-360 page-root page-language">
-      <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.TICKETINFER)} />
+      <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.SEARCH)} />
       <div className="page-content pt-3">
         {
           !feedSuccess &&

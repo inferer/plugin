@@ -36,6 +36,9 @@ export default {
   searchByAddress(address) {
     return this.duplex.send('searchByAddress', address)
   },
+  getFeedAddress() {
+    return this.duplex.send('getFeedAddress')
+  },
   getTickets(pageNo) {
     return this.duplex.send('getTickets', pageNo)
   },

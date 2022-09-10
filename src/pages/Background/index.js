@@ -90,6 +90,9 @@ const backgroundScript = {
       const data = await this.service.searchByAddress(e.data)
       e.resolve(data)
     })
+    duplex.on('getFeedAddress', ({ resolve }) => {
+      resolve(this.service.feedAddress)
+    })
     duplex.on('getTickets', async (e) => {
       const data = await this.service.getTickets(e.data)
       e.resolve(data)

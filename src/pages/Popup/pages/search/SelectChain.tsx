@@ -37,8 +37,8 @@ const SelectChain: React.FC<any> = () => {
           setShow(false)
         }}
       >
-        <img src={eth} alt="" style={{ width: 18, height: 18 }} />
-        <span>{chainId === 1 ? 'Ethereum' : 'PlatON'} </span>
+        <img src={chainId === 1 ? eth : platon} alt="" style={{ width: 18, height: 18 }} />
+        <span style={{ width: 60 }}>{chainId === 1 ? 'Ethereum' : 'PlatON'} </span>
         {
           showList ? <img src={up} alt="" style={{ width: 10, height: 6 }} /> : <img src={down} alt="" style={{ width: 10, height: 6 }} />
         }
@@ -67,7 +67,7 @@ const SelectChain: React.FC<any> = () => {
               <img src={eth} alt="" style={{ width: 18, height: 18 }} />
               <span className=' ml-1 mr-1'>Ethereum</span>
               {
-                chainId === 1 && <img src={select} alt="" style={{ width: 10, height: 6 }} />
+                chainId === 1 && <img src={select} className="select" alt="" style={{ width: 10, height: 6 }} />
               }
 
             </div>
@@ -84,7 +84,7 @@ const SelectChain: React.FC<any> = () => {
               <img src={platon} alt="" style={{ width: 18, height: 18 }} />
               <span className=' ml-1 mr-1'>PlatON</span>
               {
-                chainId === 2 && <img src={select} alt="" style={{ width: 10, height: 6 }} />
+                chainId === 2 && <img src={select} className="select" alt="" style={{ width: 10, height: 6 }} />
               }
             </div>
           </div>

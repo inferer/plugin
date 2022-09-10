@@ -75,7 +75,8 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollec
             <div className=" absolute top-0 right-0 h-full flex items-center shoucanglabels">
 
               <img src={copyPng} alt="" style={{ width: 16, height: 16, marginLeft: 8 }}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation()
                   navigator.clipboard.writeText(item.address)
                     .then(() => {
                       Toast.show({ content: 'Copied', position: 'bottom' })
@@ -84,7 +85,10 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollec
               />
 
               <img src={item.is_collected ? copiedPng : favPng} alt="" style={{ width: 16, height: 16, marginLeft: 4, marginRight: 8 }}
-                onClick={() => collectLabel(item, key)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  collectLabel(item, key)
+                }}
               />
             </div>
             <div className="flex items-center ">

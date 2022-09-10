@@ -12,7 +12,7 @@ export function fetcher(url, data) {
     new Promise((resolve, reject) => {
       setTimeout(() => {
         reject(new Error('request timeout'))
-      }, 10000)
+      }, 20000)
     })
   ]).then(res => res && res.json())
 }

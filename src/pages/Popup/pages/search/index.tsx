@@ -63,24 +63,26 @@ const Search: React.FC<{
         setIsValidAddress(true)
       } else {
         setIsValidAddress(false)
-        setNodata(false)
         setShowResult(false)
         return
       }
       if (showResult) {
-        setNodata(false)
         setShowResult(false)
       }
       setIsLoading(true)
       const searchRet = await PopupAPI.searchByAddress(address)
+      localStorage.setItem('search_address', address)
+      console.log(searchRet)
       if (searchRet.status === 200 && searchRet.result) {
         const info = searchRet.result.info || {}
         const infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
         setSearchList(infoList)
         const level = (searchRet.result.level as string).toLocaleLowerCase()
         setTicketInfo({ level: levelInfo[level], ticket_level: searchRet.result.level, ticket_id: searchRet.result.ticket_id })
+        setNodata(false)
+      } else {
+        setNodata(true)
       }
-      setNodata(true)
       setShowResult(true)
       setIsLoading(false)
 
@@ -117,7 +119,7 @@ const Search: React.FC<{
     }, [address])
 
     return (
-      <div className="page-root search-page">
+      <div className={`page-root search-page ${showResult ? 'inferer' : ' '}`}>
         {
           address.length === 0 && <SelectChain />
         }
@@ -153,7 +155,7 @@ const Search: React.FC<{
         </div>
         <div className={`search-result overflow-auto pb-4 ${showResult ? 'show' : ''}`} style={{ height: 402 }}>
           {
-            noData ?
+            !noData ?
               <>
                 <TicketScore ticketInfo={ticketInfo} collectTicket={collectTicket} />
                 <UpdateInfo />

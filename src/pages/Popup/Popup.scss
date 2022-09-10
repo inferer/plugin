@@ -360,6 +360,13 @@ body,
   padding-left: 8px;
   font-size: 12px;
   cursor: pointer;
+  position: relative;
+
+  img.select {
+    position: absolute;
+    right: 8px;
+    top: 12;
+  }
 
   &.item1 {
     color: rgba(63, 70, 100, 0.5);
