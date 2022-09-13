@@ -569,6 +569,38 @@ body,
       background-image: url('./pages/collection/images/bg6.png');
     }
 
+    &:hover {
+
+      &.bg1 {
+        background-image: url('./pages/collection/images/bg11.png');
+
+      }
+
+      &.bg2 {
+        background-image: url('./pages/collection/images/bg12.png');
+
+      }
+
+      &.bg3 {
+        background-image: url('./pages/collection/images/bg13.png');
+
+
+      }
+
+      &.bg4 {
+        background-image: url('./pages/collection/images/bg14.png');
+      }
+
+      &.bg5 {
+        background-image: url('./pages/collection/images/bg15.png');
+
+      }
+
+      &.bg6 {
+        background-image: url('./pages/collection/images/bg16.png');
+      }
+    }
+
     .text {
       font-weight: 700;
       font-size: 20px;
@@ -614,6 +646,33 @@ body,
       text-fill-color: transparent;
     }
 
+    .userimgnormal {
+      display: inline-block;
+    }
+
+    .userimghover {
+      display: none;
+    }
+
+    &:hover {
+      .userimgnormal {
+        display: none;
+      }
+
+      .userimghover {
+        display: inline-block;
+      }
+
+      .text1,
+      .text2,
+      .text3,
+      .text4,
+      .text5 {
+        background: none;
+        color: #ffffff;
+        -webkit-text-fill-color: #ffffff;
+      }
+    }
 
   }
 

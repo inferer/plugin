@@ -81,6 +81,7 @@ const backgroundScript = {
       resolve(this.service.getSearchNum())
     })
     duplex.on('setsearchnum', (e) => this.service.setSearchNum(e.data))
+    duplex.on('setChainId', (e) => this.service.setChainId(e.data))
     duplex.on('setMatchAddress', (e) => {
       console.log(e)
       // this.service.setMatchAddress(e.data)
@@ -125,12 +126,24 @@ const backgroundScript = {
       const data = await this.service.collectTicket(e.data)
       e.resolve(data)
     })
+    duplex.on('cancelCollectTicket', async (e) => {
+      const data = await this.service.cancelCollectTicket(e.data)
+      e.resolve(data)
+    })
     duplex.on('feedBack', async (e) => {
       const data = await this.service.feedBack(e.data)
       e.resolve(data)
     })
     duplex.on('getAddress', async (e) => {
       const data = await this.service.getAddress(e.data)
+      e.resolve(data)
+    })
+    duplex.on('setCloseTime', async (e) => {
+      const data = await this.service.setCloseTime(e.data)
+      e.resolve(data)
+    })
+    duplex.on('getCloseTime', async (e) => {
+      const data = await this.service.getCloseTime(e.data)
       e.resolve(data)
     })
     duplex.on('bindWallet', async (e) => {

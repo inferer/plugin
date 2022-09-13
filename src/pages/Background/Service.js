@@ -63,6 +63,12 @@ class Service extends EventEmitter {
   getLanguage() {
     return StorageService.language || 'en'
   }
+  async getCloseTime() {
+    return await StorageService.getStorage('closeTime')
+  }
+  async setCloseTime() {
+    return await StorageService.setCloseTime()
+  }
   getAddress() {
     return StorageService.address
   }
@@ -76,6 +82,11 @@ class Service extends EventEmitter {
   setSearchNum(num) {
     StorageService.setSearchNum(num);
     this.emit('setSearchNum', num);
+  }
+  setChainId(data) {
+    // StorageService.setSearchNum(num);
+    // this.emit('setSearchNum', num);
+    this.chainid = data.chainid
   }
   setMatchAddress(data) {
     console.log(data)
@@ -110,12 +121,13 @@ class Service extends EventEmitter {
   }
 
   async searchByAddress(address) {
+    console.log(this.chainid, 11111111)
     try {
       this.feedAddress = address
-      const res = await fetcher('/api/infer', { user_id: this.profileUserInfo.user_id, address })
+      const res = await fetcher(this.chainid === 1 ? '/api/infer' : '/api/platon/infer', { user_id: this.profileUserInfo.user_id, address })
       if (res.status === 200) {
         StorageService.setSearchResult({
-          chainid: 1,
+          chainid: this.chainid,
           content: JSON.stringify(res.result),
           search_address: address,
           timestamp: new Date().toString()
@@ -166,7 +178,7 @@ class Service extends EventEmitter {
     try {
       let res = { status: 200 }
       if (this.profileUserInfo.user_id) {
-        res = await poster('/plugin/collectLabel', { chainid: this.chainid, user_id: this.profileUserInfo.user_id, ...data })
+        res = await poster('/plugin/collectLabel', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
       } else {
         await StorageService.setCollectLabels({
           chainid: this.chainid,
@@ -182,7 +194,7 @@ class Service extends EventEmitter {
   }
   async cancelCollectLabel(data = {}) {
     try {
-      const res = await poster('/plugin/cancelCollectLabel', { chainid: this.chainid, user_id: this.profileUserInfo.user_id, ...data })
+      const res = await poster('/plugin/cancelCollectLabel', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
       const collectLabels = await StorageService.getStorage('collectLabels')
       if (collectLabels && collectLabels.length > 0) {
         const filterList = collectLabels.filter(item => item.collect_address !== data.collect_address)
@@ -201,7 +213,7 @@ class Service extends EventEmitter {
     try {
       let res = { status: 200 }
       if (this.profileUserInfo.user_id) {
-        res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data })
+        res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
       } else {
         await StorageService.setCollectTicket({
           chainid: this.chainid,
@@ -216,6 +228,27 @@ class Service extends EventEmitter {
       return false
     }
   }
+
+  async cancelCollectTicket(data = {}) {
+    try {
+      let res = { status: 200 }
+      if (this.profileUserInfo.user_id) {
+        res = await poster('/plugin/cancelCollectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
+      } else {
+        await StorageService.setCollectTicket({
+          chainid: this.chainid,
+          ticket_id: '',
+          ticket_level: data.ticket_level,
+          collect_address: data.collect_address,
+          timestamp: new Date().toString()
+        })
+      }
+      return res
+    } catch (e) {
+      return false
+    }
+  }
+
 
   async getCollectTickets(data = {}) {
     try {

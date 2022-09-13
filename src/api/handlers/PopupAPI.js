@@ -30,6 +30,9 @@ export default {
   setSearchNum(num) {
     this.duplex.send('setsearchnum', num)
   },
+  setChainId(data) {
+    this.duplex.send('setChainId', { chainid: data })
+  },
   updateContextmenu(text) {
     return this.duplex.send('updateContextmenu', { text })
   },
@@ -63,6 +66,9 @@ export default {
   collectTicket(data) {
     return this.duplex.send('collectTicket', data)
   },
+  cancelCollectTicket(data) {
+    return this.duplex.send('cancelCollectTicket', data)
+  },
   feedBack(data) {
     return this.duplex.send('feedBack', data)
   },
@@ -79,8 +85,14 @@ export default {
     this.duplex.send('setAddress', { address: '' })
   },
   matchAddress(addressList) {
-    console.log(addressList)
     this.duplex.send('setMatchAddress', { addressList })
-  }
+  },
+  setCloseTime() {
+    this.duplex.send('setCloseTime')
+  },
+  getCloseTime() {
+    return this.duplex.send('getCloseTime')
+  },
+
 
 }

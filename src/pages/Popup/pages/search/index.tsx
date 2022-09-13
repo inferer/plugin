@@ -39,9 +39,11 @@ export const levelInfo = {
   'poor': 1.0
 } as any
 const Search: React.FC<{
-  onChangeState: (appState: number, data: any) => void
+  onChangeState: (appState: number, data: any) => void,
+  appState: number
 }> = ({
-  onChangeState
+  onChangeState,
+  appState
 }) => {
     const intl = useIntl()
     const holder = intl.formatMessage({ id: 'Search address identity', defaultMessage: 'Search address identity' })
@@ -54,6 +56,8 @@ const Search: React.FC<{
     const [isLoading, setIsLoading] = useState(false)
     const [isValidAddress, setIsValidAddress] = useState(true)
     const [noData, setNodata] = useState(false)
+    const [collected, setCollected] = useState(false)
+
     const onSearch = async () => {
       if (!focus && address.length <= 0) {
         setFocus(true)
@@ -69,6 +73,7 @@ const Search: React.FC<{
       if (showResult) {
         setShowResult(false)
       }
+      setCollected(false)
       setIsLoading(true)
       const searchRet = await PopupAPI.searchByAddress(address)
       localStorage.setItem('search_address', address)
@@ -89,6 +94,10 @@ const Search: React.FC<{
     }
 
     const collectTicket = useCallback(async () => {
+      if (collected) {
+        await cancelCollectTicket()
+        return
+      }
       const collectRes = await PopupAPI.collectTicket({
         collect_address: address,
         chainid: 1,
@@ -97,9 +106,37 @@ const Search: React.FC<{
       })
       console.log(collectRes)
       if (collectRes.status === 200) {
-        Toast.show('Success')
+        setCollected(true)
+        Toast.show({
+          content: 'Collected',
+          position: 'bottom'
+        })
       } else {
-        Toast.show('Error')
+        Toast.show({
+          content: 'Error',
+          position: 'bottom'
+        })
+      }
+    }, [address, ticketInfo, collected])
+
+    const cancelCollectTicket = useCallback(async () => {
+      const collectRes = await PopupAPI.cancelCollectTicket({
+        collect_address: address,
+        chainid: 1,
+        ticket_id: ticketInfo.ticket_id
+      })
+      console.log(collectRes)
+      if (collectRes.status === 200) {
+        setCollected(false)
+        Toast.show({
+          content: 'Canceled',
+          position: 'bottom'
+        })
+      } else {
+        Toast.show({
+          content: 'Error',
+          position: 'bottom'
+        })
       }
     }, [address, ticketInfo])
     const checkoutAddress = useCallback(() => {
@@ -157,7 +194,10 @@ const Search: React.FC<{
           {
             !noData ?
               <>
-                <TicketScore ticketInfo={ticketInfo} collectTicket={collectTicket} />
+                <TicketScore
+                  ticketInfo={ticketInfo}
+                  collectTicket={collectTicket}
+                  collected={collected} />
                 <UpdateInfo />
                 <div className="result-list mt-4">
                   {
@@ -169,7 +209,7 @@ const Search: React.FC<{
                     })
                   }
                 </div>
-                <FeedBackUS />
+                <FeedBackUS from='search' appState={appState} />
               </> :
               <div className=" flex flex-col justify-center" style={{ marginLeft: 70, marginTop: 70 }}>
                 <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />

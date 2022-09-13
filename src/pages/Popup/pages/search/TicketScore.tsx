@@ -2,13 +2,15 @@ import React from "react";
 
 const ticket_scorePng = require('../../../../assets/img/ticket_score.png')
 const ttipPng = require('../../../../assets/img/ttip.png')
+const ttip2Png = require('../../../../assets/img/ttip2.png')
 const star1Png = require('../../../../assets/img/star1.png')
 const star2Png = require('../../../../assets/img/star2.png')
 
 const TicketScore: React.FC<{
   ticketInfo: { level: number },
-  collectTicket: () => void
-}> = ({ ticketInfo, collectTicket }) => {
+  collectTicket: () => void,
+  collected: boolean
+}> = ({ ticketInfo, collectTicket, collected }) => {
 
   return (
     <div className="ticket-score flex flex-col justify-center">
@@ -34,7 +36,7 @@ const TicketScore: React.FC<{
           />
         </div>
         <div className="text-base text-white font-bold mx-2" style={{ fontSize: 20 }}>{Number(ticketInfo.level).toFixed(1)}</div>
-        <img onClick={() => collectTicket()} src={ttipPng} alt="" style={{ width: 20, height: 20 }} />
+        <img onClick={() => collectTicket()} src={collected ? ttip2Png : ttipPng} alt="" style={{ width: 20, height: 20 }} />
       </div>
     </div>
   )

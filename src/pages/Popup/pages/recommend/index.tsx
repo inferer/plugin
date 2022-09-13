@@ -21,10 +21,19 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
     PopupAPI.changeState(page)
   }
   const [active, setActive] = useState(1)
-  const [showWallet, setShowWallet] = useState(true)
+  const [showWallet, setShowWallet] = useState(false)
   const [recommentData, setRecommentData] = useState({ like: [], other: [], risk: [] })
   useEffect(() => {
     if (appState === APP_STATE.RECOMMEND) {
+      PopupAPI.getCloseTime()
+        .then((time: number) => {
+          console.log(time, 222222)
+          if (Date.now() - time > 2 * 24 * 60 * 60 * 1000) {
+            setShowWallet(true)
+          } else {
+            setShowWallet(false)
+          }
+        })
       PopupAPI.getRecommend()
         .then((res: any) => {
           console.log(res)
@@ -36,13 +45,18 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
 
   }, [appState])
 
+  const onSetShowWallet = async () => {
+    await PopupAPI.setCloseTime(Date.now())
+    setShowWallet(false)
+  }
+
   return (
     <div className="page-root recommend-page">
       <div className="page-title">
         Recommend
       </div>
       <div className="page-content page-home-content">
-        <div className="flex items-center justify-between collection-header mt-3">
+        <div className="flex items-center justify-between collection-header mt-3 pb-3">
           <div className="flex items-center justify-center"
             onClick={() => setActive(1)}
           >
@@ -77,12 +91,13 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
         {
           !address && showWallet &&
           <div className="connect-wallet flex items-center relative cursor-pointer"
+            style={{ marginTop: 0 }}
             onClick={() => PopupAPI.changeState(APP_STATE.WALLET)}
           >
             <img
               onClick={(e) => {
                 e.stopPropagation()
-                setShowWallet(false)
+                onSetShowWallet()
               }}
               src={closePng} className=" absolute w-4 h-4" alt="" style={{ top: 6, right: 6 }} />
             <img className="walletimg" src={walletPng} alt="" />
@@ -93,7 +108,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
           </div>
         }
 
-        <div className="list-wrap overflow-auto" style={{ height: 440 }}>
+        <div className="list-wrap overflow-auto" style={{ height: !address && showWallet ? 370 : 430 }}>
           {
             active === 1 && <Likes data={recommentData.like}
               onClick={(e: any) => {

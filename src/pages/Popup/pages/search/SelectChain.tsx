@@ -20,6 +20,7 @@ const SelectChain: React.FC<any> = () => {
   }
   const onMouseClick = (chainId: number) => {
     setChainId(chainId)
+    PopupAPI.setChainId(chainId === 1 ? 1 : 210425)
   }
 
   // const searchPlace = intl.formatMessage('')

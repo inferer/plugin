@@ -10,12 +10,14 @@ const successPng = require('../setting/images/success.png')
 export type FeedBackProps = {
   searchNum: number,
   address: string,
-  appState: number
+  appState: number,
+  pageStack: number[]
 }
 
 const FeedBack: React.FC<FeedBackProps> = ({
   searchNum,
-  appState
+  appState,
+  pageStack
 }) => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.feedback', defaultMessage: 'FEEDBACK' })
@@ -57,10 +59,14 @@ const FeedBack: React.FC<FeedBackProps> = ({
       setAddress(address)
     }
   }, [appState])
+  console.log(pageStack, pageStack[pageStack.length - 2])
 
   return (
     <div className="w-360 page-root page-language">
-      <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.SEARCH)} />
+      <PageHeader title={title} onBack={() => {
+        const from = localStorage.getItem('page-from')
+        PopupAPI.changeState(from === 'search' ? APP_STATE.SEARCH : APP_STATE.TICKETINFER)
+      }} />
       <div className="page-content pt-3">
         {
           !feedSuccess &&

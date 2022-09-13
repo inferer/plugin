@@ -5,6 +5,7 @@ import PageHeader from "../components/PageHeader";
 import { transformTime } from "../../utils"
 import { levelInfo } from "../search";
 import { Toast } from "antd-mobile";
+import Loading from "../components/Loading";
 
 const { PopupAPI } = require('../../../../api')
 
@@ -15,6 +16,12 @@ const l3Png = require('./images/l3.png')
 const l4Png = require('./images/l4.png')
 const l5Png = require('./images/l5.png')
 const l6Png = require('./images/l6.png')
+const l11Png = require('./images/l11.png')
+const l12Png = require('./images/l12.png')
+const l13Png = require('./images/l13.png')
+const l14Png = require('./images/l14.png')
+const l15Png = require('./images/l15.png')
+const l16Png = require('./images/l16.png')
 const ticketsPng = require('./images/ticket.png')
 const tickets2Png = require('./images/tickets2.png')
 const labelsPng = require('./images/labels.png')
@@ -61,12 +68,12 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   const [labels, setLabels] = useState<any>([])
 
   const getLabelImg = (level: number) => {
-    if (level === 1) return l1Png
-    if (level === 2) return l2Png
-    if (level === 3) return l3Png
-    if (level === 4) return l4Png
-    if (level === 5) return l5Png
-    if (level === 6) return l6Png
+    if (level === 1) return l11Png
+    if (level === 2) return l12Png
+    if (level === 3) return l13Png
+    if (level === 4) return l14Png
+    if (level === 5) return l15Png
+    if (level === 6) return l16Png
   }
 
   const getUserImg = (level: number) => {
@@ -78,11 +85,17 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
     if (level === 6) return l6Png
   }
 
-  const [active, setActive] = useState(1)
+  const [active, setActive2] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const [noData, setNodata] = useState(false)
   const [noData2, setNodata2] = useState(false)
-
+  const setActive = (type: number) => {
+    localStorage.setItem('ticketinfer_from', '')
+    setIsLoading(false)
+    setNodata(false)
+    setNodata2(false)
+    setActive2(type)
+  }
   const getCollectTickets = (pageNo: number) => {
     if (isLoading || noData) return
     PopupAPI.getCollectTickets({ page_index: pageNo, page_size: 10 })
@@ -129,27 +142,38 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
         }
       })
   }
-
+  const listRef = useRef<HTMLDivElement | null>(null)
+  const pageNoRef = useRef<number>(0)
   useEffect(() => {
-    if (appState === APP_STATE.COLLECTION) {
+    const ticketinfer_from = localStorage.getItem('ticketinfer_from')
+    if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
       if (active === 1) {
         setLabels([])
+        pageNoRef.current = 0
         getCollectTickets(0)
       } else {
         setTickets([])
+        pageNoRef.current = 0
         getCollectLabels(0)
       }
-    } {
-      setIsLoading(false)
-      setNodata(false)
-      setNodata2(false)
-      setLabels([])
-      setTickets([])
+    } else {
+      localStorage.setItem('ticketinfer_from', '')
+      // setIsLoading(false)
+      // setNodata(false)
+      // setNodata2(false)
+      // setLabels([])
+      // setTickets([])
     }
+    // else {
+    //   setIsLoading(false)
+    //   setNodata(false)
+    //   setNodata2(false)
+    //   setLabels([])
+    //   setTickets([])
+    // }
   }, [active, appState])
 
-  const listRef = useRef<HTMLDivElement | null>(null)
-  const pageNoRef = useRef<number>(0)
+
   const onTicketsSroll = async () => {
     if (listRef.current) {
       const listDom = listRef.current
@@ -238,7 +262,11 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
               )
             }
             {
-              noData && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+              noData ? <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+                :
+                <div className="flex justify-center pb-3">
+                  <Loading size={20} />
+                </div>
             }
           </div>
         }
@@ -256,7 +284,8 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   }}
                 >
                   <div className="flex justify-center items-center w-16 h-16">
-                    <img src={getUserImg(item.level)} alt="" style={{ width: 24, height: 24 }} />
+                    <img className="userimgnormal" src={getUserImg(item.level)} alt="" style={{ width: 24, height: 24 }} />
+                    <img className="userimghover" src={getLabelImg(item.level)} alt="" style={{ width: 24, height: 24 }} />
                   </div>
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
@@ -277,7 +306,11 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
               )
             }
             {
-              noData2 && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+              noData2 ? <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+                :
+                <div className="flex justify-center pb-3">
+                  <Loading size={20} />
+                </div>
             }
           </div>
         }

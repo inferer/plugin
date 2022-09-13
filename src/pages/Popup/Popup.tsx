@@ -71,7 +71,6 @@ const Popup: React.FC<PopupProps> = (props) => {
       const info = searchRet.result.info || {}
       infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
     }
-    console.log(searchRet, 444444)
 
     setTicketInfo({ level: searchRet.level, searchList: infoList, ticket_level: searchRet.result.level, search_address: searchRet.search_address })
     setRecommendData({})
@@ -80,7 +79,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     PopupAPI.changeState(appState)
   }
   const onClickRecommend = (data: any) => {
-    console.log(data, 2222222)
+    localStorage.setItem('search_address', data.address)
     setTicketInfo({ level: 0, searchList: [], ticket_level: '' })
     setRecommendData(data)
     setToTxInfo('')
@@ -115,7 +114,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
         >
-          <FeedBack searchNum={searchNum} address={address} appState={appState} />
+          <FeedBack searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.COLLECTION || pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Collection appState={appState} searchNum={searchNum}

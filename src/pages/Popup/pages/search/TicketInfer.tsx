@@ -33,9 +33,13 @@ const TicketInfer: React.FC<{
     const [isLoading, setIsLoading] = useState(false)
     const [showResult, setShowResult] = useState(false)
     const [noData, setNodata] = useState(false)
+    const [collected, setCollected] = useState(false)
+
     useEffect(() => {
       const fetch = async () => {
         if (!recommendData.address) {
+          setCollected(false)
+          setNodata(false)
           setShowResult(true)
           setNewTicketInfo(ticketInfo)
           setNewSearchList(searchList)
@@ -47,6 +51,7 @@ const TicketInfer: React.FC<{
     useEffect(() => {
       const fetch = async () => {
         if (recommendData.address) {
+          setCollected(false)
           setIsLoading(true)
           setShowResult(false)
           setNodata(false)
@@ -71,6 +76,10 @@ const TicketInfer: React.FC<{
       fetch()
     }, [recommendData.address])
     const collectTicket = useCallback(async () => {
+      if (collected) {
+        await cancelCollectTicket()
+        return
+      }
       const collectRes = await PopupAPI.collectTicket({
         collect_address: recommendData.address || newTicketInfo.address,
         chainid: 1,
@@ -78,22 +87,56 @@ const TicketInfer: React.FC<{
         ticket_level: newTicketInfo.ticket_level
       })
       if (collectRes.status === 200) {
-        Toast.show('Success')
+        setCollected(true)
+        Toast.show({
+          content: 'Collected',
+          position: 'bottom'
+        })
       } else {
-        Toast.show('Error')
+        Toast.show({
+          content: 'Error',
+          position: 'bottom'
+        })
+      }
+    }, [recommendData.address, newTicketInfo, collected])
+    const cancelCollectTicket = useCallback(async () => {
+      const collectRes = await PopupAPI.cancelCollectTicket({
+        collect_address: recommendData.address || newTicketInfo.address,
+        chainid: 1,
+        ticket_id: newTicketInfo.ticket_id
+      })
+      console.log(collectRes)
+      if (collectRes.status === 200) {
+        setCollected(false)
+        Toast.show({
+          content: 'Canceled',
+          position: 'bottom'
+        })
+      } else {
+        Toast.show({
+          content: 'Error',
+          position: 'bottom'
+        })
       }
     }, [recommendData.address, newTicketInfo])
-
     return (
       <div className='page-root search-page inferer'>
-        <PageHeader title={'INFERER'} onBack={() => PopupAPI.changeState(toTxInfer === 'collection' ? APP_STATE.COLLECTION : APP_STATE.TICKET)} />
+        <PageHeader title={'INFERER'} onBack={() => {
+          if (toTxInfer === 'collection') {
+            localStorage.setItem('ticketinfer_from', 'ticketinfer')
+          } else {
+            localStorage.setItem('ticketinfer_from', '')
+          }
+
+          PopupAPI.changeState(toTxInfer === 'collection' ? APP_STATE.COLLECTION : APP_STATE.TICKET)
+        }} />
         <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`} style={{ left: 20, top: 212 }}>
           <img src={loading2Png} alt="" style={{ width: 320, height: 182 }} />
         </div>
         {
           showResult && (!noData ?
             <div className={`search-result overflow-auto pb-4 show`} style={{ height: 520, top: 78 }}>
-              <TicketScore ticketInfo={newTicketInfo} collectTicket={collectTicket} />
+              <TicketScore ticketInfo={newTicketInfo} collectTicket={collectTicket} collected={collected} />
               <UpdateInfo />
               <div className="result-list mt-4">
                 {

@@ -4,7 +4,7 @@ const leftPng = require('./images/left.png')
 
 const Likes: React.FC<any> = ({ data, onClick }) => {
   return (
-    <div className="setting-list">
+    <div className="setting-list" style={{ marginTop: 0 }}>
       {
         data.map((item: any, key: number) => (
           <div key={key} className="setting-item flex justify-between items-center likes"

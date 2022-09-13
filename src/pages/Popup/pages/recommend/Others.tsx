@@ -4,7 +4,7 @@ const leftPng = require('./images/left.png')
 
 const Others: React.FC<any> = ({ data, onClick }) => {
   return (
-    <div className="setting-list flex flex-wrap justify-between">
+    <div className="setting-list flex flex-wrap justify-between" style={{ marginTop: 0 }}>
       {
         data.map((item: any, key: number) => (
           <div key={key} className="setting-item setting-item2 flex justify-between items-center w-1/2 others"

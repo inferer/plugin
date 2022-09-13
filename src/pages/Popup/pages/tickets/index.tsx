@@ -6,6 +6,7 @@ import PageHeader from "../components/PageHeader";
 import NoData from "./NoData";
 import { levelInfo } from '../search/index'
 import { Toast } from "antd-mobile";
+import Loading from "../components/Loading";
 
 const { PopupAPI } = require('../../../../api')
 
@@ -78,6 +79,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
   }, [appState])
 
   const openTicketInfer = (item: any) => {
+    localStorage.setItem('search_address', item.search_address)
     onChangeState(APP_STATE.TICKETINFER, item)
   }
   const listRef = useRef<HTMLDivElement | null>(null)
@@ -149,7 +151,11 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                 </div>
               </div> */}
           {
-            noData && tickets.length > 0 && <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+            noData && tickets.length > 0 ? <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+              :
+              <div className="flex justify-center pb-3">
+                <Loading size={20} />
+              </div>
           }
 
         </div>

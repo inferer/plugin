@@ -20,10 +20,18 @@ const StorageService = {
 
         this[key] = encrypted;
       }
-      this['searchnum'] = 20
-      this.language = 'en'
-      this.save('searchnum')
-      this.save('language')
+      if (!this['searchnum']) {
+        this['searchnum'] = 20
+        this.save('searchnum')
+      }
+      if (!this['language']) {
+        this.language = 'en'
+        this.save('language')
+      }
+      if (!this['closeTime']) {
+        this.closeTime = 0
+        this.save('closeTime')
+      }
     } catch (ex) {
       return 'ERRORS.INVALID_PASSWORD';
     }
@@ -99,6 +107,10 @@ const StorageService = {
       this.collectLabels.push(data)
     }
     this.save('collectLabels')
+  },
+  setCloseTime(time) {
+    this.closeTime = time || Date.now()
+    this.save('closeTime')
   }
 
 }
