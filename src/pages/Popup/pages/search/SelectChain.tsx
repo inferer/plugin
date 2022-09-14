@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useIntl } from 'react-intl'
 
 const { PopupAPI } = require('../../../../api')
-const eth = require('./images/eth2.png')
-const platon = require('./images/platon2.png')
+const eth = require('./images/eth3.png')
+const platon = require('./images/platon3.png')
 const up = require('./images/up2.png')
 const down = require('./images/down.png')
 const select = require('./images/select2.png')
@@ -20,9 +20,16 @@ const SelectChain: React.FC<any> = () => {
   }
   const onMouseClick = (chainId: number) => {
     setChainId(chainId)
+    localStorage.setItem('chainid', String(chainId))
     PopupAPI.setChainId(chainId === 1 ? 1 : 210425)
   }
-
+  useEffect(() => {
+    if (localStorage.getItem('chainid')) {
+      const chainid = Number(localStorage.getItem('chainid'))
+      setChainId(chainid)
+      PopupAPI.setChainId(chainid)
+    }
+  }, [])
   // const searchPlace = intl.formatMessage('')
 
   return (

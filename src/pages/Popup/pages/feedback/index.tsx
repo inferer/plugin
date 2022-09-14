@@ -57,6 +57,7 @@ const FeedBack: React.FC<FeedBackProps> = ({
     if (appState === APP_STATE.FEEDBACK) {
       const address = localStorage.getItem('search_address') ?? ''
       setAddress(address)
+      setFeedSuccess(false)
     }
   }, [appState])
   console.log(pageStack, pageStack[pageStack.length - 2])
@@ -101,7 +102,10 @@ const FeedBack: React.FC<FeedBackProps> = ({
             <img src={successPng} alt="" style={{ width: 80, height: 80, marginTop: 90 }} />
             <div className=" text-sm font-medium mt-4 mb-3" style={{ color: 'rgba(63, 70, 100, 0.5)' }}>Submit Sucessfully</div>
             <button className="submit-btn text-white text-base font-bold flex items-center justify-center"
-              onClick={() => PopupAPI.changeState(APP_STATE.SEARCH)}
+              onClick={() => {
+                const from = localStorage.getItem('page-from')
+                PopupAPI.changeState(from === 'search' ? APP_STATE.SEARCH : APP_STATE.TICKETINFER)
+              }}
             >
               Back
             </button>

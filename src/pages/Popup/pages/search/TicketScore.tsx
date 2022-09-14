@@ -20,18 +20,18 @@ const TicketScore: React.FC<{
       </div>
       <div className="flex items-center justify-center mt-2">
         <div className="flex items-center">
-          <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
+          <img src={star1Png} alt="" style={{ width: 16, height: 16, marginLeft: 3 }}
             className={` ${ticketInfo.level < 1 ? 'opacity-30' : ''} `} />
-          <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
+          <img src={star1Png} alt="" style={{ width: 16, height: 16, marginLeft: 3 }}
             className={` ${ticketInfo.level < 2 ? 'opacity-30' : ''} `}
           />
-          <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
+          <img src={star1Png} alt="" style={{ width: 16, height: 16, marginLeft: 3 }}
             className={` ${ticketInfo.level < 3 ? 'opacity-30' : ''} `}
           />
-          <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
+          <img src={star1Png} alt="" style={{ width: 16, height: 16, marginLeft: 3 }}
             className={` ${ticketInfo.level < 4 ? 'opacity-30' : ''} `}
           />
-          <img src={star1Png} alt="" style={{ width: 16, height: 16 }}
+          <img src={star1Png} alt="" style={{ width: 16, height: 16, marginLeft: 3 }}
             className={` ${ticketInfo.level < 5 ? 'opacity-30' : ''} `}
           />
         </div>

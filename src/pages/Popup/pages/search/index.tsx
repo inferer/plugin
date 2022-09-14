@@ -173,7 +173,7 @@ const Search: React.FC<{
             onFocus={() => setFocus(true)}
             onBlur={() => (address.length === 0 && setFocus(false))}
           />
-          <div className={`search-btn flex justify-center items-center hover:opacity-80  ${focus ? 'focus' : ''}`}
+          <div className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
             onClick={() => {
               onSearch()
             }}

@@ -34,18 +34,15 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
   const [matchAddress, setMatchAddress] = useState<any>([])
 
   useEffect(() => {
-    if (appState === APP_STATE.LABELS) {
-      PopupAPI.getLabels()
-        .then((res: any) => {
-          console.log(res)
-          if (res.status === 200) {
-            setMatchAddress(res.matchAddress)
-            setUserData(res.result)
-          }
-        })
-    }
-
-  }, [appState])
+    PopupAPI.getLabels()
+      .then((res: any) => {
+        console.log(res)
+        if (res.status === 200) {
+          setMatchAddress(res.matchAddress)
+          setUserData(res.result)
+        }
+      })
+  }, [])
 
   useEffect(() => {
     if (active && userData) {

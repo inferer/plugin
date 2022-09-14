@@ -24,26 +24,23 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
   const [showWallet, setShowWallet] = useState(false)
   const [recommentData, setRecommentData] = useState({ like: [], other: [], risk: [] })
   useEffect(() => {
-    if (appState === APP_STATE.RECOMMEND) {
-      PopupAPI.getCloseTime()
-        .then((time: number) => {
-          console.log(time, 222222)
-          if (Date.now() - time > 2 * 24 * 60 * 60 * 1000) {
-            setShowWallet(true)
-          } else {
-            setShowWallet(false)
-          }
-        })
-      PopupAPI.getRecommend()
-        .then((res: any) => {
-          console.log(res)
-          if (res.status === 200) {
-            setRecommentData({ like: res.result.like || [], other: res.result.other || [], risk: res.result.risk || [] })
-          }
-        })
-    }
+    PopupAPI.getCloseTime()
+      .then((time: number) => {
+        if (Date.now() - time > 2 * 24 * 60 * 60 * 1000) {
+          setShowWallet(true)
+        } else {
+          setShowWallet(false)
+        }
+      })
+    PopupAPI.getRecommend()
+      .then((res: any) => {
+        console.log(res)
+        if (res.status === 200) {
+          setRecommentData({ like: res.result.like || [], other: res.result.other || [], risk: res.result.risk || [] })
+        }
+      })
 
-  }, [appState])
+  }, [])
 
   const onSetShowWallet = async () => {
     await PopupAPI.setCloseTime(Date.now())
@@ -62,7 +59,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
           >
             {
               active === 1 ?
-                <img src={like2Png} alt="" style={{ width: 15, height: 12 }} /> :
+                <img src={like2Png} alt="" /> :
                 <img src={like1Png} alt="" />
             }
             <div className={`text-base font-bold ${active === 1 ? 'color-image' : 'text-title'}`}>Like</div>

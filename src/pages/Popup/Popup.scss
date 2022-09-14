@@ -171,6 +171,10 @@ body,
     border-radius: 4px;
     padding: 1px;
 
+    input {
+      caret-color: #A157FF
+    }
+
     &.bg-image {
       background-image: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
       padding: 1px;
@@ -257,7 +261,8 @@ body,
     width: 64px;
     height: 64px;
     background: linear-gradient(128.3deg, rgba(53, 85, 255, 0.1) -56.57%, rgba(161, 87, 255, 0.1) 49.14%), #FFFFFF;
-    border-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
     flex: '0 0 64px'
   }
 
@@ -275,6 +280,7 @@ body,
   padding-left: 16px;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
+  padding-right: 12px;
 }
 
 .search-btn {
@@ -283,6 +289,10 @@ body,
   background: linear-gradient(133.61deg, #3555FF 44.55%, #A157FF 244.59%);
   border-radius: 0px 3px 3px 0px;
   flex: 0 0 49px;
+
+  &:hover {
+    background: #2832DC;
+  }
 
   &.focus {
     width: 49px;
@@ -878,6 +888,7 @@ body,
       height: 26px;
       background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
       border-radius: 26px;
+      flex: 0 0 26px;
 
       &.label-user {
         background-image: url('./pages/labels/images/border-bg.png');
@@ -967,4 +978,10 @@ body,
   //     background-color: ;
   //   }
   // }
+}
+
+.adm-toast-mask .adm-toast-main-text {
+  border-radius: 4px !important;
+  padding: 5px !important;
+
 }

@@ -121,7 +121,6 @@ class Service extends EventEmitter {
   }
 
   async searchByAddress(address) {
-    console.log(this.chainid, 11111111)
     try {
       this.feedAddress = address
       const res = await fetcher(this.chainid === 1 ? '/api/infer' : '/api/platon/infer', { user_id: this.profileUserInfo.user_id, address })
