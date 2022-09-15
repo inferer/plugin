@@ -36,7 +36,7 @@ const TicketScore: React.FC<{
           />
         </div>
         <div className="text-base text-white font-bold mx-2" style={{ fontSize: 20 }}>{Number(ticketInfo.level).toFixed(1)}</div>
-        <img onClick={() => collectTicket()} src={collected ? ttip2Png : ttipPng} alt="" style={{ width: 20, height: 20 }} />
+        <img className=" cursor-pointer" onClick={() => collectTicket()} src={collected ? ttip2Png : ttipPng} alt="" style={{ width: 20, height: 20 }} />
       </div>
     </div>
   )

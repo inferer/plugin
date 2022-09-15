@@ -18,6 +18,7 @@ export const app = {
   duplex: new MessageDuplex.Popup(),
   async run() {
     this.createStore()
+    localStorage.setItem('chainid', '1')
     await this.getAppState()
     this.bindDuplexRequests()
     this.render()
