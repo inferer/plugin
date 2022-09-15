@@ -88,7 +88,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
         {
           !address && showWallet &&
           <div className="connect-wallet flex items-center relative cursor-pointer"
-            style={{ marginTop: 0 }}
+            style={{ marginTop: 0, marginBottom: 12 }}
             onClick={() => PopupAPI.changeState(APP_STATE.WALLET)}
           >
             <img
@@ -105,7 +105,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
           </div>
         }
 
-        <div className="list-wrap overflow-auto" style={{ height: !address && showWallet ? 370 : 430 }}>
+        <div className="list-wrap overflow-auto" style={{ height: !address && showWallet ? 358 : 430 }}>
           {
             active === 1 && <Likes data={recommentData.like}
               onClick={(e: any) => {
