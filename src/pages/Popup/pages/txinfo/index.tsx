@@ -22,7 +22,7 @@ const TxInfo: React.FC<TxInfoProps> = ({
   const txinfoList = Object.keys(txinfoData.data).map(key => ({ key, data: txinfoData.data[key] }))
 
   return (
-    <div className="w-360 page-root search-page ">
+    <div className="w-360 page-root search-page " style={{ backgroundImage: 'none' }}>
       <PageHeader title={txinfoData.key} onBack={() => PopupAPI.changeState('searchpage' === toTxInfo ? APP_STATE.SEARCH : APP_STATE.TICKETINFER)} />
 
       <div className="page-content">

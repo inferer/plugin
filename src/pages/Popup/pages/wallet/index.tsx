@@ -43,7 +43,7 @@ const Wallet: React.FC<WalletProps> = ({
     if (address === null && isLoading) {
       setIsLoading(false)
       Toast.show({
-        content: 'Current webpage doesn\'t support Metamask',
+        content: 'Please install MetaMask Chrome Plugin.',
         position: "bottom"
       })
     }

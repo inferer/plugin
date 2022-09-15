@@ -147,30 +147,24 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   useEffect(() => {
     const ticketinfer_from = localStorage.getItem('ticketinfer_from')
     if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
-      if (active === 1) {
-        setLabels([])
-        pageNoRef.current = 0
-        getCollectTickets(0)
-      } else {
-        setTickets([])
+      setTickets([])
+      pageNoRef.current = 0
+      getCollectTickets(0)
+    } else {
+      localStorage.setItem('ticketinfer_from', '')
+    }
+  }, [appState])
+
+  useEffect(() => {
+    const ticketinfer_from = localStorage.getItem('ticketinfer_from')
+    if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
+      if (active === 2 && labels.length <= 0) {
         pageNoRef.current = 0
         getCollectLabels(0)
       }
     } else {
       localStorage.setItem('ticketinfer_from', '')
-      // setIsLoading(false)
-      // setNodata(false)
-      // setNodata2(false)
-      // setLabels([])
-      // setTickets([])
     }
-    // else {
-    //   setIsLoading(false)
-    //   setNodata(false)
-    //   setNodata2(false)
-    //   setLabels([])
-    //   setTickets([])
-    // }
   }, [active, appState])
 
 

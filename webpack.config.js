@@ -137,8 +137,8 @@ var options = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/pages/Content/content.styles.css',
-          to: path.join(__dirname, 'build'),
+          from: 'src/pages/Popup/public',
+          to: path.join(__dirname, 'build/public'),
           force: true,
         },
       ],
@@ -178,6 +178,7 @@ var options = {
       filename: 'popup.html',
       chunks: ['popup'],
       cache: false,
+      inject: 'body'
     }),
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'src', 'pages', 'Devtools', 'index.html'),

@@ -15,7 +15,7 @@ const Setting: React.FC<any> = () => {
     PopupAPI.changeState(page)
   }
   return (
-    <div className="page-root">
+    <div className="page-root setting-root">
       <div className="page-title color-image">
         Settings
       </div>
@@ -29,7 +29,7 @@ const Setting: React.FC<any> = () => {
                 <img src={walletPng} alt="" />
               </div>
               <div className="">
-                <div className="item-text1">Wallet</div>
+                <div className="item-text1 font-bold">Wallet</div>
                 <div className="item-text2">Wallet settings</div>
               </div>
             </div>
@@ -43,7 +43,7 @@ const Setting: React.FC<any> = () => {
                 <img src={favPng} alt="" />
               </div>
               <div className="">
-                <div className="item-text1">Collection</div>
+                <div className="item-text1 font-bold">Collection</div>
                 <div className="item-text2">Collect address</div>
               </div>
             </div>
@@ -57,7 +57,7 @@ const Setting: React.FC<any> = () => {
                 <img src={searchPng} alt="" />
               </div>
               <div className="">
-                <div className="item-text1">Search</div>
+                <div className="item-text1 font-bold">Search</div>
                 <div className="item-text2">Search settings</div>
               </div>
             </div>

@@ -1,3 +1,18 @@
+@font-face {
+  font-family: Poppins;
+  src: url('./public/fonts/Poppins-Bold.ttf');
+}
+
+@font-face {
+  font-family: DMSans-Bold;
+  src: url('./public/fonts/DMSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: DM Sans;
+  src: url('./public/fonts/DMSans-Regular.ttf');
+}
+
 .page-content {
   box-sizing: border-box;
   font-size: 14px;
@@ -396,7 +411,7 @@ body,
 }
 
 .page-title {
-  // font-family: Poppins;
+  font-family: Poppins;
   // font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -411,7 +426,7 @@ body,
 }
 
 .page-title2 {
-  // font-family: DMSans-Bold;
+  font-family: Poppins;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -982,6 +997,23 @@ body,
 
 .adm-toast-mask .adm-toast-main-text {
   border-radius: 4px !important;
-  padding: 5px !important;
-  top: 86% !important;
+  padding: 5px 12px !important;
+  top: 85% !important;
+  background: #33383E !important;
+  min-width: auto !important;
+  max-width: auto !important;
+}
+
+.setting-root {
+  .setting-item {
+    .icon-box {
+      background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
+    }
+
+    &:hover {
+      .icon-box {
+        background: #ffffff;
+      }
+    }
+  }
 }
