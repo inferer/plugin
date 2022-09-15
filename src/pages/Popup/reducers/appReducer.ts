@@ -33,12 +33,11 @@ export const appReucer = createReducer(initialState, (builder) => {
         if (payload !== state.pageStack[state.pageStack.length - 1]) {
           state.pageStack = [payload, ...state.pageStack]
         } else {
-          state.pageStack = state.pageStack.splice(0, state.pageStack.length - 1)
+          state.pageStack = [...state.pageStack.splice(0, state.pageStack.length - 1)]
         }
 
     }
-    console.log(state.pageStack)
-
+    console.log(payload, state.pageStack)
   })
   builder.addCase(setLanguage, (state, { payload }: any) => {
     state.language = payload

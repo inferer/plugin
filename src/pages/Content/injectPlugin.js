@@ -1,9 +1,7 @@
 
 import jQuery from '../../assets/js/jquery-3.6.0.min.js';
 import EventChannel from '../../MessageDuplex/EventChannel'
-
 import RequestHandler from '../../MessageDuplex/RequestHandler';
-
 
 export const matchAddress = (injectPlugin) => {
   document.addEventListener('selectionchange', function (e) {
@@ -12,11 +10,21 @@ export const matchAddress = (injectPlugin) => {
       injectPlugin.updateContextmenu(selectStr)
     }
   })
-  setTimeout(() => {
-    const bodyStr = jQuery('body').text()
-    const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
-    injectPlugin.setMatchAddress(addressList)
-  }, 5000)
+  // setTimeout(() => {
+  //   const bodyStr = jQuery('body').text()
+  //   const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
+  //   injectPlugin.setMatchAddress(addressList)
+  // }, 5000)
+  document.addEventListener('visibilitychange', function (e) {
+    console.log(e)
+    if (!document.hidden) {
+      setTimeout(() => {
+        const bodyStr = jQuery('body').text()
+        const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
+        injectPlugin.setMatchAddress(addressList)
+      }, 500)
+    }
+  })
 }
 
 const injectPlugin = {
@@ -49,6 +57,10 @@ const injectPlugin = {
 
   _bindEvents() {
     this.eventChannel.on('connectWallect', type => {
+      if (!window.ethereum) {
+        window.injectPlugin.extension.connectMetamask(null)
+        return
+      }
       window.ethereum.enable()
         .then(res => {
           if (res && res[0]) {

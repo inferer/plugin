@@ -15,6 +15,7 @@ class Service extends EventEmitter {
   }
   async initData() {
     await StorageService.init()
+    this.state = APP_STATE.SEARCH
     const userInfo = await this.getProfileUserInfo()
     this.profileUserInfo.email = userInfo.email
     this.profileUserInfo.chrome_id = userInfo.id
@@ -48,11 +49,11 @@ class Service extends EventEmitter {
       if (res.status === 200) {
         this.profileUserInfo.user_id = res.result.user_id
         StorageService.setUserId(res.result.user_id)
-        this.currentAddress = address.address
-        StorageService.setAddress(address.address)
-        chrome.runtime.reload()
+        // chrome.runtime.reload()
       }
     }
+    this.currentAddress = address.address
+    StorageService.setAddress(address.address)
     this.emit('setAddress', address.address)
   }
   changeState(appState) {
@@ -70,7 +71,7 @@ class Service extends EventEmitter {
     return await StorageService.setCloseTime()
   }
   getAddress() {
-    return StorageService.address
+    return StorageService.getStorage('address')
   }
   setLanguage(language) {
     StorageService.setLanguage(language);

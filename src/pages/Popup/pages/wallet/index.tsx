@@ -39,10 +39,15 @@ const Wallet: React.FC<WalletProps> = ({
       PopupAPI.connectWallet(type)
     }
   }
-
   useEffect(() => {
-
-  }, [])
+    if (address === null && isLoading) {
+      setIsLoading(false)
+      Toast.show({
+        content: 'Current webpage doesn\'t support Metamask',
+        position: "bottom"
+      })
+    }
+  }, [address, isLoading])
   return (
     <div className="w-360 page-root page-language">
       <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.SETTING)} />
