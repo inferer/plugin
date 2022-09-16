@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react"
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
 import { useIntl } from 'react-intl'
 import { Toast } from 'antd-mobile'
 import { getAddress } from '@ethersproject/address'
@@ -57,6 +57,7 @@ const Search: React.FC<{
     const [isValidAddress, setIsValidAddress] = useState(true)
     const [noData, setNodata] = useState(false)
     const [collected, setCollected] = useState(false)
+    const resultRef = useRef<HTMLDivElement | null>(null)
 
     const onSearch = async () => {
       if (!focus && address.length <= 0) {
@@ -78,6 +79,9 @@ const Search: React.FC<{
       const searchRet = await PopupAPI.searchByAddress(address)
       localStorage.setItem('search_address', address)
       console.log(searchRet)
+      if (resultRef.current) {
+        resultRef.current.scrollTop = 0
+      }
       if (searchRet.status === 200 && searchRet.result) {
         const info = searchRet.result.info || {}
         const infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
@@ -172,6 +176,13 @@ const Search: React.FC<{
             }}
             onFocus={() => setFocus(true)}
             onBlur={() => (address.length === 0 && setFocus(false))}
+            onKeyDown={(e) => {
+              const keyCode = e.keyCode || e.which || e.charCode;
+              if (keyCode == 13) {
+                e.preventDefault()
+                onSearch()
+              }
+            }}
           />
           <div className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
             onClick={() => {
@@ -190,7 +201,7 @@ const Search: React.FC<{
           {/* <Loading size={60} /> */}
           <img src={loading2Png} alt="" style={{ width: 320, height: 182 }} />
         </div>
-        <div className={`search-result overflow-auto pb-4 ${showResult ? 'show' : ''}`} style={{ height: 402 }}>
+        <div ref={resultRef} className={`search-result overflow-auto pb-4 ${showResult ? 'show' : ''}`} style={{ height: 402 }}>
           {
             !noData ?
               <>

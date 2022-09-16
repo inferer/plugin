@@ -144,28 +144,40 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   }
   const listRef = useRef<HTMLDivElement | null>(null)
   const pageNoRef = useRef<number>(0)
+  const listRef2 = useRef<HTMLDivElement | null>(null)
+  const pageNoRef2 = useRef<number>(0)
   useEffect(() => {
     const ticketinfer_from = localStorage.getItem('ticketinfer_from')
     if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
       setTickets([])
       pageNoRef.current = 0
       getCollectTickets(0)
+
+      setLabels([])
+      pageNoRef2.current = 0
+      getCollectLabels(0)
     } else {
+      setTimeout(() => {
+        setIsLoading(false)
+        setNodata(false)
+        setNodata2(false)
+        setActive2(1)
+      }, 500)
       localStorage.setItem('ticketinfer_from', '')
     }
   }, [appState])
 
-  useEffect(() => {
-    const ticketinfer_from = localStorage.getItem('ticketinfer_from')
-    if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
-      if (active === 2 && labels.length <= 0) {
-        pageNoRef.current = 0
-        getCollectLabels(0)
-      }
-    } else {
-      localStorage.setItem('ticketinfer_from', '')
-    }
-  }, [active, appState])
+  // useEffect(() => {
+  //   const ticketinfer_from = localStorage.getItem('ticketinfer_from')
+  //   if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
+  //     if (active === 2 && labels.length <= 0) {
+  //       pageNoRef.current = 0
+  //       getCollectLabels(0)
+  //     }
+  //   } else {
+  //     localStorage.setItem('ticketinfer_from', '')
+  //   }
+  // }, [active, appState])
 
 
   const onTicketsSroll = async () => {
@@ -180,8 +192,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
       }
     }
   }
-  const listRef2 = useRef<HTMLDivElement | null>(null)
-  const pageNoRef2 = useRef<number>(0)
+
   const onTicketsSroll2 = async () => {
     if (listRef2.current) {
       const listDom = listRef2.current

@@ -16,7 +16,6 @@ export const matchAddress = (injectPlugin) => {
   //   injectPlugin.setMatchAddress(addressList)
   // }, 5000)
   document.addEventListener('visibilitychange', function (e) {
-    console.log(e)
     if (!document.hidden) {
       setTimeout(() => {
         const bodyStr = jQuery('body').text()
@@ -57,17 +56,20 @@ const injectPlugin = {
 
   _bindEvents() {
     this.eventChannel.on('connectWallect', type => {
-      if (!window.ethereum) {
-        window.injectPlugin.extension.connectMetamask(null)
-        return
-      }
-      window.ethereum.enable()
-        .then(res => {
-          if (res && res[0]) {
-            window.injectPlugin.extension.connectMetamask(res[0])
-          }
+      if (!document.hidden) {
+        if (!window.ethereum) {
+          window.injectPlugin.extension.connectMetamask('notinstall')
+          return
+        }
+        window.ethereum.enable()
+          .then(res => {
+            if (res && res[0]) {
+              window.injectPlugin.extension.connectMetamask(res[0])
+            }
 
-        })
+          })
+      }
+
     })
   },
   connectMetamask(address) {

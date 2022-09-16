@@ -40,8 +40,8 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [noData, setNodata] = useState(false)
   const getTickets = (pageNo: number) => {
-    setIsLoading(true)
     if (isLoading || noData) return
+    // setIsLoading(true)
     PopupAPI.getTickets(pageNo)
       .then((res: any) => {
         if (res && res.status === 200) {
@@ -90,7 +90,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
       const scrollTop = listDom.scrollTop;
       const scrollHeight = listDom.scrollHeight;
       const clientHeight = listDom.clientHeight;
-      if (scrollHeight - clientHeight - scrollTop <= 5 && !isLoading) {
+      if (scrollHeight - clientHeight - scrollTop <= 2 && !isLoading) {
         pageNoRef.current++
         getTickets(pageNoRef.current)
       }

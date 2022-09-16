@@ -86,7 +86,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
           </div>
         </div>
         {
-          !address && showWallet &&
+          (!address && showWallet || address === 'notinstall') &&
           <div className="connect-wallet flex items-center relative cursor-pointer"
             style={{ marginTop: 0, marginBottom: 12 }}
             onClick={() => PopupAPI.changeState(APP_STATE.WALLET)}

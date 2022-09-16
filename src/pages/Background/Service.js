@@ -44,6 +44,10 @@ class Service extends EventEmitter {
     })
   }
   async setAddress(address) {
+    if (address.address === 'notinstall') {
+      this.emit('setAddress', address.address)
+      return
+    }
     if (address.address && !this.profileUserInfo.user_id) {
       const res = await this.bindWallet({ wallet_address: address.address })
       if (res.status === 200) {
@@ -95,7 +99,11 @@ class Service extends EventEmitter {
     this.emit('setMatchAddress', data);
   }
   connectWallet(data) {
-    this.emit('connectWallect', data)
+    if (this.currentAddress) {
+      this.emit('setAddress', this.currentAddress)
+    } else {
+      this.emit('connectWallect', data)
+    }
   }
 
   async register(chrome_id) {

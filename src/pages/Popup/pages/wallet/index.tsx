@@ -40,8 +40,9 @@ const Wallet: React.FC<WalletProps> = ({
     }
   }
   useEffect(() => {
-    if (address === null && isLoading) {
+    if (address === 'notinstall' && isLoading) {
       setIsLoading(false)
+      PopupAPI.setAddress()
       Toast.show({
         content: 'Please install MetaMask Chrome Plugin.',
         position: "bottom"
@@ -54,7 +55,7 @@ const Wallet: React.FC<WalletProps> = ({
 
       <div className="page-content">
         {
-          !address ?
+          !address || address === 'notinstall' ?
             <div className="setting-list">
               <div className="setting-item flex justify-between items-center"
                 onClick={() => connectWallet('metamask')}
