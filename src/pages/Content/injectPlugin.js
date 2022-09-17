@@ -73,20 +73,23 @@ const injectPlugin = {
 
   _bindEvents() {
     this.eventChannel.on('connectWallect', type => {
-      if (!document.hidden) {
-        if (!window.ethereum) {
-          window.injectPlugin.extension.connectMetamask('notinstall')
-          return
+      try {
+        if (!document.hidden) {
+          if (!window.ethereum) {
+            window.injectPlugin.extension.connectMetamask('notinstall')
+            return
+          }
+          window.ethereum.enable()
+            .then(res => {
+              if (res && res[0]) {
+                window.injectPlugin.extension.connectMetamask(res[0])
+              }
+
+            })
         }
-        window.ethereum.enable()
-          .then(res => {
-            if (res && res[0]) {
-              window.injectPlugin.extension.connectMetamask(res[0])
-            }
-
-          })
+      } catch (e) {
+        window.injectPlugin.extension.connectMetamask('notinstall')
       }
-
     })
   },
   connectMetamask(address) {
