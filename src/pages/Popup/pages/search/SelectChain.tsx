@@ -79,12 +79,12 @@ const SelectChain: React.FC<any> = () => {
               }
 
             </div>
-            <div className={`flex items-center chain-item ${chainId === 2 ? 'active' : ''}`}
+            <div className={`flex items-center chain-item ${chainId === 210425 ? 'active' : ''}`}
               onMouseEnter={() => {
-                onMouseEnter(2)
+                onMouseEnter(210425)
               }}
               onClick={() => {
-                onMouseClick(2)
+                onMouseClick(210425)
                 setShow(false)
                 setShowList(false)
               }}
@@ -92,7 +92,7 @@ const SelectChain: React.FC<any> = () => {
               <img src={platon} alt="" style={{ width: 18, height: 18 }} />
               <span className=' ml-1 mr-1'>PlatON</span>
               {
-                chainId === 2 && <img src={select} className="select" alt="" style={{ width: 10, height: 6 }} />
+                chainId === 210425 && <img src={select} className="select" alt="" style={{ width: 10, height: 6 }} />
               }
             </div>
           </div>

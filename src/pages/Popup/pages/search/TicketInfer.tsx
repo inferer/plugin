@@ -55,7 +55,8 @@ const TicketInfer: React.FC<{
           setIsLoading(true)
           setShowResult(false)
           setNodata(false)
-          const searchRet = await PopupAPI.searchByAddress(recommendData.address)
+
+          const searchRet = await PopupAPI.searchByAddress({ address: recommendData.address, chainid: recommendData.chainid })
           console.log(searchRet)
           if (searchRet.status === 200 && searchRet.result) {
             const info = searchRet.result.info || {}

@@ -12,6 +12,8 @@ import TicketScore from './TicketScore'
 import UpdateInfo from "./UpdateInfo"
 import FeedBackUS from "./FeedbackUS"
 
+// 0xefe7572596cf5e3f908a3bb59fac20da8abad646
+
 const { PopupAPI } = require('../../../../api')
 const logoPng = require('../../../../assets/img/icon-128.png')
 const logoTPng = require('../../../../assets/img/inferer.png')
@@ -29,6 +31,10 @@ const isAddress = (address: string) => {
   } catch (e) {
     return false
   }
+}
+
+const isLatAddress = (address: string) => {
+  return address.startsWith('lat') && address.length === 42
 }
 
 export const levelInfo = {
@@ -60,23 +66,36 @@ const Search: React.FC<{
     const resultRef = useRef<HTMLDivElement | null>(null)
 
     const onSearch = async () => {
+      const chainid = localStorage.getItem('chainid')
       if (!focus && address.length <= 0) {
         setFocus(true)
         return
       }
-      if (isAddress(address)) {
-        setIsValidAddress(true)
+      if (Number(chainid) === 1) {
+        if (isAddress(address)) {
+          setIsValidAddress(true)
+        } else {
+          setIsValidAddress(false)
+          setShowResult(false)
+          return
+        }
       } else {
-        setIsValidAddress(false)
-        setShowResult(false)
-        return
+        if (isAddress(address) || isLatAddress(address)) {
+          setIsValidAddress(true)
+        } else {
+          setIsValidAddress(false)
+          setShowResult(false)
+          return
+        }
       }
+
       if (showResult) {
         setShowResult(false)
       }
       setCollected(false)
       setIsLoading(true)
-      const searchRet = await PopupAPI.searchByAddress(address)
+
+      const searchRet = await PopupAPI.searchByAddress({ address, chainid: Number(chainid) })
       localStorage.setItem('search_address', address)
       console.log(searchRet)
       if (resultRef.current) {

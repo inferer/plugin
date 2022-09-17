@@ -130,9 +130,13 @@ class Service extends EventEmitter {
   }
 
   async searchByAddress(address) {
+    console.log(address)
     try {
-      this.feedAddress = address
-      const res = await fetcher(this.chainid === 1 ? '/api/infer' : '/api/platon/infer', { user_id: this.profileUserInfo.user_id, address })
+      this.feedAddress = address.address
+      const chainid = address.chainid ?? 1
+
+      const res = await fetcher(chainid === 1 ? '/api/infer' : '/api/platon/infer',
+        { user_id: this.profileUserInfo.user_id, address: address.address })
       if (res.status === 200) {
         StorageService.setSearchResult({
           chainid: this.chainid,

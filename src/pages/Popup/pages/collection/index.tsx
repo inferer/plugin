@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
@@ -91,13 +91,11 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   const [noData2, setNodata2] = useState(false)
   const setActive = (type: number) => {
     localStorage.setItem('ticketinfer_from', '')
-    setIsLoading(false)
-    setNodata(false)
-    setNodata2(false)
+
     setActive2(type)
   }
   const getCollectTickets = (pageNo: number) => {
-    if (isLoading || noData) return
+    if ((isLoading || noData) && pageNo > 0) return
     PopupAPI.getCollectTickets({ page_index: pageNo, page_size: 10 })
       .then((res: any) => {
         if (res.status === 200) {
@@ -112,7 +110,12 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
             setNodata(true)
             setIsLoading(false)
           }
-          setTickets([...tickets, ...newList])
+          if (pageNo > 0) {
+            setTickets([...tickets, ...newList])
+          } else {
+            setTickets([...newList])
+          }
+
           setTimeout(() => {
             setIsLoading(false)
           }, 500)
@@ -120,7 +123,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
       })
   }
   const getCollectLabels = (pageNo: number) => {
-    if (isLoading || noData2) return
+    if ((isLoading || noData2) && pageNo > 0) return
     PopupAPI.getCollectLabels({ page_index: pageNo, page_size: 10 })
       .then((res: any) => {
         if (res.status === 200) {
@@ -135,7 +138,12 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
             setNodata2(true)
             setIsLoading(false)
           }
-          setLabels([...labels, ...newList])
+
+          if (pageNo > 0) {
+            setLabels([...labels, ...newList])
+          } else {
+            setLabels([...newList])
+          }
           setTimeout(() => {
             setIsLoading(false)
           }, 500)
@@ -146,23 +154,23 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   const pageNoRef = useRef<number>(0)
   const listRef2 = useRef<HTMLDivElement | null>(null)
   const pageNoRef2 = useRef<number>(0)
+  console.log(tickets)
   useEffect(() => {
     const ticketinfer_from = localStorage.getItem('ticketinfer_from')
     if (appState === APP_STATE.COLLECTION && ticketinfer_from !== 'ticketinfer') {
       setTickets([])
+      setLabels([])
+      setIsLoading(false)
+      setNodata(false)
+      setNodata2(false)
+      setActive2(1)
       pageNoRef.current = 0
       getCollectTickets(0)
 
-      setLabels([])
       pageNoRef2.current = 0
       getCollectLabels(0)
     } else {
-      setTimeout(() => {
-        setIsLoading(false)
-        setNodata(false)
-        setNodata2(false)
-        setActive2(1)
-      }, 500)
+
       localStorage.setItem('ticketinfer_from', '')
     }
   }, [appState])
@@ -181,12 +189,12 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
 
 
   const onTicketsSroll = async () => {
-    if (listRef.current) {
+    if (listRef.current && tickets.length > 0) {
       const listDom = listRef.current
       const scrollTop = listDom.scrollTop;
       const scrollHeight = listDom.scrollHeight;
       const clientHeight = listDom.clientHeight;
-      if (scrollHeight - clientHeight - scrollTop <= 5 && !isLoading) {
+      if (scrollHeight - clientHeight - scrollTop <= 2 && !isLoading) {
         pageNoRef.current++
         getCollectTickets(pageNoRef.current)
       }
@@ -194,7 +202,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   }
 
   const onTicketsSroll2 = async () => {
-    if (listRef2.current) {
+    if (listRef2.current && labels.length > 0) {
       const listDom = listRef2.current
       const scrollTop = listDom.scrollTop;
       const scrollHeight = listDom.scrollHeight;

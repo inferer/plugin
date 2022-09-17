@@ -10,17 +10,34 @@ export const matchAddress = (injectPlugin) => {
       injectPlugin.updateContextmenu(selectStr)
     }
   })
-  // setTimeout(() => {
-  //   const bodyStr = jQuery('body').text()
-  //   const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
-  //   injectPlugin.setMatchAddress(addressList)
-  // }, 5000)
+  const setMatchAddress = () => {
+    const bodyStr = jQuery('body').text()
+    const addressList80 = bodyStr.match(/(0x[a-zA-Z0-9]{80})/g)
+    const addressList40 = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
+    let addressList = []
+    addressList40.forEach(address40 => {
+      let isIn = false
+      for (let k = 0; k < addressList80.length; k++) {
+        if (addressList80[k].indexOf(address40) > -1) {
+          isIn = true;
+          break;
+        }
+      }
+      if (!isIn) {
+        addressList.push(address40)
+      }
+    })
+    injectPlugin.setMatchAddress(addressList)
+  }
+  setTimeout(() => {
+    if (!document.hidden) {
+      setMatchAddress()
+    }
+  }, 1000)
   document.addEventListener('visibilitychange', function (e) {
     if (!document.hidden) {
       setTimeout(() => {
-        const bodyStr = jQuery('body').text()
-        const addressList = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
-        injectPlugin.setMatchAddress(addressList)
+        setMatchAddress()
       }, 500)
     }
   })
