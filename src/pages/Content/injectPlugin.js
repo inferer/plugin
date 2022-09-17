@@ -12,8 +12,8 @@ export const matchAddress = (injectPlugin) => {
   })
   const setMatchAddress = () => {
     const bodyStr = jQuery('body').text()
-    const addressList80 = bodyStr.match(/(0x[a-zA-Z0-9]{80})/g)
-    const addressList40 = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g)
+    const addressList80 = bodyStr.match(/(0x[a-zA-Z0-9]{80})/g) || []
+    const addressList40 = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g) || []
     let addressList = []
     addressList40.forEach(address40 => {
       let isIn = false
