@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader'
 import DataItem1 from "./DataItem1";
 import DataItem2 from "./DataItem2";
 import DataItem3 from "./DataItem3";
+import DataItem4 from "./DataItem4";
 const { PopupAPI } = require('../../../../api')
 // 0xd387a6e4e84a6c86bd90c158c6028a58cc8ac459
 export type TxInfoProps = {
@@ -30,10 +31,14 @@ const TxInfo: React.FC<TxInfoProps> = ({
         <div className="setting-list">
           {
             txinfoList.map((item: any, key: number) => {
+              console.log("txinfoList item.key " + item.key)
+
               if (item.key.indexOf('Interacted Address') > -1) {
                 return <DataItem2 key={key} itemData={item} />
               } else if (item.key.indexOf('Contributed Projects') > -1) {
                 return <DataItem3 key={key} itemData={item} />
+              } else if (txinfoData.key.indexOf('Label Info') > -1) {
+                return <DataItem4 key={key} itemData={item} />
               } else {
                 return <DataItem1 key={key} itemData={item} />
               }

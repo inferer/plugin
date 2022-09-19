@@ -92,27 +92,27 @@ const Popup: React.FC<{
           <div className=''
             onClick={() => navOnClick(APP_STATE.SEARCH)}
           >
-            <img className=' w-5 h-5' src={appState === APP_STATE.SEARCH ? searchActivePng : searchPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.SEARCH ? searchActivePng : searchPng} alt="" />
           </div>
           <div className=''
             onClick={() => navOnClick(APP_STATE.TICKET)}
           >
-            <img className=' w-5 h-5' src={appState === APP_STATE.TICKET ? ticketActivePng : ticketPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.TICKET ? ticketActivePng : ticketPng} alt="" />
           </div>
           <div className=''
             onClick={() => navOnClick(APP_STATE.RECOMMEND)}
           >
-            <img className=' w-5 h-5' src={appState === APP_STATE.RECOMMEND ? favActivePng : favPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.RECOMMEND ? favActivePng : favPng} alt="" />
           </div>
           <div className=''
             onClick={() => navOnClick(APP_STATE.LABELS)}
           >
-            <img className=' w-5 h-5' src={appState === APP_STATE.LABELS ? tipActivePng : tipPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.LABELS ? tipActivePng : tipPng} alt="" />
           </div>
           <div className=''
             onClick={() => navOnClick(APP_STATE.SETTING)}
           >
-            <img className=' w-5 h-5' src={appState === APP_STATE.SETTING ? settingActivePng : settingPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.SETTING ? settingActivePng : settingPng} alt="" />
           </div>
 
         </div>

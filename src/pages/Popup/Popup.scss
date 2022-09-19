@@ -17,7 +17,6 @@
   box-sizing: border-box;
   font-size: 14px;
   font-family: DM Sans;
-
 }
 
 @keyframes loadingx {
@@ -286,6 +285,19 @@ body,
       background: linear-gradient(128.59deg, rgba(0, 93, 233, 0.1) 11.59%, rgba(87, 154, 255, 0.1) 82.55%), #FFFFFF;
     }
   }
+
+  .dataitem4 {
+    width: 300px;
+    height: 74px;
+    background-image: url('./pages/txinfo/images/bg_label.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 4px;
+
+    &:hover {
+      background-image: url('./pages/txinfo/images/bg_label2.png');
+    }
+  }
 }
 
 .search-input {
@@ -434,6 +446,26 @@ body,
   /* identical to box height */
   text-transform: uppercase;
   background: linear-gradient(124.16deg, #3555FF 8.05%, #A157FF 66.68%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 210px;
+  text-align: center;
+}
+
+.page-title3 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  /* identical to box height */
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -616,6 +648,7 @@ body,
     .text {
       font-weight: 700;
       font-size: 20px;
+      font-family: DMSans-Bold;
     }
 
     .text1 {
@@ -1040,4 +1073,12 @@ body,
       }
     }
   }
+}
+
+.bglabel {
+  background: #000000;
+}
+
+.bgtxinfo {
+  background: #FFFFFF;
 }

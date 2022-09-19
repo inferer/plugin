@@ -1,7 +1,7 @@
 {
-  "name": "Plugin",
-  "version": "0.0.1",
-  "description": "Plugin",
+  "name": "Inferer",
+  "version": "0.0.3",
+  "description": "Inferer is a user identity analysis service in web3.",
   "license": "MIT",
   "repository": {
     "type": "git"
