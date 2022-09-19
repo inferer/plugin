@@ -476,6 +476,10 @@ body,
     font-size: 12px;
   }
 
+  .text-sm {
+    font-size: 14px;
+  }
+
   .icon-box {
     width: 36px;
     height: 36px;
@@ -1015,5 +1019,19 @@ body,
         background: #ffffff;
       }
     }
+  }
+}
+
+.slug-item {
+  max-width: 82px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.labels-page {
+  .setting-item .icon-box img {
+    width: 20px;
+    height: 20px;
   }
 }

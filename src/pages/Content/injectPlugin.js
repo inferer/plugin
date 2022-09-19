@@ -4,6 +4,20 @@ import EventChannel from '../../MessageDuplex/EventChannel'
 import RequestHandler from '../../MessageDuplex/RequestHandler';
 
 export const matchAddress = (injectPlugin) => {
+  // let disabled = false
+  // document.addEventListener('mouseover', function (e) {
+  //   if (disabled) return
+  //   disabled = true
+  //   // setTimeout(() => {
+  //   if (e.fromElement && e.fromElement.innerText) {
+  //     const text = e.fromElement.innerText
+  //     // const addressList80 = text.match(/(0x[a-zA-Z0-9]{80})/g) || []
+  //     const addressList40 = text.match(/(0x[a-zA-Z0-9]{40})/g) || []
+  //     console.log(addressList40)
+  //   }
+  //   disabled = false
+  //   // }, 300);
+  // })
   document.addEventListener('selectionchange', function (e) {
     const selectStr = window.getSelection().toString()
     if (selectStr) {

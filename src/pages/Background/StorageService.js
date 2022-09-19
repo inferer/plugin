@@ -6,7 +6,8 @@ const StorageService = {
     'address',
     'searchResult',
     'user_id',
-    'collectTicket'
+    'collectTicket',
+    'closeTime'
   ],
   storage: extensionizer.storage.local,
   async init() {

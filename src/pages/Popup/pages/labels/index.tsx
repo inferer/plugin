@@ -87,7 +87,7 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
   }
 
   return (
-    <div className="page-root recommend-page">
+    <div className="page-root recommend-page labels-page">
       <div className="page-title">
         Labels
       </div>
