@@ -1030,8 +1030,14 @@ body,
 }
 
 .labels-page {
-  .setting-item .icon-box img {
-    width: 20px;
-    height: 20px;
+  .setting-item {
+    .icon-box {
+      background: linear-gradient(127.27deg, rgba(53, 85, 255, 0.1) 12.05%, rgba(161, 87, 255, 0.1) 85.34%), #FFFFFF;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
   }
 }

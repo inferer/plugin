@@ -66,6 +66,7 @@ const Search: React.FC<{
     const resultRef = useRef<HTMLDivElement | null>(null)
 
     const onSearch = async () => {
+      console.log(focus, address, 1111111111,)
       const chainid = localStorage.getItem('chainid')
       if (!focus && address.length <= 0) {
         setFocus(true)
@@ -177,6 +178,21 @@ const Search: React.FC<{
       }
 
     }, [address])
+    const searchRef = useRef<any>(null)
+    useEffect(() => {
+      if (window.location.search.indexOf('address=')) {
+        setTimeout(() => {
+          const arr = window.location.search.split('=')
+          if (arr[1]) {
+            setAddress(arr[1])
+            setFocus(true)
+            if (searchRef.current) {
+              searchRef.current.click()
+            }
+          }
+        }, 1000)
+      }
+    }, [])
 
     return (
       <div className={`page-root search-page ${showResult ? 'inferer' : ' '}`}>
@@ -203,7 +219,7 @@ const Search: React.FC<{
               }
             }}
           />
-          <div className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
+          <div ref={searchRef} className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
             onClick={() => {
               onSearch()
             }}

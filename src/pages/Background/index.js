@@ -3,45 +3,6 @@ import { BackgroundAPI } from '../../api';
 import Service from './Service'
 import StorageService from './StorageService'
 
-console.log(chrome.action)
-chrome.runtime.onInstalled.addListener(function () {
-  chrome.contextMenus.removeAll(function () {
-    chrome.contextMenus.create({
-      type: 'normal',
-      title: 'Inferer search: ',
-      id: 'inferer',
-      contexts: ['page'],
-      // onclick: function (data) {
-      //   console.log(data)
-      // }
-    }, function () {
-      console.log('contextMenus are create.');
-      chrome.contextMenus.onClicked.addListener(function (data) {
-        console.log(data)
-        chrome.management.getSelf(
-          function (info) {
-            console.log(info)
-            chrome.windows.create({
-              focused: true,
-              width: 360,
-              height: 660,
-              type: 'popup',
-              url: 'popup.html',
-              left: 1500,
-              top: 0
-
-              // incognito: true,
-              // setSelfAsOpener: true
-            },
-              () => { })
-          }
-        )
-
-      })
-    });
-  })
-
-});
 
 
 
@@ -179,12 +140,13 @@ const backgroundScript = {
           })
           break
         case 'updateContextmenu':
+          backgroundScript.menuAddress = data.str
           chrome.contextMenus.update(
             'inferer',
             {
               type: 'normal',
               contexts: ['all'],
-              title: 'Inferer search: ' + data.str
+              title: 'Inferer search: ' + (data.str.length > 42 ? data.str.slice(0, 42) + '...' : data.str)
             },
             function (e) {
               console.log(e)
@@ -232,6 +194,44 @@ const backgroundScript = {
 
 backgroundScript.run();
 
-// setInterval(() => {
-//   BackgroundAPI.setState('Init...' + Date.now());
-// }, 2000);
+chrome.runtime.onInstalled.addListener(function () {
+  chrome.contextMenus.removeAll(function () {
+    chrome.contextMenus.create({
+      type: 'normal',
+      title: 'Inferer search: ',
+      id: 'inferer',
+      contexts: ['page'],
+      // onclick: function (data) {
+      //   console.log(data)
+      // }
+    }, function () {
+      console.log('contextMenus are create.');
+      chrome.contextMenus.onClicked.addListener(function (data) {
+        console.log(data)
+        chrome.management.getSelf(
+          function (info) {
+            console.log(info)
+            chrome.windows.create({
+              focused: true,
+              width: 360,
+              height: 632,
+              type: 'popup',
+              url: 'popup.html?address=' + backgroundScript.menuAddress,
+              left: 1500,
+              top: 0
+
+              // incognito: true,
+              // setSelfAsOpener: true
+            },
+              () => {
+
+              })
+
+          }
+        )
+
+      })
+    });
+  })
+
+});

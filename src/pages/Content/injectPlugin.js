@@ -26,9 +26,19 @@ export const matchAddress = (injectPlugin) => {
   })
   const setMatchAddress = () => {
     const bodyStr = jQuery('body').text()
-    const addressList80 = bodyStr.match(/(0x[a-zA-Z0-9]{80})/g) || []
-    const addressList40 = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g) || []
     let addressList = []
+
+    let addressList64 = bodyStr.match(/(0x[a-zA-Z0-9]{64})/g) || []
+    let addressList40 = bodyStr.match(/(0x[a-zA-Z0-9]{40})/g) || []
+    let addressList80 = []
+    addressList64.forEach(item => {
+      if (item.lastIndexOf('0x') === 42) {
+        addressList40.push(item.slice(0, 42))
+      } else {
+        addressList80.push(item)
+      }
+
+    })
     addressList40.forEach(address40 => {
       let isIn = false
       for (let k = 0; k < addressList80.length; k++) {
@@ -41,7 +51,7 @@ export const matchAddress = (injectPlugin) => {
         addressList.push(address40)
       }
     })
-    injectPlugin.setMatchAddress(addressList)
+    injectPlugin.setMatchAddress(Array.from(new Set(addressList)))
   }
   setTimeout(() => {
     if (!document.hidden) {

@@ -20,5 +20,8 @@ export default {
   },
   connectWallect(type) {
     this.duplex.send('tab', 'injectPlugin', { action: 'connectWallect', data: type }, false)
+  },
+  setMenuAddress(address) {
+    this.duplex.send('popup', 'setMenuAddress', address, false);
   }
 };
