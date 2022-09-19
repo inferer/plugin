@@ -30,7 +30,7 @@ const DataItem3: React.FC<{
                   //   .then(() => {
                   //     Toast.show({ content: 'Copied', position: 'bottom' })
                   //   })
-                  window.open(item.url, '_blank')
+                  window.open('https://gitcoin.co' + item.url, '_blank')
                 }}
               />
             </div>)
