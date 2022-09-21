@@ -121,8 +121,8 @@ const Popup: React.FC<PopupProps> = (props) => {
             onClick={onCollectionClick}
           />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TXINFO ? 'pop-root-page-in' : 'pop-root-page-right'}`}
-          style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TXINFO ? 'pop-root-page-in' : 'pop-root-page-right'} ${txinfoData.key === 'Label Info' ? 'bglabel' : 'bgtxinfo' }`}
+          style={{ zIndex: 999, opacity: 1 }}
         >
           <TxInfo language={language} txinfoData={txinfoData} toTxInfo={toTxInfo} />
         </div>

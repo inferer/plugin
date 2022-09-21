@@ -92,7 +92,7 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
         Labels
       </div>
       <div className="page-content page-home-content pt-3 relative">
-        <img src={infoPng} className="w-4 h-4 absolute right-2 top-5" alt=""
+        <img src={infoPng} className="w-3 h-3 absolute right-2 top-4 cursor-pointer" alt=""
           onMouseEnter={() => setShowInfo(true)}
         />
         {
