@@ -13,7 +13,7 @@ const DataItem1: React.FC<{
       </div>
       <div className="w-full flex flex-col justify-center pl-3">
         <div className="text-xs" style={{ color: '#7F8792' }}>{itemData.key}</div>
-        <div className="text-sm font-bold mt-1" style={{ color: '#3F4664' }}>{itemData.data}</div>
+        <div className="text-sm font-bold mt-1" style={{ color: '#3F4664', lineHeight: '14px', marginTop: 6 }}>{itemData.data}</div>
       </div>
     </div>
   )

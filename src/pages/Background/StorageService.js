@@ -7,7 +7,8 @@ const StorageService = {
     'searchResult',
     'user_id',
     'collectTicket',
-    'closeTime'
+    'closeTime',
+    'injectSuccess'
   ],
   storage: extensionizer.storage.local,
   async init() {
@@ -32,6 +33,10 @@ const StorageService = {
       if (!this['closeTime']) {
         this.closeTime = 0
         this.save('closeTime')
+      }
+      if (!this['injectSuccess']) {
+        this.injectSuccess = 'null'
+        this.save('injectSuccess')
       }
     } catch (ex) {
       return 'ERRORS.INVALID_PASSWORD';
@@ -112,6 +117,10 @@ const StorageService = {
   setCloseTime(time) {
     this.closeTime = time || Date.now()
     this.save('closeTime')
+  },
+  setInject(str) {
+    this.injectSuccess = str
+    this.save('injectSuccess')
   }
 
 }

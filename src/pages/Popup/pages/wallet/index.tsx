@@ -37,6 +37,7 @@ const Wallet: React.FC<WalletProps> = ({
     } else {
       setIsLoading(true)
       PopupAPI.connectWallet(type)
+
     }
   }
   useEffect(() => {

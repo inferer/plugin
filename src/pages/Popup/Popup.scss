@@ -151,7 +151,11 @@ body,
     height: 62px;
     left: 150px;
     top: 119px;
-    transition: all .3s ease-out;
+    transition-property: top, left, width, height;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    // transition: top .3s ease-out;
+    // transition: left .3s ease-out;
 
     &.left-position {
       left: 30px;
@@ -167,12 +171,22 @@ body,
     height: 18px;
     left: 131px;
     top: 196px;
-    transition: all .3s ease-out;
+    transition-property: top, left;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
 
     &.left-position {
       left: 30px;
       top: 30px;
     }
+  }
+
+  .img-logo3 {
+    position: absolute;
+    width: 100px;
+    height: 18px;
+    left: 30px;
+    top: 30px;
   }
 
   .search-wrap {
@@ -181,7 +195,9 @@ body,
     height: 51px;
     left: 40px;
     top: 263px;
-    transition: all .3s ease-out;
+    transition-property: top, left, width;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
     background: #F8F9FF;
     border-radius: 4px;
     padding: 1px;

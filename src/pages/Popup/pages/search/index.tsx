@@ -179,8 +179,11 @@ const Search: React.FC<{
 
     }, [address])
     const searchRef = useRef<any>(null)
+    const [showInput, setShowInput] = useState(false)
+    const [showInput2, setShowInput2] = useState(false)
     useEffect(() => {
-      if (window.location.search.indexOf('address=')) {
+      if (window.location.search.indexOf('address=') > -1) {
+        setShowInput(true)
         setTimeout(() => {
           const arr = window.location.search.split('=')
           if (arr[1]) {
@@ -188,22 +191,28 @@ const Search: React.FC<{
             setFocus(true)
             if (searchRef.current) {
               searchRef.current.click()
+              setTimeout(() => {
+                setShowInput2(true)
+                setShowInput(false)
+              }, 2000)
             }
           }
-        }, 1000)
+        }, 100)
+
+      } else {
+        setShowInput2(true)
       }
     }, [])
 
     return (
       <div className={`page-root search-page ${showResult ? 'inferer' : ' '}`}>
         {
-          address.length === 0 && <SelectChain />
+          address.length === 0 && <div className={`${showInput2 ? 'opacity-100' : 'opacity-0'}`}><SelectChain /></div>
         }
-
-        <img src={logoPng} className={`img-logo ${focus && address.length > 0 ? 'left-position' : ''}`} alt="" />
-        <img src={logoTPng} className={`img-logo2 ${focus && address.length > 0 ? 'left-position' : ''}`} alt="" />
-
-        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image' : ''}  ${focus && address.length > 0 ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''}`} >
+        <img src={logoPng} className={`img-logo ${focus && address.length > 0 ? 'left-position' : ''} ${showInput2 ? 'opacity-100' : 'opacity-0'}`} alt="" />
+        <img src={logoTPng} className={`img-logo2 ${focus && address.length > 0 ? 'left-position' : ''} ${showInput2 ? 'opacity-100' : 'opacity-0'}`} alt="" />
+        <img src={logoTPng} className={`img-logo3 left-position ${showInput ? 'opacity-100' : 'opacity-0'}`} alt="" />
+        <div className={`flex justify-center search-wrap bg-image left-position ${!isValidAddress ? 'valid' : ''} ${showInput ? 'opacity-100 z-20' : 'opacity-0'}`} >
           <input type="text" className={`outline-none search-input `} placeholder={holder}
             value={address}
             onChange={(e) => {
@@ -220,6 +229,33 @@ const Search: React.FC<{
             }}
           />
           <div ref={searchRef} className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
+            onClick={() => {
+              onSearch()
+            }}
+          >
+            <img src={searchPng} className=" w-6 h-6" alt="" />
+          </div>
+          {
+            !isValidAddress && <div className="text-sm font-medium absolute invalid-address">Invalid Address</div>
+          }
+        </div>
+        <div className={`flex justify-center search-wrap  ${focus ? 'bg-image' : ''}  ${focus && address.length > 0 ? 'bg-image left-position' : ''} ${!isValidAddress ? 'valid' : ''} ${showInput2 ? 'opacity-100 z-20' : 'opacity-0'}`} >
+          <input type="text" className={`outline-none search-input `} placeholder={holder}
+            value={address}
+            onChange={(e) => {
+              setAddress(e.target.value)
+            }}
+            onFocus={() => setFocus(true)}
+            onBlur={() => (address.length === 0 && setFocus(false))}
+            onKeyDown={(e) => {
+              const keyCode = e.keyCode || e.which || e.charCode;
+              if (keyCode == 13) {
+                e.preventDefault()
+                onSearch()
+              }
+            }}
+          />
+          <div className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
             onClick={() => {
               onSearch()
             }}

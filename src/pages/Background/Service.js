@@ -12,6 +12,7 @@ class Service extends EventEmitter {
     this.chainid = 1
     this.matchAddress = []
     this.feedAddress = ''
+    this.injectSuccess = null
   }
   async initData() {
     await StorageService.init()
@@ -70,6 +71,12 @@ class Service extends EventEmitter {
   }
   async getCloseTime() {
     return await StorageService.getStorage('closeTime')
+  }
+  setInject(str) {
+    this.injectSuccess = str
+  }
+  async getInjectSuccess() {
+    return this.injectSuccess
   }
   async setCloseTime() {
     return await StorageService.setCloseTime()

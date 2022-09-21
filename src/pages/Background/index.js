@@ -35,6 +35,9 @@ const backgroundScript = {
     duplex.on('getLanguage', ({ resolve }) => {
       resolve(this.service.getLanguage())
     });
+    duplex.on('getInjectSuccess', async ({ resolve }) => {
+      resolve(await this.service.getInjectSuccess())
+    });
     duplex.on('setLanguage', (e) => this.service.setLanguage(e.data))
     duplex.on('setAddress', (e) => this.service.setAddress(e.data))
 
@@ -131,6 +134,14 @@ const backgroundScript = {
     duplex.on('tabRequest', async ({ hostname, resolve, data: request }) => {
       const { action, data, uuid } = request
       switch (action) {
+        case 'connectWallectInit':
+          Service.setInject('success')
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break
         case 'connectWallet':
           Service.setAddress(data)
           resolve({

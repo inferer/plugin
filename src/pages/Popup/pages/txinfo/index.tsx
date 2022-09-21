@@ -27,7 +27,7 @@ const TxInfo: React.FC<TxInfoProps> = ({
       <PageHeader title={txinfoData.key} onBack={() => PopupAPI.changeState('searchpage' === toTxInfo ? APP_STATE.SEARCH : APP_STATE.TICKETINFER)} />
 
       <div className="page-content">
-        <div className="setting-list">
+        <div className="setting-list" style={{ height: 490, overflow: 'auto' }}>
           {
             txinfoList.map((item: any, key: number) => {
               if (item.key.indexOf('Interacted Address') > -1) {

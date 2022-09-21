@@ -11,12 +11,14 @@ export default {
     return this.duplex.send('refresh');
   },
   // Data requesting
-
   requestState() {
     return this.duplex.send('requestState');
   },
   changeState(appState) {
     return this.duplex.send('changeState', appState, false);
+  },
+  getInjectSuccess() {
+    return this.duplex.send('getInjectSuccess');
   },
   getLanguage() {
     return this.duplex.send('getLanguage');
