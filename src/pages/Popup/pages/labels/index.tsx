@@ -105,7 +105,7 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
             /> */}
             <div className="flex items-center">
               <img src={userPng} alt="" />
-              local users on web page
+              local users on current web page
             </div>
             <div className="flex items-center">
               <img src={user1Png} alt="" />
@@ -113,11 +113,11 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
             </div>
             <div className="flex items-center">
               <img src={user2Png} alt="" />
-              users who behave not like bots
+              users who adopted Layer 2 Service
             </div>
             <div className="flex items-center">
               <img src={user3Png} alt="" />
-              users who had transactions with me before
+              users who adopted Defi Service
             </div>
             <div className="flex items-center">
               <img src={user4Png} alt="" />
@@ -149,7 +149,7 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
               onClick={() => setActive(2)}
             >
               <img src={user2Png} alt="" />
-              Real users</div>
+              Layer 2 users</div>
           </div>
           <div className="flex items-center">
             <div
