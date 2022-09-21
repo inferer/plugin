@@ -15,4 +15,4 @@ export const APP_STATE = {
   TICKETINFER: 12
 }
 
-export const API_URL = 'http://119.8.117.37:12999'
+export const API_URL = 'http://119.8.117.37:12997'

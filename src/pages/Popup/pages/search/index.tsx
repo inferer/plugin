@@ -219,7 +219,7 @@ const Search: React.FC<{
               }
             }}
           />
-          <div ref={searchRef} className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
+          <div ref={searchRef} className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''} cursor-pointer`}
             onClick={() => {
               onSearch()
             }}
