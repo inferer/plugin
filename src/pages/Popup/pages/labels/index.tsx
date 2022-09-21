@@ -121,11 +121,11 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
             </div>
             <div className="flex items-center">
               <img src={user4Png} alt="" />
-              users who had many trasactions on nft
+              users who holds top brand of nfts
             </div>
             <div className="flex items-center">
               <img src={user5Png} alt="" />
-              users who holds big amount of tokens
+              users who holds big balance of tokens
             </div>
             <div className="flex items-center">
               <img src={user6Png} alt="" />
@@ -157,14 +157,14 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
               onClick={() => setActive(3)}
             >
               <img src={user3Png} alt="" />
-              Interactive users</div>
+              Defi Users</div>
             <img src={linePng} alt="" style={{ height: 10, width: 1, marginLeft: 20, marginRight: 20 }} />
             <div
               className={`text1 font-bold flex items-center ${active === 4 ? 'opacity-100' : 'opacity-50'}`}
               onClick={() => setActive(4)}
             >
               <img src={user4Png} alt="" />
-              Active on NFT</div>
+              Top NFT Accounts</div>
           </div>
           <div className="flex items-center">
             <div
@@ -172,7 +172,7 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
               onClick={() => setActive(5)}
             >
               <img src={user5Png} alt="" />
-              Large balance</div>
+              Top Accounts</div>
             <img src={linePng} alt="" style={{ height: 10, width: 1, marginLeft: 20, marginRight: 20 }} />
             <div
               className={`text1 font-bold flex items-center ${active === 6 ? 'opacity-100' : 'opacity-50'}`}
