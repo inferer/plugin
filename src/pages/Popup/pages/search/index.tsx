@@ -228,12 +228,12 @@ const Search: React.FC<{
               }
             }}
           />
-          <div ref={searchRef} className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''} cursor-pointer`}
+          <div ref={searchRef} className={`search-btn flex justify-center items-center cursor-pointer ${focus ? 'focus' : ''}`}
             onClick={() => {
               onSearch()
             }}
           >
-            <img src={searchPng} className=" w-6 h-6" alt="" />
+            <img src={searchPng} className=" w-6 h-6 cursor-pointer" alt="" />
           </div>
           {
             !isValidAddress && <div className="text-sm font-medium absolute invalid-address">Invalid Address</div>
@@ -255,12 +255,12 @@ const Search: React.FC<{
               }
             }}
           />
-          <div className={`search-btn flex justify-center items-center ${focus ? 'focus' : ''}`}
+          <div className={`search-btn flex justify-center items-center cursor-pointer ${focus ? 'focus' : ''}`}
             onClick={() => {
               onSearch()
             }}
           >
-            <img src={searchPng} className=" w-6 h-6" alt="" />
+            <img src={searchPng} className=" w-6 h-6 cursor-pointer" alt="" />
           </div>
           {
             !isValidAddress && <div className="text-sm font-medium absolute invalid-address">Invalid Address</div>
@@ -295,7 +295,8 @@ const Search: React.FC<{
               </> :
               <div className=" flex flex-col justify-center" style={{ marginLeft: 70, marginTop: 70 }}>
                 <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />
-                <div className=" text-center font-bold" style={{ color: 'rgba(63, 70, 100, 0.5)', marginTop: 20 }}>No result</div>
+                <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)', marginTop: 10 }}>No result yet, or maybe</div>
+                <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)'}}>it’s a contract</div>
               </div>
           }
 

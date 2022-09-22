@@ -153,7 +153,8 @@ const TicketInfer: React.FC<{
             </div> :
             <div className=" flex flex-col justify-center items-center" style={{ marginTop: 70 }}>
               <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />
-              <div className=" text-center font-bold" style={{ color: 'rgba(63, 70, 100, 0.5)', marginTop: 20 }}>No result</div>
+              <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)', marginTop: 10 }}>No result yet, or maybe</div>
+              <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)'}}>it’s a contract</div>
             </div>)
         }
 
