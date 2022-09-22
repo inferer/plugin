@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl'
 const { PopupAPI } = require('../../../../api')
 const eth = require('./images/eth3.png')
 const platon = require('./images/platon3.png')
-const up = require('./images/up2.png')
+const up = require('./images/up.png')
 const down = require('./images/down.png')
 const select = require('./images/select2.png')
 

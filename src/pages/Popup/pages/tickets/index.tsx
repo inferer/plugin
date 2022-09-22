@@ -11,6 +11,8 @@ import Loading from "../components/Loading";
 const { PopupAPI } = require('../../../../api')
 
 const copyImg = require('./images/copy2.png')
+const chainEthImg = require('./images/chain_eth.png')
+const chainPlatonImg = require('./images/chain_platon.png')
 
 const ticketsList = [
   { id: 1, level: 1 },
@@ -119,7 +121,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                 <div className="ml-4 ">
                   <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
                     {item.search_address.slice(0, 6) + '.....' + item.search_address.slice(-4)}
-                    <img src={copyImg} alt="" className="w-4 h-4 ml-1"
+                    <img src={copyImg} alt="" className="w-3 h-3 ml-1"
                       onClick={(e) => {
                         e.stopPropagation()
                         navigator.clipboard.writeText(item.search_address)
@@ -128,6 +130,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                           })
                       }}
                     />
+                    <img src={item.chainid === 1 ? chainEthImg : chainPlatonImg} alt="" className="w-3 h-3 ml-1"/>
                   </div>
                   <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>{item.timestamp}</div>
                 </div>
@@ -151,7 +154,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                 </div>
               </div> */}
           {
-            noData && tickets.length > 0 ? <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+            noData && tickets.length > 0 ? <div className=" my-2 text-sm opacity-70 text-center">END</div>
               :
               <div className="flex justify-center pb-3">
                 <Loading size={20} />

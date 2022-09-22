@@ -36,7 +36,7 @@ const Language: React.FC<LanguageProps> = ({
             }
 
           </div>
-          <div className="setting-item flex justify-between items-center"
+          {/* <div className="setting-item flex justify-between items-center"
             onClick={() => changeLanguage('zh')}
           >
             <div className="flex items-center ">
@@ -45,7 +45,7 @@ const Language: React.FC<LanguageProps> = ({
             {
               language === 'zh' && <img src={selectPng} alt="" style={{ width: 13, height: 9 }} />
             }
-          </div>
+          </div> */}
         </div>
 
       </div>

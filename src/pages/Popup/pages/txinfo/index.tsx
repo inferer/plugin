@@ -37,7 +37,7 @@ const TxInfo: React.FC<TxInfoProps> = ({
                 return <DataItem2 key={key} itemData={item} />
               } else if (item.key.indexOf('Contributed Projects') > -1) {
                 return <DataItem3 key={key} itemData={item} />
-              } else if (txinfoData.key.indexOf('Label Info') > -1) {
+              } else if (txinfoData.key.indexOf('Inferer Label') > -1) {
                 return <DataItem4 key={key} itemData={item} />
               } else {
                 return <DataItem1 key={key} itemData={item} />

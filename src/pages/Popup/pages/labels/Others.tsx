@@ -58,9 +58,9 @@ const Others: React.FC<any> = ({ showData = [], activeKey = '', active, onCollec
     if (res.status === 200) {
       onCollectSuccess && onCollectSuccess(key, item.is_collected)
       if(item.is_collected) {
-        Toast.show('Cancelled')
-      } else {
         Toast.show('Collected')
+      } else {
+        Toast.show('Canceled')
       }
     } else {
       Toast.show('Error')

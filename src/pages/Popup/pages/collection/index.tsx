@@ -26,6 +26,8 @@ const ticketsPng = require('./images/ticket.png')
 const tickets2Png = require('./images/tickets2.png')
 const labelsPng = require('./images/labels.png')
 const labels2Png = require('./images/labels2.png')
+const chainEthImg = require('./images/chain_eth.png')
+const chainPlatonImg = require('./images/chain_platon.png')
 
 const ticketsList = [
   { level: 1 },
@@ -275,7 +277,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
                       {item.collect_address.slice(0, 6) + '.....' + item.collect_address.slice(-6)}
-                      <img src={copyImg} alt="" className="w-4 h-4 ml-1"
+                      <img src={copyImg} alt="" className="w-3 h-3 ml-1"
                         onClick={(e) => {
                           e.stopPropagation()
                           navigator.clipboard.writeText(item.collect_address)
@@ -284,6 +286,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                             })
                         }}
                       />
+                      <img src={item.chainid === 1 ? chainEthImg : chainPlatonImg} alt="" className="w-3 h-3 ml-1"/>
                     </div>
                     <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>Collect on {item.date}</div>
                   </div>
@@ -319,7 +322,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
                   <div className="ml-4 ">
                     <div className="text-sm font-bold flex items-center" style={{ color: '#7F8792' }}>
                       {item.collect_address.slice(0, 6) + '.....' + item.collect_address.slice(-6)}
-                      <img src={copyImg} alt="" className="w-4 h-4 ml-1"
+                      <img src={copyImg} alt="" className="w-3 h-3 ml-1"
                         onClick={(e) => {
                           e.stopPropagation()
                           navigator.clipboard.writeText(item.collect_address)

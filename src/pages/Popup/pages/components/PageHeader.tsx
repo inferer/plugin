@@ -14,7 +14,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div className="relative flex justify-center items-center">
-      <img src={title === 'Label Info' ? backWhitePng : backtPng} className="w-6 h-6 relative -ml-2 cursor-pointer" alt=""
+      <img src={title === 'Inferer Label' ? backWhitePng : backtPng} className="w-6 h-6 relative -ml-2 cursor-pointer" alt=""
         onClick={(e) => {
           e.stopPropagation()
           if (onBack) {
@@ -23,7 +23,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         }}
       />
       <div className=" w-full flex justify-center pr-6">
-        <div className={title === 'Label Info' ? 'page-title3' : 'page-title2' }>{title}</div>
+        <div className={title === 'Inferer Label' ? 'page-title3' : 'page-title2' }>{title}</div>
       </div>
     </div>
 
