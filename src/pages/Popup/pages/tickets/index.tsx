@@ -154,7 +154,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                 </div>
               </div> */}
           {
-            noData && tickets.length > 0 ? <div className=" my-2 text-sm opacity-70 text-center">No more data</div>
+            noData && tickets.length > 0 ? <div className=" my-2 text-sm opacity-70 text-center">END</div>
               :
               <div className="flex justify-center pb-3">
                 <Loading size={20} />
