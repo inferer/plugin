@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants"
 import Loading from "../components/Loading";
 import PageHeader from '../components/PageHeader'
+import CoinBase from './images/CoinbaseWallet'
 
 
 const { PopupAPI } = require('../../../../api')
@@ -31,9 +32,12 @@ const Wallet: React.FC<WalletProps> = ({
     PopupAPI.setSearchNum(num)
   }
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoading2, setIsLoading2] = useState(false)
 
   const connectWallet = async (type: string) => {
-    if (type === 'walletconnect') {
+    if (type === 'coinbase') {
+      setIsLoading2(true)
+      PopupAPI.connectWallet('metamask')
     } else {
       setIsLoading(true)
       PopupAPI.connectWallet(type)
@@ -43,6 +47,7 @@ const Wallet: React.FC<WalletProps> = ({
   useEffect(() => {
     if (address === 'notinstall' && isLoading) {
       setIsLoading(false)
+      setIsLoading2(false)
       PopupAPI.setAddress()
       Toast.show({
         content: 'Please install MetaMask Chrome Plugin.',
@@ -74,13 +79,20 @@ const Wallet: React.FC<WalletProps> = ({
                 </div>
               </div>
               <div className="setting-item flex justify-between items-center"
-                onClick={() => connectWallet('walletconnect')}
+                onClick={() => connectWallet('coinbase')}
               >
                 <div className="flex items-center ">
-                  <img src={wccPng} alt="" style={{ width: 24, height: 24 }} />
-                  <div className={`item-text1 ml-1`}>Connect WalletConnect</div>
+                  {/* <img src={wccPng} alt="" style={{ width: 24, height: 24 }} /> */}
+                  <CoinBase width="22" height="22" />
+                  <div className={`item-text1 ml-1`} style={{ marginLeft: 6 }}>Connect Coinbase</div>
                 </div>
-                <img src={leftPng} alt="" style={{ width: 5, height: 7 }} />
+                {/* <img src={leftPng} alt="" style={{ width: 5, height: 7 }} /> */}
+                <div className="flex items-center">
+                  <div className={`loading-box ${isLoading2 ? '' : 'hide'}`} style={{ width: 18, height: 18, marginRight: 10 }}>
+                    <img src={loadingPng} alt="" className="loading-wrap" style={{ width: 18, height: 18 }} />
+                  </div>
+                  <img src={leftPng} alt="" style={{ width: 5, height: 7 }} />
+                </div>
               </div>
             </div> :
             <div className="wallet-card pb-3 pr-3 mt-3">
@@ -101,6 +113,7 @@ const Wallet: React.FC<WalletProps> = ({
                 <div
                   onClick={() => {
                     setIsLoading(false)
+                    setIsLoading2(false)
                     PopupAPI.setAddress()
                   }}
                   className=" hover:opacity-80 border cursor-pointer rounded border-white flex justify-center items-center text-white font-bold text-xs" style={{ width: 103, height: 28 }}>

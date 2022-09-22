@@ -89,13 +89,18 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [noData, setNodata] = useState(false)
   const [noData2, setNodata2] = useState(false)
+  const [canScroll, setCanScroll] = useState(true)
   const setActive = (type: number) => {
     localStorage.setItem('ticketinfer_from', '')
-
+    setCanScroll(true)
     setActive2(type)
   }
   const getCollectTickets = (pageNo: number) => {
-    if ((isLoading || noData) && pageNo > 0) return
+    if ((isLoading || noData) && pageNo > 0) {
+      setCanScroll(true)
+      return
+    }
+    setCanScroll(false)
     PopupAPI.getCollectTickets({ page_index: pageNo, page_size: 10 })
       .then((res: any) => {
         if (res.status === 200) {
@@ -116,14 +121,20 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
             setTickets([...newList])
           }
 
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 500)
         }
+
+        setTimeout(() => {
+          setIsLoading(false)
+          setCanScroll(true)
+        }, 500)
       })
   }
   const getCollectLabels = (pageNo: number) => {
-    if ((isLoading || noData2) && pageNo > 0) return
+    if ((isLoading || noData2) && pageNo > 0) {
+      setCanScroll(true)
+      return
+    }
+    setCanScroll(false)
     PopupAPI.getCollectLabels({ page_index: pageNo, page_size: 10 })
       .then((res: any) => {
         if (res.status === 200) {
@@ -136,6 +147,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
           })
           if (newList.length < 10) {
             setNodata2(true)
+            setCanScroll(true)
             setIsLoading(false)
           }
 
@@ -144,10 +156,12 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
           } else {
             setLabels([...newList])
           }
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 500)
+
         }
+        setTimeout(() => {
+          setIsLoading(false)
+          setCanScroll(true)
+        }, 500)
       })
   }
   const listRef = useRef<HTMLDivElement | null>(null)
@@ -195,6 +209,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
       const scrollHeight = listDom.scrollHeight;
       const clientHeight = listDom.clientHeight;
       if (scrollHeight - clientHeight - scrollTop <= 2 && !isLoading) {
+        setCanScroll(false)
         pageNoRef.current++
         getCollectTickets(pageNoRef.current)
       }
@@ -208,6 +223,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
       const scrollHeight = listDom.scrollHeight;
       const clientHeight = listDom.clientHeight;
       if (scrollHeight - clientHeight - scrollTop <= 2 && !isLoading) {
+        setCanScroll(false)
         pageNoRef2.current++
         getCollectLabels(pageNoRef2.current)
       }
@@ -242,7 +258,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
         </div>
         {
           active === 1 &&
-          <div className="setting-list" style={{ height: 470, overflow: 'auto' }}
+          <div className="setting-list" style={{ height: 470, overflow: canScroll ? 'auto' : 'hidden' }}
             ref={listRef}
             onScroll={() => onTicketsSroll()}
           >
@@ -285,7 +301,7 @@ const Collection: React.FC<any> = ({ appState, onClick }) => {
         }
         {
           active === 2 &&
-          <div className="setting-list" style={{ height: 470, overflow: 'auto' }}
+          <div className="setting-list" style={{ height: 470, overflow: canScroll ? 'auto' : 'hidden' }}
             ref={listRef2}
             onScroll={() => onTicketsSroll2()}
           >
