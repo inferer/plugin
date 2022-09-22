@@ -66,7 +66,6 @@ const Search: React.FC<{
     const resultRef = useRef<HTMLDivElement | null>(null)
 
     const onSearch = async () => {
-      console.log(focus, address, 1111111111,)
       const chainid = localStorage.getItem('chainid')
       if (!focus && address.length <= 0) {
         setFocus(true)
@@ -215,6 +214,7 @@ const Search: React.FC<{
         <div className={`flex justify-center search-wrap bg-image left-position ${!isValidAddress ? 'valid' : ''} ${showInput ? 'opacity-100 z-20' : 'opacity-0'}`} >
           <input type="text" className={`outline-none search-input `} placeholder={holder}
             value={address}
+            disabled={isLoading}
             onChange={(e) => {
               setAddress(e.target.value)
             }}
@@ -245,6 +245,7 @@ const Search: React.FC<{
             onChange={(e) => {
               setAddress(e.target.value)
             }}
+            disabled={isLoading}
             onFocus={() => setFocus(true)}
             onBlur={() => (address.length === 0 && setFocus(false))}
             onKeyDown={(e) => {
@@ -273,7 +274,7 @@ const Search: React.FC<{
           <img src={loading2Png} alt="" style={{ width: 320, height: 182 }} />
         </div>
         <div ref={resultRef} className={`search-result overflow-auto pb-4 ${showResult ? 'show' : ''}`} style={{ height: 402 }}>
-          {
+          {address.length > 0 && (
             !noData ?
               <>
                 <TicketScore
@@ -296,7 +297,7 @@ const Search: React.FC<{
               <div className=" flex flex-col justify-center" style={{ marginLeft: 70, marginTop: 70 }}>
                 <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />
                 <div className=" text-center font-bold" style={{ color: 'rgba(63, 70, 100, 0.5)', marginTop: 20 }}>No result</div>
-              </div>
+              </div>)
           }
 
         </div>
