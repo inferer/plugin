@@ -26,7 +26,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
   useEffect(() => {
     PopupAPI.getCloseTime()
       .then((time: number) => {
-        if (Date.now() - time > 2 * 24 * 60 * 60 * 1000) {
+        if ((Date.now()) - time > 2 * 24 * 60 * 60 * 1000) {
           setShowWallet(true)
         } else {
           setShowWallet(false)
@@ -52,7 +52,7 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
       <div className="page-title">
         Recommend
       </div>
-      <div className="page-content page-home-content">
+      <div className="page-content page-home-content relative">
         <div className="flex items-center justify-between collection-header mt-3 pb-3">
           <div className="flex items-center justify-center"
             onClick={() => setActive(1)}
@@ -105,26 +105,39 @@ const Recommend: React.FC<any> = ({ appState, onClick, address }) => {
           </div>
         }
 
-        <div className="list-wrap overflow-auto" style={{ height: !address && showWallet ? 358 : 430 }}>
-          {
-            active === 1 && <Likes data={recommentData.like}
-              onClick={(e: any) => {
-                onClick && onClick(e)
-              }} />
-          }
-          {
-            active === 2 && <Risks data={recommentData.risk}
-              onClick={(e: any) => {
-                onClick && onClick(e)
-              }} />
-          }
-          {
-            active === 3 && <Others data={recommentData.other}
-              onClick={(e: any) => {
-                onClick && onClick(e)
-              }} />
-          }
+        <div className="list-wrap overflow-auto absolute left-0 bg-white w-full" style={{
+          height: !address && showWallet ? 358 : 430,
+          top: !address && showWallet ? 106 : 32,
+          zIndex: active === 1 ? 999 : 0
+        }}>
+          <Likes data={recommentData.like}
+            onClick={(e: any) => {
+              onClick && onClick(e)
+            }} />
         </div>
+
+        <div className="list-wrap overflow-auto absolute left-0 bg-white w-full" style={{
+          height: !address && showWallet ? 358 : 430,
+          top: !address && showWallet ? 106 : 32,
+          zIndex: active === 2 ? 999 : 0
+        }}>
+          <Risks data={recommentData.risk}
+            onClick={(e: any) => {
+              onClick && onClick(e)
+            }} />
+        </div>
+
+        <div className="list-wrap overflow-auto absolute left-0 bg-white w-full" style={{
+          height: !address && showWallet ? 358 : 430,
+          top: !address && showWallet ? 106 : 32,
+          zIndex: active === 3 ? 999 : 0
+        }}>
+          <Others data={recommentData.other}
+            onClick={(e: any) => {
+              onClick && onClick(e)
+            }} />
+        </div>
+
         {/* <div className="setting-list">
           <div className="setting-item flex justify-between items-center"
           >
