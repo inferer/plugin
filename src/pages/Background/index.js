@@ -134,6 +134,13 @@ const backgroundScript = {
     duplex.on('tabRequest', async ({ hostname, resolve, data: request }) => {
       const { action, data, uuid } = request
       switch (action) {
+        case 'init':
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break;
         case 'connectWallectInit':
           Service.setInject('success')
           resolve({
