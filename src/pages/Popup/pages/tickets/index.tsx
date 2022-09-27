@@ -47,7 +47,6 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
     PopupAPI.getTickets(pageNo)
       .then((res: any) => {
         if (res && res.status === 200) {
-          console.log(res)
           const result = typeof res.result === 'string' ? [] : res.result
           const tmpList = result.map((item: any) => {
             const contentJson = JSON.parse(item.content)
@@ -62,12 +61,16 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
           if (tmpList.length < 10) {
             setNodata(true)
             setIsLoading(false)
+          } 4
+          if (pageNo === 0) {
+            setTickets([...tmpList])
+          } else {
+            setTickets([...tickets, ...tmpList])
           }
-          setTickets([...tickets, ...tmpList])
           setShowResult(true)
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 500)
+          // setTimeout(() => {
+          setIsLoading(false)
+          // }, 500)
         }
       })
   }
@@ -77,6 +80,9 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
       setIsLoading(false)
       setNodata(false)
       getTickets(0)
+    } else {
+      setIsLoading(false)
+      setNodata(false)
     }
   }, [appState])
 
@@ -130,7 +136,7 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                           })
                       }}
                     />
-                    <img src={item.chainid === 1 ? chainEthImg : chainPlatonImg} alt="" className="w-3 h-3 ml-1"/>
+                    <img src={item.chainid === 1 ? chainEthImg : chainPlatonImg} alt="" className="w-3 h-3 ml-1" />
                   </div>
                   <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>{item.timestamp}</div>
                 </div>
@@ -153,8 +159,9 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
                   <div className="text-xs " style={{ color: 'rgba(127, 135, 146, 0.7)' }}>15:00 7/22 2022</div>
                 </div>
               </div> */}
+
           {
-            noData && tickets.length > 0 ? <div className=" my-2 text-sm opacity-70 text-center">End</div>
+            noData && tickets.length >= 0 ? !(showResult && tickets.length <= 0) && <div className=" my-2 text-sm opacity-70 text-center">End</div>
               :
               <div className="flex justify-center pb-3">
                 <Loading size={20} />

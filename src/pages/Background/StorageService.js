@@ -105,6 +105,10 @@ const StorageService = {
     }
     this.save('collectTicket')
   },
+  cancelCollectTicket(data) {
+    this.collectTicket = data
+    this.save('collectTicket')
+  },
   setCollectLabels(data) {
     if (this.collectLabels) {
       this.collectLabels.push(data)
@@ -112,6 +116,10 @@ const StorageService = {
       this.collectLabels = []
       this.collectLabels.push(data)
     }
+    this.save('collectLabels')
+  },
+  cancelCollectLabels(data) {
+    this.collectLabels = data
     this.save('collectLabels')
   },
   setCloseTime(time) {

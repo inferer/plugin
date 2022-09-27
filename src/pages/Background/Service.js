@@ -137,7 +137,6 @@ class Service extends EventEmitter {
   }
 
   async searchByAddress(address) {
-    console.log(address)
     try {
       this.feedAddress = address.address
       const chainid = address.chainid ?? 1
@@ -145,12 +144,20 @@ class Service extends EventEmitter {
       const res = await fetcher(chainid === 1 ? '/api/infer' : '/api/platon/infer',
         { user_id: this.profileUserInfo.user_id, address: address.address })
       if (res.status === 200) {
-        StorageService.setSearchResult({
-          chainid: this.chainid,
-          content: JSON.stringify(res.result),
-          search_address: address,
-          timestamp: new Date().toString()
-        })
+        // 判断是否存在
+        const searchResult = await StorageService.getStorage('searchResult') || []
+        const newTicket = searchResult.find(item => item.search_address === address.address)
+        if (newTicket && newTicket.search_address) {
+
+        } else {
+          StorageService.setSearchResult({
+            chainid: this.chainid,
+            content: JSON.stringify(res.result),
+            search_address: address.address,
+            timestamp: new Date().toString()
+          })
+        }
+
       }
       return res
     } catch (e) {
@@ -199,12 +206,18 @@ class Service extends EventEmitter {
       if (this.profileUserInfo.user_id) {
         res = await poster('/plugin/collectLabel', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
       } else {
-        await StorageService.setCollectLabels({
-          chainid: this.chainid,
-          label: data.label_info,
-          collect_address: data.collect_address,
-          timestamp: new Date().toString()
-        })
+        const collectLabels = await StorageService.getStorage('collectLabels') || []
+        const newTicket = collectLabels.find(item => item.collect_address === data.collect_address)
+        if (newTicket && newTicket.collect_address) {
+
+        } else {
+          await StorageService.setCollectLabels({
+            chainid: this.chainid,
+            label: data.label_info,
+            collect_address: data.collect_address,
+            timestamp: new Date().toString()
+          })
+        }
       }
       return res
     } catch (e) {
@@ -214,17 +227,23 @@ class Service extends EventEmitter {
   async cancelCollectLabel(data = {}) {
     try {
       const res = await poster('/plugin/cancelCollectLabel', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
-      const collectLabels = await StorageService.getStorage('collectLabels')
-      if (collectLabels && collectLabels.length > 0) {
-        const filterList = collectLabels.filter(item => item.collect_address !== data.collect_address)
-        StorageService.storage.clear('collectLabels')
-        filterList.forEach(async (item) => {
-          await StorageService.setCollectLabels(item)
-        })
+      let collectLabels = await StorageService.getStorage('collectLabels') || []
+      const index = collectLabels.findIndex(item => item.collect_address === data.collect_address)
+      if (index > -1) {
+        collectLabels.splice(index, 1)
+        await StorageService.cancelCollectLabels(collectLabels)
       }
+      // const collectLabels = await StorageService.getStorage('collectLabels')
+      // if (collectLabels && collectLabels.length > 0) {
+      //   const filterList = collectLabels.filter(item => item.collect_address !== data.collect_address)
+      //   StorageService.storage.clear('collectLabels')
+      //   filterList.forEach(async (item) => {
+      //     await StorageService.setCollectLabels(item)
+      //   })
 
       return res
     } catch (e) {
+
     }
   }
 
@@ -234,13 +253,20 @@ class Service extends EventEmitter {
       if (this.profileUserInfo.user_id) {
         res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
       } else {
-        await StorageService.setCollectTicket({
-          chainid: this.chainid,
-          ticket_id: '',
-          ticket_level: data.ticket_level,
-          collect_address: data.collect_address,
-          timestamp: new Date().toString()
-        })
+        // 判断是否已收藏
+        const collectTicket = await StorageService.getStorage('collectTicket') || []
+        const newTicket = collectTicket.find(item => item.collect_address === data.collect_address)
+        if (newTicket && newTicket.collect_address) {
+
+        } else {
+          await StorageService.setCollectTicket({
+            chainid: this.chainid,
+            ticket_id: '',
+            ticket_level: data.ticket_level,
+            collect_address: data.collect_address,
+            timestamp: new Date().toString()
+          })
+        }
       }
       return res
     } catch (e) {
@@ -254,13 +280,13 @@ class Service extends EventEmitter {
       if (this.profileUserInfo.user_id) {
         res = await poster('/plugin/cancelCollectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
       } else {
-        await StorageService.setCollectTicket({
-          chainid: this.chainid,
-          ticket_id: '',
-          ticket_level: data.ticket_level,
-          collect_address: data.collect_address,
-          timestamp: new Date().toString()
-        })
+
+      }
+      let collectTicket = await StorageService.getStorage('collectTicket') || []
+      const index = collectTicket.findIndex(item => item.collect_address === data.collect_address)
+      if (index > -1) {
+        collectTicket.splice(index, 1)
+        await StorageService.cancelCollectTicket(collectTicket)
       }
       return res
     } catch (e) {
