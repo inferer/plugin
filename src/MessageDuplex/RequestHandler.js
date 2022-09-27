@@ -13,8 +13,8 @@ const RequestHandler = {
     bindListener() {
         this.eventChannel.on('injectPuginReply', ({ success, data, uuid }) => {
             if (success)
-                this.calls[uuid].resolve && this.calls[uuid].resolve(data);
-            else this.calls[uuid].reject && this.calls[uuid].reject(data);
+                this.calls[uuid] && this.calls[uuid].resolve && this.calls[uuid].resolve(data);
+            else this.calls[uuid] && this.calls[uuid].reject && this.calls[uuid].reject(data);
 
             delete this.calls[uuid];
         });
