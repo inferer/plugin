@@ -224,32 +224,33 @@ chrome.runtime.onInstalled.addListener(function () {
       // }
     }, function () {
       console.log('contextMenus are create.');
-      chrome.contextMenus.onClicked.addListener(function (data) {
-        console.log(data)
-        chrome.management.getSelf(
-          function (info) {
-            console.log(info)
-            chrome.windows.create({
-              focused: true,
-              width: 360,
-              height: 632,
-              type: 'popup',
-              url: 'popup.html?address=' + backgroundScript.menuAddress,
-              left: 1500,
-              top: 0
 
-              // incognito: true,
-              // setSelfAsOpener: true
-            },
-              () => {
-
-              })
-
-          }
-        )
-
-      })
     });
   })
 
 });
+chrome.contextMenus.onClicked.addListener(function (data) {
+  console.log(data)
+  chrome.management.getSelf(
+    function (info) {
+      console.log(info)
+      chrome.windows.create({
+        focused: true,
+        width: 360,
+        height: 632,
+        type: 'popup',
+        url: 'popup.html?address=' + backgroundScript.menuAddress,
+        left: 1500,
+        top: 0
+
+        // incognito: true,
+        // setSelfAsOpener: true
+      },
+        () => {
+
+        })
+
+    }
+  )
+
+})

@@ -20,9 +20,9 @@ export const matchAddress = (injectPlugin) => {
   // })
   document.addEventListener('selectionchange', function (e) {
     const selectStr = window.getSelection().toString()
-    if (selectStr) {
-      injectPlugin.updateContextmenu(selectStr)
-    }
+    // if (selectStr) {
+    injectPlugin.updateContextmenu(selectStr)
+    // }
   })
   const setMatchAddress = () => {
     const bodyStr = jQuery('body').text()
