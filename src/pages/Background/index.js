@@ -39,6 +39,7 @@ const backgroundScript = {
       resolve(await this.service.getInjectSuccess())
     });
     duplex.on('setLanguage', (e) => this.service.setLanguage(e.data))
+    duplex.on('connectInit', (e) => this.service.connectInit(null))
     duplex.on('setAddress', (e) => this.service.setAddress(e.data))
 
     duplex.on('getsearchnum', ({ resolve }) => {
@@ -135,6 +136,15 @@ const backgroundScript = {
       const { action, data, uuid } = request
       switch (action) {
         case 'init':
+          Service.setInject('success')
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break;
+        case 'connectInit':
+          Service.connectInit('success')
           resolve({
             success: true,
             data: 'success',

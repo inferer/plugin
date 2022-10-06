@@ -20,12 +20,16 @@ export default {
   getInjectSuccess() {
     return this.duplex.send('getInjectSuccess');
   },
+  connectInit() {
+    this.duplex.send('connectInit')
+  },
   getLanguage() {
     return this.duplex.send('getLanguage');
   },
   setLanguage(language) {
     this.duplex.send('setLanguage', language)
   },
+
   getSearchNum() {
     return this.duplex.send('getsearchnum')
   },

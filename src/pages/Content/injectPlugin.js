@@ -2,6 +2,7 @@
 import jQuery from '../../assets/js/jquery-3.6.0.min.js';
 import EventChannel from '../../MessageDuplex/EventChannel'
 import RequestHandler from '../../MessageDuplex/RequestHandler';
+import './modules/WallectConnect'
 
 export const matchAddress = (injectPlugin) => {
   // let disabled = false
@@ -87,6 +88,9 @@ const injectPlugin = {
     injectPlugin.extension.connectMetamask = (address) => {
       this.connectMetamask(address)
     };
+    injectPlugin.extension.connectInit = (address) => {
+      this.connectInit(address)
+    };
     window.injectPlugin = injectPlugin;
   },
 
@@ -96,24 +100,49 @@ const injectPlugin = {
   },
 
   _bindEvents() {
-    this.eventChannel.on('connectWallect', type => {
+    this.eventChannel.on('connectWallect', async (type) => {
       try {
         if (!document.hidden) {
-          if (!window.ethereum) {
-            window.injectPlugin.extension.connectMetamask('notinstall')
-            return
-          }
-          window.ethereum.enable()
-            .then(res => {
-              if (res && res[0]) {
-                window.injectPlugin.extension.connectMetamask(res[0])
-              }
+          window.injectPlugin.extension.connectInit()
+          if (type === 'metamask') {
+            if (!window.ethereum) {
+              window.injectPlugin.extension.connectMetamask('notinstall')
+              return
+            }
+            window.ethereum.enable()
+              .then(res => {
+                if (res && res[0]) {
+                  window.injectPlugin.extension.connectMetamask(res[0])
+                }
 
-            })
+              })
+          } else {
+            if (!window.walletConnectProvider) {
+              window.injectPlugin.extension.connectMetamask('notinstall')
+              return
+            }
+            window.walletConnectOn = function (accounts) {
+              console.log(accounts)
+              window.injectPlugin.extension.connectMetamask(accounts[0])
+            }
+            await window.walletConnectProvider.activate()
+
+          }
+
         }
       } catch (e) {
+        console.log(e)
         window.injectPlugin.extension.connectMetamask('notinstall')
       }
+    })
+  },
+  connectInit() {
+    this.request('connectInit', {
+
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
     })
   },
   connectMetamask(address) {

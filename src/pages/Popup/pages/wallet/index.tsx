@@ -35,17 +35,33 @@ const Wallet: React.FC<WalletProps> = ({
   const [isLoading2, setIsLoading2] = useState(false)
 
   const connectWallet = async (type: string) => {
+    if (isLoading || isLoading2) return
     if (type === 'coinbase') {
       setIsLoading2(true)
-      PopupAPI.connectWallet('metamask')
+      PopupAPI.connectWallet('walletconnect')
     } else {
       setIsLoading(true)
       PopupAPI.connectWallet(type)
-
     }
+    setTimeout(async () => {
+      const res = await PopupAPI.getInjectSuccess()
+      console.log(res, 444444)
+      if (!res) {
+        // This page does not support wallet connection
+        setIsLoading(false)
+        setIsLoading2(false)
+        PopupAPI.setAddress()
+        Toast.show({
+          content: 'This page does not support wallet connection.',
+          position: "bottom"
+        })
+      } else {
+        PopupAPI.connectInit(null)
+      }
+    }, 1000)
   }
   useEffect(() => {
-    if (address === 'notinstall' && isLoading) {
+    if (address === 'notinstall' && (isLoading || isLoading2)) {
       setIsLoading(false)
       setIsLoading2(false)
       PopupAPI.setAddress()
@@ -55,6 +71,13 @@ const Wallet: React.FC<WalletProps> = ({
       })
     }
   }, [address, isLoading])
+  useEffect(() => {
+    const init = async () => {
+      const res = await PopupAPI.getInjectSuccess()
+      console.log(res, 66666666)
+    }
+    // init()
+  }, [])
   return (
     <div className="w-360 page-root page-language">
       <PageHeader title={title} onBack={() => PopupAPI.changeState(APP_STATE.SETTING)} />
@@ -82,9 +105,9 @@ const Wallet: React.FC<WalletProps> = ({
                 onClick={() => connectWallet('coinbase')}
               >
                 <div className="flex items-center ">
-                  {/* <img src={wccPng} alt="" style={{ width: 24, height: 24 }} /> */}
-                  <CoinBase width="22" height="22" />
-                  <div className={`item-text1 ml-1`} style={{ marginLeft: 6 }}>Connect Coinbase</div>
+                  <img src={wccPng} alt="" style={{ width: 24, height: 24 }} />
+                  {/* <CoinBase width="22" height="22" /> */}
+                  <div className={`item-text1 ml-1`} style={{ marginLeft: 6 }}>Connect WalletConnect</div>
                 </div>
                 {/* <img src={leftPng} alt="" style={{ width: 5, height: 7 }} /> */}
                 <div className="flex items-center">

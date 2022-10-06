@@ -13,9 +13,11 @@ class Service extends EventEmitter {
     this.matchAddress = []
     this.feedAddress = ''
     this.injectSuccess = null
+    this.connectInitSuccess = null
   }
   async initData() {
     await StorageService.init()
+    this.connectInitSuccess = null
     this.state = APP_STATE.SEARCH
     const userInfo = await this.getProfileUserInfo()
     this.profileUserInfo.email = userInfo.email
@@ -74,9 +76,14 @@ class Service extends EventEmitter {
   }
   setInject(str) {
     this.injectSuccess = str
+    // StorageService.setInject(str)
   }
   async getInjectSuccess() {
-    return this.injectSuccess
+    // return await StorageService.getStorage('injectSuccess')
+    return this.connectInitSuccess
+  }
+  connectInit(flag) {
+    this.connectInitSuccess = flag
   }
   async setCloseTime() {
     return await StorageService.setCloseTime()
