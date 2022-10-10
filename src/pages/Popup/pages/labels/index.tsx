@@ -109,7 +109,7 @@ const Labels: React.FC<any> = ({ appState, onClick }) => {
             </div>
             <div className="flex items-center">
               <img src={user1Png} alt="" />
-              users active within 30 days
+              users who started first txn within 90 days
             </div>
             <div className="flex items-center">
               <img src={user2Png} alt="" />
