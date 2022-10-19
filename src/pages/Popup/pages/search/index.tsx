@@ -218,7 +218,10 @@ const Search: React.FC<{
             onChange={(e) => {
               setAddress(e.target.value)
             }}
-            onFocus={() => setFocus(true)}
+            onFocus={(e) => {
+              e.target.select()
+              setFocus(true)
+            }}
             onBlur={() => (address.length === 0 && setFocus(false))}
             onKeyDown={(e) => {
               const keyCode = e.keyCode || e.which || e.charCode;
@@ -246,7 +249,10 @@ const Search: React.FC<{
               setAddress(e.target.value)
             }}
             disabled={isLoading}
-            onFocus={() => setFocus(true)}
+            onFocus={(e) => {
+              e.target.select()
+              setFocus(true)
+            }}
             onBlur={() => (address.length === 0 && setFocus(false))}
             onKeyDown={(e) => {
               const keyCode = e.keyCode || e.which || e.charCode;

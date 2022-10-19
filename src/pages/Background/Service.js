@@ -51,7 +51,9 @@ class Service extends EventEmitter {
       this.emit('setAddress', address.address)
       return
     }
-    if (address.address && !this.profileUserInfo.user_id) {
+    const storageAddress = await StorageService.getStorage('address')
+    console.log('storageAddress', storageAddress)
+    if (address.address && (!this.profileUserInfo.user_id || storageAddress !== address.address)) {
       const res = await this.bindWallet({ wallet_address: address.address })
       if (res.status === 200) {
         this.profileUserInfo.user_id = res.result.user_id
@@ -347,7 +349,7 @@ class Service extends EventEmitter {
 
   async bindWallet(data = {}) {
     try {
-      const res = await poster('/plugin/bindWallet', { user_id: this.profileUserInfo.email, ...data })
+      const res = await poster('/plugin/bindWallet', { chrome_id: this.profileUserInfo.email, ...data })
       return res
     } catch (e) {
       return false
