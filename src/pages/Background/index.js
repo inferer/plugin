@@ -167,6 +167,14 @@ const backgroundScript = {
             uuid
           })
           break
+        case 'connectChange':
+          Service.accountsChange(data)
+          resolve({
+            success: true,
+            data: 'success',
+            uuid
+          })
+          break
         case 'updateContextmenu':
           backgroundScript.menuAddress = data.str
           chrome.contextMenus.update(

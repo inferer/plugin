@@ -91,6 +91,9 @@ const injectPlugin = {
     injectPlugin.extension.connectInit = (address) => {
       this.connectInit(address)
     };
+    injectPlugin.extension.connectChange = (address) => {
+      this.connectChange(address)
+    };
     window.injectPlugin = injectPlugin;
   },
 
@@ -100,6 +103,11 @@ const injectPlugin = {
   },
 
   _bindEvents() {
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', (res) => {
+        window.injectPlugin.extension.connectChange(res[0])
+      })
+    }
     this.eventChannel.on('connectWallect', async (type) => {
       try {
         if (!document.hidden) {
@@ -147,6 +155,15 @@ const injectPlugin = {
   },
   connectMetamask(address) {
     this.request('connectWallet', {
+      address
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  connectChange(address) {
+    this.request('connectChange', {
       address
     }).then(res => {
       console.log(res)

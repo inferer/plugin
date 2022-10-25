@@ -121,6 +121,13 @@ class Service extends EventEmitter {
       this.emit('connectWallect', data)
     }
   }
+  accountsChange(data) {
+    if (data.address !== this.currentAddress) {
+      this.currentAddress = ''
+      StorageService.setAddress('')
+      this.emit('setAddress', '')
+    }
+  }
 
   async register(chrome_id) {
     try {
