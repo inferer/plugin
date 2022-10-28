@@ -52,9 +52,11 @@ class Service extends EventEmitter {
       return
     }
     const storageAddress = await StorageService.getStorage('address')
-    console.log('storageAddress', storageAddress)
+    const changeAddress = await StorageService.getStorage('changeAddress')
     if (address.address && (!this.profileUserInfo.user_id || storageAddress !== address.address)) {
-      const res = await this.bindWallet({ wallet_address: address.address })
+      const res = await this.bindWallet({
+        wallet_address: changeAddress && changeAddress !== address.address ? changeAddress : address.address
+      })
       if (res.status === 200) {
         this.profileUserInfo.user_id = res.result.user_id
         StorageService.setUserId(res.result.user_id)
@@ -122,6 +124,7 @@ class Service extends EventEmitter {
     }
   }
   accountsChange(data) {
+    StorageService.setChangeAddress(data.address)
     if (data.address !== this.currentAddress) {
       this.currentAddress = ''
       StorageService.setAddress('')

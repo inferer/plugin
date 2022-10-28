@@ -129,6 +129,10 @@ const StorageService = {
   setInject(str) {
     this.injectSuccess = str
     this.save('injectSuccess')
+  },
+  setChangeAddress(str) {
+    this.changeAddress = str
+    this.save('changeAddress')
   }
 
 }
