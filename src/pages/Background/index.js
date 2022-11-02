@@ -225,6 +225,9 @@ const backgroundScript = {
     this.service.on('setAddress', (address) => {
       BackgroundAPI.setAddress(address)
     })
+    this.service.on('disconnectWallet', (address) => {
+      BackgroundAPI.disconnectWallet(address)
+    })
   }
 }
 

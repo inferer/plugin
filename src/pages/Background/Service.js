@@ -51,6 +51,13 @@ class Service extends EventEmitter {
       this.emit('setAddress', address.address)
       return
     }
+    if (address.address === '') {
+      this.currentAddress = address.address
+      StorageService.setAddress(address.address)
+      this.emit('setAddress', address.address)
+      this.emit('disconnectWallet')
+      return
+    }
     const storageAddress = await StorageService.getStorage('address')
     const changeAddress = await StorageService.getStorage('changeAddress')
     if (address.address && (!this.profileUserInfo.user_id || storageAddress !== address.address)) {
@@ -117,6 +124,7 @@ class Service extends EventEmitter {
     this.emit('setMatchAddress', data);
   }
   connectWallet(data) {
+    console.log(data, 22222)
     if (this.currentAddress) {
       this.emit('setAddress', this.currentAddress)
     } else {

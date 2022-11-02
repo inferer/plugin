@@ -74,7 +74,6 @@ const Wallet: React.FC<WalletProps> = ({
   useEffect(() => {
     const init = async () => {
       const res = await PopupAPI.getInjectSuccess()
-      console.log(res, 66666666)
     }
     // init()
   }, [])

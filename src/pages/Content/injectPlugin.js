@@ -143,6 +143,12 @@ const injectPlugin = {
         window.injectPlugin.extension.connectMetamask('notinstall')
       }
     })
+    this.eventChannel.on('disconnectWallet', async () => {
+      if (window.walletConnectProvider) {
+        window.walletConnectProvider.deactivate()
+        window.localStorage.removeItem('walletconnect')
+      }
+    })
   },
   connectInit() {
     this.request('connectInit', {

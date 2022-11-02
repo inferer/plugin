@@ -21,6 +21,9 @@ export default {
   connectWallect(type) {
     this.duplex.send('tab', 'injectPlugin', { action: 'connectWallect', data: type }, false)
   },
+  disconnectWallet(type) {
+    this.duplex.send('tab', 'injectPlugin', { action: 'disconnectWallet', data: type }, false)
+  },
   setMenuAddress(address) {
     this.duplex.send('popup', 'setMenuAddress', address, false);
   }
