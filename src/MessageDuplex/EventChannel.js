@@ -18,7 +18,8 @@ class EventChannel extends EventEmitter {
 
             if (source === this._channelKey)
                 return;
-
+            if (!message)
+                return;
             const {
                 action,
                 data

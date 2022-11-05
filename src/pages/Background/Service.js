@@ -14,6 +14,7 @@ class Service extends EventEmitter {
     this.feedAddress = ''
     this.injectSuccess = null
     this.connectInitSuccess = null
+    this.connectType = ''
   }
   async initData() {
     await StorageService.init()
@@ -61,8 +62,12 @@ class Service extends EventEmitter {
     const storageAddress = await StorageService.getStorage('address')
     const changeAddress = await StorageService.getStorage('changeAddress')
     if (address.address && (!this.profileUserInfo.user_id || storageAddress !== address.address)) {
+      let bingAddress = changeAddress && changeAddress !== address.address ? changeAddress : address.address
+      if (this.connectType === 'walletconnect') {
+        bingAddress = address.address
+      }
       const res = await this.bindWallet({
-        wallet_address: changeAddress && changeAddress !== address.address ? changeAddress : address.address
+        wallet_address: bingAddress
       })
       if (res.status === 200) {
         this.profileUserInfo.user_id = res.result.user_id
@@ -124,7 +129,7 @@ class Service extends EventEmitter {
     this.emit('setMatchAddress', data);
   }
   connectWallet(data) {
-    console.log(data, 22222)
+    this.connectType = data
     if (this.currentAddress) {
       this.emit('setAddress', this.currentAddress)
     } else {

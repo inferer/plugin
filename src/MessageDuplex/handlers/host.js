@@ -71,6 +71,7 @@ class MessageDuplexHost extends EventEmitter {
 
     handleMessage(source, message) {
         // console.info(`Received message from ${ source }:`, message);
+        if (!message) return;
         const {
             noAck = false,
             hostname,
