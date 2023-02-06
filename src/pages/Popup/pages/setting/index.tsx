@@ -1,5 +1,7 @@
 import React from "react";
 import { APP_STATE } from "../../config/constants";
+import LineChartT from "../components/LineChart";
+import PieChartT from "../components/PieChart";
 
 const { PopupAPI } = require('../../../../api')
 
@@ -20,6 +22,8 @@ const Setting: React.FC<any> = () => {
         Settings
       </div>
       <div className="page-content">
+        <LineChartT />
+        <PieChartT />
         <div className="setting-list">
           <div className="setting-item flex justify-between items-center"
             onClick={() => onItemClick(APP_STATE.WALLET)}

@@ -11,6 +11,7 @@ import { transformTime } from "../../utils"
 import TicketScore from './TicketScore'
 import UpdateInfo from "./UpdateInfo"
 import FeedBackUS from "./FeedbackUS"
+import LineChartT from "../components/LineChart"
 
 // 0xefe7572596cf5e3f908a3bb59fac20da8abad646
 

@@ -12,3 +12,7 @@ export function transformTime(timestamp: number) {
 
   return addZero(h) + ':' + addZero(m) + ' ' + addZero(M) + "/" + addZero(d) + ' ' + y;
 }
+
+export function randomString() {
+  return Math.random().toString(36).slice(-10);
+}
