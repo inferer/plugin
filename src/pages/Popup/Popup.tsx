@@ -27,6 +27,7 @@ import TxInfo from './pages/txinfo'
 import enMessages from './translations/en.json'
 import zhMessages from './translations/zh.json'
 import TicketInfer from './pages/search/TicketInfer';
+import TrendAnalysis from './pages/trends/Analysis';
 
 const { PopupAPI } = require('../../api')
 
@@ -91,6 +92,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     setRecommendData({ ...data, address: data.collect_address })
     PopupAPI.changeState(APP_STATE.TICKETINFER)
   }
+
   return (
     <IntlProvider locale={props.language || 'en'} messages={messages[props.language]}>
       <>
@@ -111,6 +113,9 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.WALLET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Wallet searchNum={searchNum} address={address} />
         </div>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.ANALYSIS_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <TrendAnalysis searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
         >
@@ -121,7 +126,7 @@ const Popup: React.FC<PopupProps> = (props) => {
             onClick={onCollectionClick}
           />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TXINFO ? 'pop-root-page-in' : 'pop-root-page-right'} ${txinfoData.key === 'Inferer Label' ? 'bglabel' : 'bgtxinfo' }`}
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TXINFO ? 'pop-root-page-in' : 'pop-root-page-right'} ${txinfoData.key === 'Inferer Label' ? 'bglabel' : 'bgtxinfo'}`}
           style={{ zIndex: 999, opacity: 1 }}
         >
           <TxInfo language={language} txinfoData={txinfoData} toTxInfo={toTxInfo} />

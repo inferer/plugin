@@ -5,6 +5,8 @@ import Tickets from '../tickets';
 import Setting from '../setting';
 import Recommend from '../recommend'
 import Labels from '../labels'
+import PriceTrend from '../trends/Price';
+import TrendAnalysis from '../trends/Analysis';
 
 const { PopupAPI } = require('../../../../api')
 
@@ -37,17 +39,20 @@ const Popup: React.FC<{
     const [appState, setAppState] = useState(APP_STATE.SEARCH)
     const [nowState, setNowState] = useState(-1)
     const navOnClick = (type: number) => {
-      console.log(type)
       setAppState(type)
       // PopupAPI.changeState(type)
     }
     return (
       <div className="w-360">
         <div className={`${appState === APP_STATE.SEARCH ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          <Search onChangeState={onChangeState} appState={appState} />
+          {/* <Search onChangeState={onChangeState} appState={appState} /> */}
+          <TrendAnalysis searchNum={0} address={''} appState={0} pageStack={[]} />
         </div>
-        <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+        {/* <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
+        </div> */}
+        <div className={`${appState === APP_STATE.PRICE_TREND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <PriceTrend appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
         </div>
         <div className={`${appState === APP_STATE.RECOMMEND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Recommend
@@ -95,9 +100,9 @@ const Popup: React.FC<{
             <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.SEARCH ? searchActivePng : searchPng} alt="" />
           </div>
           <div className=''
-            onClick={() => navOnClick(APP_STATE.TICKET)}
+            onClick={() => navOnClick(APP_STATE.PRICE_TREND)}
           >
-            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.TICKET ? ticketActivePng : ticketPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.PRICE_TREND ? ticketActivePng : ticketPng} alt="" />
           </div>
           <div className=''
             onClick={() => navOnClick(APP_STATE.RECOMMEND)}

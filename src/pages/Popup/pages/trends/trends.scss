@@ -1,0 +1,128 @@
+.page-trend {
+  padding: 20px;
+}
+
+.price-item {
+  width: 320px;
+  height: 103px;
+  border-radius: 4px;
+  background-image: url('./images/bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+  padding-top: 29px;
+
+  &:hover {
+    background-image: url('./images/bg_active.png');
+
+    .right-price,
+    .text-right {
+      opacity: 0;
+    }
+  }
+
+  .num {
+    background: linear-gradient(0deg, #F9F9F9, #F9F9F9), #FFFFFF;
+    border-radius: 4px 0px;
+    height: 21px;
+    min-width: 46px;
+    color: #7F8792;
+    text-shadow: 1px 1px 0px #FFFFFF;
+  }
+
+  .num1 {
+    background: linear-gradient(0deg, rgba(255, 199, 0, 0.1), rgba(255, 199, 0, 0.1)), #FFFFFF;
+    color: #FFC700;
+  }
+
+  .num2 {
+    background: linear-gradient(0deg, #EEEEEE, #EEEEEE), #FFFFFF;
+    color: #212121;
+  }
+
+  .num3 {
+    background: linear-gradient(0deg, rgba(249, 221, 193, 0.41), rgba(249, 221, 193, 0.41)), #FFFFFF;
+    color: #CAA17C;
+  }
+
+  .price-item-content {
+    padding-left: 8px;
+    padding-right: 12px;
+  }
+
+  .img-wrap {
+    width: 47px;
+    height: 62px;
+
+  }
+}
+
+.page-analysis {
+  background-color: #F8F9FF;
+
+  .left-text {
+    margin-top: 8px;
+  }
+
+  .bg-img {
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+      width: 79px;
+      height: 105px;
+    }
+
+  }
+}
+
+.like-wrap {
+  img {
+    width: 14px;
+    height: 14px;
+    margin-right: 2px;
+  }
+
+  .text {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 13px;
+    background: linear-gradient(124.16deg, #3555FF 8.05%, #A157FF 66.68%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+
+    &.up {
+      background: linear-gradient(280.16deg, #F73B47 8.51%, #FF7E35 142.08%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    &.down {
+      background: linear-gradient(124.16deg, #3F4664 8.05%, #3F4664 66.68%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+  }
+
+  &.is-like {}
+}
+
+.div-line {
+  width: 1px;
+  height: 11px;
+  background: linear-gradient(124.16deg, #3555FF 8.05%, #A157FF 66.68%);
+  opacity: 0.3;
+}
+
+.text-wrap {
+  .right-price {
+    line-height: 110%;
+    font-size: 22px;
+  }
+}

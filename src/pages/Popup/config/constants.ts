@@ -12,7 +12,9 @@ export const APP_STATE = {
   FEEDBACK: 9,
   COLLECTION: 10,
   TXINFO: 11,
-  TICKETINFER: 12
+  TICKETINFER: 12,
+  PRICE_TREND: 13,
+  ANALYSIS_TREND: 14,
 }
 
 export const API_URL = 'http://119.8.117.37:12999'

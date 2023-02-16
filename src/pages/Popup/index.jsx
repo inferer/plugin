@@ -6,6 +6,9 @@ import reducer from './reducers'
 import { PopupAPI } from '../../api';
 import Popup from './Popup'
 import './tailwind.min.css'
+// import './index.css'
+
+
 import MessageDuplex from '../../MessageDuplex'
 
 import {
