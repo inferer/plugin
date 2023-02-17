@@ -126,3 +126,56 @@
     font-size: 22px;
   }
 }
+
+.star-list {
+  img {
+    width: 16px;
+    height: 15px;
+    margin-right: 3px;
+  }
+}
+
+.icon-wrap {
+  width: 16px;
+  height: 16px;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.icon-line {
+  width: 1px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.volume-wrap {
+  width: 154px;
+  height: 119px;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+}
+
+.tips-wrap {
+  width: 136px;
+  height: 46px;
+
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  padding: 6px 8px;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 4px);
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 140%;
+  word-break: break-all;
+  z-index: 10;
+}
+
+.color-b2 {
+  color: #3F4664;
+}

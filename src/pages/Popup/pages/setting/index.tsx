@@ -22,8 +22,8 @@ const Setting: React.FC<any> = () => {
         Settings
       </div>
       <div className="page-content">
-        <LineChartT />
-        <PieChartT />
+        {/* <LineChartT />
+        <PieChartT /> */}
         <div className="setting-list">
           <div className="setting-item flex justify-between items-center"
             onClick={() => onItemClick(APP_STATE.WALLET)}

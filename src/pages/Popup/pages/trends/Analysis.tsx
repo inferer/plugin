@@ -4,7 +4,8 @@ import { Toast } from 'antd-mobile'
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants"
 import PageHeader from '../components/PageHeader'
-import { Like, UnLike } from "./components";
+import { BuyIcon, CollectIcon, Like, MsgIcon, ShareIcon, StarList, UnLike } from "./components";
+import { VolumePrice } from "./Blocks";
 
 const { PopupAPI } = require('../../../../api')
 const userPng = require('../setting/images/user.png')
@@ -81,12 +82,12 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
               <UnLike />
             </div>
           </div>
-          <div className="flex flex-col justify-between flex-1 text-wrap">
+          <div className="flex flex-col justify-between flex-1 text-wrap pl-5">
             <div className="flex justify-between">
               <div>
                 <div className=" text-xs font-bold">Meme Team (100)</div>
-                <div>
-
+                <div className="mt-1">
+                  <StarList score={4} />
                 </div>
               </div>
               <div>
@@ -94,11 +95,20 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
                 <div className="color-image text-xs font-bold text-right">ETH</div>
               </div>
             </div>
-            <div>
-
+            <div className="flex justify-end">
+              <div className=" rounded flex justify-between items-center space-x-3 " style={{ background: '#F8F9FF', width: 175, height: 28, padding: '0 12px' }}>
+                <CollectIcon />
+                <div className="icon-line"></div>
+                <ShareIcon />
+                <div className="icon-line"></div>
+                <BuyIcon />
+                <div className="icon-line"></div>
+                <MsgIcon />
+              </div>
             </div>
           </div>
         </div>
+        <VolumePrice />
       </div>
     </div>
   )

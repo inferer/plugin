@@ -1,0 +1,18 @@
+.chart-tip {
+  position: absolute;
+  background-color: rgba(51, 56, 62, 0.8);
+  border-radius: 4px;
+  font-size: 10px;
+  color: #E8EAEC;
+  font-weight: 500;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  left: 50%;
+  top: 50%;
+  height: 24px;
+  margin-top: -24px;
+  margin-left: -200%;
+  opacity: 0;
+  cursor: pointer;
+}
