@@ -38,6 +38,7 @@ const PieChartT = () => {
         bottom: 0,
       },
       tooltip: {
+        show: false,
         trigger: 'item'
       },
       legend: {
@@ -47,23 +48,24 @@ const PieChartT = () => {
       },
       series: [
         {
-          name: 'Access From',
+          name: '',
           type: 'pie',
-          radius: ['65%', '80%'],
+          radius: ['75%', '95%'],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 20,
             borderColor: '#fff',
-            borderWidth: 4
+            borderWidth: 2
           },
           label: {
             show: false,
             position: 'center'
           },
           emphasis: {
+            scaleSize: 1,
             label: {
               show: true,
-              fontSize: 40,
+              fontSize: 14,
               fontWeight: 'bold'
             }
           },
@@ -71,10 +73,10 @@ const PieChartT = () => {
             show: false
           },
           data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-            { value: 580, name: 'Email' },
-            { value: 484, name: 'Union Ads' }
+            { value: 1048, name: '1' },
+            { value: 735, name: '2-3' },
+            { value: 580, name: '4-10' },
+            { value: 484, name: '>10' }
           ]
         }
       ]
@@ -88,7 +90,7 @@ const PieChartT = () => {
   }, [])
 
   return (
-    <div id={id} className="" style={{ height: 160, width: 160 }}>
+    <div id={id} className="" style={{ height: '70px', width: '70px' }}>
 
     </div>
   )

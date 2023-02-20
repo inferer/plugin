@@ -28,6 +28,11 @@ import enMessages from './translations/en.json'
 import zhMessages from './translations/zh.json'
 import TicketInfer from './pages/search/TicketInfer';
 import TrendAnalysis from './pages/trends/Analysis';
+import PriceCollTrend from './pages/trends/PriceColl';
+import PopularCollTrend from './pages/trends/PopularColl';
+import PriceOneTrend from './pages/trends/PriceOne';
+import PopularOneTrend from './pages/trends/PopularOne';
+import TrendAnalysisOne from './pages/trends/AnalysisOne';
 
 const { PopupAPI } = require('../../api')
 
@@ -113,8 +118,35 @@ const Popup: React.FC<PopupProps> = (props) => {
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.WALLET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Wallet searchNum={searchNum} address={address} />
         </div>
+        <div className={`pop-root-page 
+          ${pageStack[0] === APP_STATE.PRICECOLL_TREND ||
+            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
+            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <PriceCollTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page 
+          ${pageStack[0] === APP_STATE.PRICEONE_TREND ||
+            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
+            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <PriceOneTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page 
+          ${pageStack[0] === APP_STATE.POPULARCOLL_TREND ||
+            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
+            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <PopularCollTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page 
+          ${pageStack[0] === APP_STATE.POPULARONE_TREND ||
+            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
+            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <PopularOneTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.ANALYSIS_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <TrendAnalysis searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <TrendAnalysisOne searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}

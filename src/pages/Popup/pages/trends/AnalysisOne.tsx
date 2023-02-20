@@ -23,7 +23,7 @@ export type FeedBackProps = {
   pageStack: number[]
 }
 
-const TrendAnalysis: React.FC<FeedBackProps> = ({
+const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   searchNum,
   appState,
   pageStack
@@ -74,21 +74,13 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
     <div className="w-360 page-root page-trend page-analysis">
       <PageHeader title={title} onBack={() => {
         const from = localStorage.getItem('page-from')
-        if (Number(from) === APP_STATE.PRICECOLL_TREND) {
-          PopupAPI.changeState(APP_STATE.PRICECOLL_TREND)
-        } else {
-          PopupAPI.changeState(APP_STATE.POPULARCOLL_TREND)
-        }
+        PopupAPI.changeState(APP_STATE.PRICECOLL_TREND)
       }} />
       <div className="page-content pt-3">
         <ProjectInfo />
-        <VolumePrice />
-        <InfererScore />
-        <HoldingAmount />
-        <InfererLabels />
       </div>
     </div>
   )
 }
 
-export default TrendAnalysis
+export default TrendAnalysisOne

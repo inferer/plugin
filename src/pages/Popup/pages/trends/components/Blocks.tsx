@@ -1,5 +1,5 @@
 import React from "react";
-import LineChartT from "../components/LineChart";
+import LineChartT from "../../components/LineChart";
 import { TTitle } from "./components";
 
 export const VolumePrice: React.FC<any> = () => {

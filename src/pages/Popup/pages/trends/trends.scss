@@ -1,6 +1,79 @@
 .page-trend {
   padding: 20px;
+
+  .page-content {
+    height: 486px;
+    overflow: auto;
+    padding-bottom: 60px;
+  }
+
+  .text1 {
+    background: linear-gradient(280.16deg, #F73B47 8.51%, #FF7E35 142.08%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .text2 {
+    background: linear-gradient(270deg, #D640B8 0%, #FB6AAB 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .text3 {
+    background: linear-gradient(270deg, #01A4FF 0%, #436AFE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .text4 {
+    background: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .text5 {
+    background: linear-gradient(268.16deg, #FFD428 1.37%, #FD4702 194.17%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .bg1 {
+    background: linear-gradient(280.16deg, #F73B47 8.51%, #FF7E35 142.08%);
+  }
+
+  .bg2 {
+    background: linear-gradient(270deg, #D640B8 0%, #FB6AAB 100%);
+  }
+
+  .bg3 {
+    background: linear-gradient(270deg, #01A4FF 0%, #436AFE 100%);
+  }
+
+  .bg4 {
+    background: linear-gradient(127.27deg, #3555FF 12.05%, #A157FF 85.34%);
+  }
+
+  .bg5 {
+    background: linear-gradient(268.16deg, #FFD428 1.37%, #FD4702 194.17%);
+  }
+
+  .inferer-score {
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 88px;
+  }
 }
+
 
 .price-item {
   width: 320px;
@@ -59,6 +132,7 @@
 
 .page-analysis {
   background-color: #F8F9FF;
+  padding-bottom: 62px;
 
   .left-text {
     margin-top: 8px;
@@ -178,4 +252,59 @@
 
 .color-b2 {
   color: #3F4664;
+}
+
+.box-wrap {
+  background-color: #fff;
+  background-image: url('./images/box_bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+
+.score-bar {
+  height: 4px;
+  border-radius: 8px;
+
+}
+
+.holding-amount {
+  color: #7F8792;
+  font-size: 12px;
+
+}
+
+.holding-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  margin-right: 3px;
+
+  &._1 {
+    background-color: #48AEF5;
+  }
+
+  &._23 {
+    background-color: #FE7B77;
+  }
+
+  &._410 {
+    background-color: #D080FF;
+  }
+
+  &._10 {
+    background-color: #FFB859;
+  }
+}
+
+.infer-label {
+  padding: 2px 5px;
+  background: linear-gradient(124.16deg, rgba(53, 85, 255, 0.1) 8.05%, rgba(161, 87, 255, 0.1) 66.68%);
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 8px;
+  margin-right: 10px;
 }

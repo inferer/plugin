@@ -5,8 +5,8 @@ import Tickets from '../tickets';
 import Setting from '../setting';
 import Recommend from '../recommend'
 import Labels from '../labels'
-import PriceTrend from '../trends/Price';
 import TrendAnalysis from '../trends/Analysis';
+import TrendsIndex from '../trends';
 
 const { PopupAPI } = require('../../../../api')
 
@@ -51,8 +51,8 @@ const Popup: React.FC<{
         {/* <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
         </div> */}
-        <div className={`${appState === APP_STATE.PRICE_TREND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          <PriceTrend appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
+        <div className={`${appState === APP_STATE.TRENDS_INDEX ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
+          <TrendsIndex appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
         </div>
         <div className={`${appState === APP_STATE.RECOMMEND ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Recommend
@@ -100,9 +100,9 @@ const Popup: React.FC<{
             <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.SEARCH ? searchActivePng : searchPng} alt="" />
           </div>
           <div className=''
-            onClick={() => navOnClick(APP_STATE.PRICE_TREND)}
+            onClick={() => navOnClick(APP_STATE.TRENDS_INDEX)}
           >
-            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.PRICE_TREND ? ticketActivePng : ticketPng} alt="" />
+            <img className=' w-5 h-5 cursor-pointer' src={appState === APP_STATE.TRENDS_INDEX ? ticketActivePng : ticketPng} alt="" />
           </div>
           <div className=''
             onClick={() => navOnClick(APP_STATE.RECOMMEND)}

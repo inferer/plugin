@@ -27,7 +27,7 @@ export const appReucer = createReducer(initialState, (builder) => {
       case APP_STATE.RECOMMEND:
       case APP_STATE.LABELS:
       case APP_STATE.SETTING:
-      case APP_STATE.PRICE_TREND:
+      case APP_STATE.TRENDS_INDEX:
         state.pageStack = [APP_STATE.HOME]
         break
       default:
