@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts/core';
 import { GridComponent, GridComponentOption } from 'echarts/components';
 import { LineChart, LineSeriesOption } from 'echarts/charts';
@@ -15,16 +15,20 @@ type EChartsOption = echarts.ComposeOption<
 
 var option: EChartsOption;
 
-const LineChartT: React.FC<{ lineData: EChartsOption }> = ({
+const LineChartT: React.FC<{ lineData: any }> = ({
   lineData
 }) => {
-  console.log(lineData, 1111111)
   const id = randomString()
+  const chartWrapId = randomString()
+  const chartTipId = randomString()
   const [serieData, setSerieData] = useState<{ name: string, value: number }>({ name: '', value: 0 })
   const [tipPos, setTipPos] = useState<{ left: number | string, top: number, opacity: number }>({ left: 0, top: 0, opacity: 0 })
   const [overTip, setOverTip] = useState(false)
   const [dataIndex, setdataIndex] = useState(-1)
   const [eventPos, setEventPos] = useState<{ clientX: number, clientY: number }>({ clientX: 0, clientY: 0 })
+
+  const chartWrapRef = useRef<any>(null)
+  const chartTipRef = useRef<any>(null)
 
   useEffect(() => {
     option = {
@@ -44,7 +48,7 @@ const LineChartT: React.FC<{ lineData: EChartsOption }> = ({
           show: false
         },
         axisLabel: {
-          interval: 0,
+          interval: 1,
           fontSize: '10px',
           color: '#7F8792'
         }
@@ -63,7 +67,11 @@ const LineChartT: React.FC<{ lineData: EChartsOption }> = ({
     var chartDom = document.getElementById(id);
     if (chartDom) {
       var myChart = echarts.init(chartDom);
-      option && myChart.setOption({ ...option, ...lineData });
+      option && myChart.setOption({
+        ...option,
+        ...{ xAxis: { ...option.xAxis, data: lineData?.xAxis?.data || ['Jan', 'Fab', 'Mar', 'Apr', 'May', 'Jun'] } },
+        series: lineData.series
+      });
       // myChart.getZr().on('mouseover', (params) => {
       //   console.log(params)
       // })
@@ -73,45 +81,40 @@ const LineChartT: React.FC<{ lineData: EChartsOption }> = ({
         setEventPos({ clientX: originEvent.clientX, clientY: originEvent.clientY })
         setdataIndex(params.dataIndex)
         setSerieData({ name: params.name, value: Number(params.value) })
-        const tipDom = document.querySelector('.chart-tip');
+        const tipDom = chartTipRef.current
         const rect = tipDom?.getBoundingClientRect();
-        if (rect) {
-          setTipPos({ left: -(!rect.width ? 0 : rect?.width / 2), top: 12, opacity: 1 })
+        const chartDom = chartWrapRef.current
+        const chartRect = chartDom?.getBoundingClientRect()
+        if (rect && chartRect) {
+          let left = 0
+          left = originEvent.zrX - (rect?.width / 2)
+          if (left < 0) {
+            left = 0
+          }
+          if (left > chartRect?.width - rect?.width) {
+            left = chartRect?.width - rect?.width
+          }
+          setTipPos({ left: left, top: originEvent.zrY - rect?.height / 2, opacity: 1 })
         }
       })
-      // myChart.on('mouseout', (params) => {
-      //   console.log(1111111)
-      //   // console.log(params)
-      //   // setTimeout(() => {
-      //   //   console.log(overTip, 1111111)
-      //   //   if (overTip) return
-      //   //   setTipPos({ left: '-200%', top: 12, opacity: 0 })
-      //   // }, 1000)
-      // })
 
     }
   }, [lineData, overTip])
 
   return (
-    <div className=' relative'
-      onMouseOver={e => {
-        // console.log(e)
-        console.log(dataIndex, eventPos)
-        if (dataIndex < 0) return
-        if (Math.abs(e.clientX - eventPos.clientX) >= 5) {
-          setdataIndex(-1)
-          setTipPos({ left: '-200%', top: 12, opacity: 0 })
-        }
-      }}
-    // onMouseLeave={e => {
-    //   setTipPos({ left: '-200%', top: 12, opacity: 0 })
-    // }}
+    <div
+      ref={chartWrapRef}
+      className='chart-wrap relative'
     >
       <div id={id} className="" style={{ height: 56 }}></div>
       <div
-
+        ref={chartTipRef}
+        onMouseLeave={e => {
+          e.stopPropagation()
+          setTipPos({ left: '-200%', top: 12, opacity: 0 })
+        }}
         className='chart-tip'
-        style={{ marginLeft: tipPos.left, opacity: tipPos.opacity }}>
+        style={{ left: tipPos.left, top: tipPos.top, opacity: tipPos.opacity }}>
         {`${serieData.name}: ${serieData.value} ETH`}
       </div>
     </div>

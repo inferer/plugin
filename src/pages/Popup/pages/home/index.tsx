@@ -7,6 +7,8 @@ import Recommend from '../recommend'
 import Labels from '../labels'
 import TrendAnalysis from '../trends/Analysis';
 import TrendsIndex from '../trends';
+import TrendAnalysisOne from '../trends/AnalysisOne';
+import TopAccountTrend from '../trends/TopAccount';
 
 const { PopupAPI } = require('../../../../api')
 
@@ -46,7 +48,7 @@ const Popup: React.FC<{
       <div className="w-360">
         <div className={`${appState === APP_STATE.SEARCH ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           {/* <Search onChangeState={onChangeState} appState={appState} /> */}
-          <TrendAnalysis searchNum={0} address={''} appState={0} pageStack={[]} />
+          <TrendAnalysisOne searchNum={0} address={''} appState={0} pageStack={[]} />
         </div>
         {/* <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />

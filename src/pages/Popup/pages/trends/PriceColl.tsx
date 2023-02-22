@@ -29,7 +29,7 @@ const PriceCollTrend: React.FC<any> = () => {
       <PageHeader
         title={'Price (Coll.)'}
         tip={
-          <ul className="list-decimal list-inside tip-list">
+          <ul className="list-decimal list-outside tip-list pl-4">
             <li>Price ranking focuses on price of nft on chain.</li>
             <li>COLL. refers to collection.</li>
             <li>Ranking is based on weekly data range.</li>

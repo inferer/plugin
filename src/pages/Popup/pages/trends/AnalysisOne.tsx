@@ -4,17 +4,14 @@ import { Toast } from 'antd-mobile'
 import { useIntl } from 'react-intl'
 import { APP_STATE } from "../../config/constants"
 import PageHeader from '../components/PageHeader'
-import { BuyIcon, CollectIcon, Like, MsgIcon, ShareIcon, StarList, TTitle, UnLike } from "./components/components";
-import { VolumePrice } from "./components/Blocks";
-import InfererScore from "./components/InfererScore";
-import HoldingAmount from "./components/HoldingAmount";
-import InfererLabels from "./components/InfererLabels";
 import ProjectInfo from "./components/ProjectInfo";
+import { AvgPrice } from "./components/AvgPrice";
+import HistoryOne from "./components/History";
+import OwnerOne from "./components/OwnerOne";
+import GoAnl from "./components/GoAnl";
+import NftColl from "./components/NftColl";
 
 const { PopupAPI } = require('../../../../api')
-const userPng = require('../setting/images/user.png')
-const successPng = require('../setting/images/success.png')
-const DemoPng = require('./images/demo.png');
 
 export type FeedBackProps = {
   searchNum: number,
@@ -78,6 +75,11 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
       }} />
       <div className="page-content pt-3">
         <ProjectInfo />
+        <AvgPrice />
+        <HistoryOne />
+        <OwnerOne />
+        <GoAnl />
+        <NftColl />
       </div>
     </div>
   )

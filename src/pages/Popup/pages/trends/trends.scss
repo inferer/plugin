@@ -128,6 +128,23 @@
     height: 62px;
 
   }
+
+  &.top-account-item {
+    .img-wrap {
+      padding: 5px 7px;
+      background-image: url('./images/avatar_bg.png');
+      background-position: left top;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
 }
 
 .page-analysis {
@@ -232,6 +249,13 @@
   border-radius: 4px;
 }
 
+.avgprice-wrap {
+  width: 100%;
+  height: 119px;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+}
+
 .tips-wrap {
   width: 136px;
   height: 46px;
@@ -307,4 +331,141 @@
   line-height: 16px;
   margin-bottom: 8px;
   margin-right: 10px;
+}
+
+.history-list {
+  font-size: 10px;
+
+  .history-title {
+    color: #AEB4BD;
+    height: 21px;
+    padding: 0 4px;
+    background: rgba(198, 217, 255, 0.3)
+  }
+
+  .history-item {
+    margin-right: 10px;
+  }
+
+  .item-time {
+    width: 34px;
+  }
+
+  .item-from,
+  .item-to {
+    width: 80px;
+  }
+
+  .bg-1 {
+    background-color: #F8F9FF;
+  }
+
+  .history-content {
+    padding: 0 4px;
+    height: 21px;
+    color: #7F8792;
+    font-size: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #D7E4FD;
+    }
+  }
+
+}
+
+.owner-wrap {
+  .owner-img {
+    padding: 7px 5px;
+    background-image: url('./images/avatar_bg.png');
+    background-position: left top;
+    background-size: 100% 100%;
+    width: 88px;
+    height: 116px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  .img-left {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+  }
+
+  .img-right {
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+  }
+}
+
+.go-ana {
+  width: 100%;
+  height: 44px;
+  background-image: url('./images/go.png');
+  background-size: 100% 100%;
+  background-position: left top;
+  background-repeat: no-repeat;
+  padding-right: 13px;
+  color: #3F4664;
+
+  .img1 {
+    display: block;
+  }
+
+  .img2 {
+    display: none;
+  }
+
+  .font-bold {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background-image: url('./images/go_bg.png');
+
+    .img2 {
+      display: block;
+    }
+
+    .img1 {
+      display: none;
+    }
+
+    .font-bold {
+      background: linear-gradient(280.16deg, #F73B47 8.51%, #FF7E35 142.08%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+  }
+}
+
+.nftcoll-wrap {
+  background-image: url('./images/item_bg1.png');
+
+  &:hover {
+    background-image: url('./images/item_bg.png');
+  }
+
+  .img-wrap {
+    width: 47px;
+    height: 62px;
+    border-radius: 6px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

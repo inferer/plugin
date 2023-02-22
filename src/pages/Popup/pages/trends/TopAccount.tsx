@@ -2,11 +2,14 @@ import React, { useRef, useState } from "react";
 import { APP_STATE } from "../../config/constants";
 import PageHeader from "../components/PageHeader";
 import TrendItem from "./components/TrendItem";
+import TrendItem2 from "./components/TrendItem2";
 import './trends.scss';
 
 const { PopupAPI } = require('../../../../api')
+const DemoPng = require('./images/demo.png');
+const SharePng = require('./images/share.png');
 
-const PopularCollTrend: React.FC<any> = () => {
+const TopAccountTrend: React.FC<any> = () => {
   const [isLoading, setIsLoading] = useState(false)
   const listRef = useRef<HTMLDivElement | null>(null)
   const pageNoRef = useRef<number>(0)
@@ -25,11 +28,10 @@ const PopularCollTrend: React.FC<any> = () => {
   return (
     <div className="w-360 page-root page-trend">
       <PageHeader
-        title={'Popular(Coll.)'}
+        title={'top account'}
         tip={
           <ul className="list-decimal list-outside tip-list pl-4">
-            <li>Popular ranking focuses on transaction count on chain.</li>
-            <li>COLL. refers to collection.</li>
+            <li>Top account ranking focuses on user balance on chain.</li>
             <li>Ranking is based on weekly data range.</li>
           </ul>
         }
@@ -45,7 +47,7 @@ const PopularCollTrend: React.FC<any> = () => {
       >
         {
           new Array(20).fill('*').map((item, index) => {
-            return <TrendItem key={index} from={APP_STATE.POPULARCOLL_TREND} index={index} />
+            return <TrendItem2 key={index} from={APP_STATE.TOPACCOUNT_TREND} index={index} />
           })
         }
 
@@ -54,4 +56,4 @@ const PopularCollTrend: React.FC<any> = () => {
   )
 }
 
-export default PopularCollTrend
+export default TopAccountTrend

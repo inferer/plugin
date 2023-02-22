@@ -33,6 +33,9 @@ import PopularCollTrend from './pages/trends/PopularColl';
 import PriceOneTrend from './pages/trends/PriceOne';
 import PopularOneTrend from './pages/trends/PopularOne';
 import TrendAnalysisOne from './pages/trends/AnalysisOne';
+import TopAccountTrend from './pages/trends/TopAccount';
+import ActiveAccountTrend from './pages/trends/ActiveAccount';
+import TopProfitTrend from './pages/trends/TopProfit';
 
 const { PopupAPI } = require('../../api')
 
@@ -147,6 +150,15 @@ const Popup: React.FC<PopupProps> = (props) => {
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <TrendAnalysisOne searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TOPACCOUNT_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <TopAccountTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.ACTIVEACCOUNT_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <ActiveAccountTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TOPPROFIT_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <TopProfitTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}

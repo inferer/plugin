@@ -29,6 +29,21 @@ const TrendsIndex: React.FC<any> = () => {
             PopupAPI.changeState(APP_STATE.POPULARONE_TREND)
           }}
         >Popular</div>
+        <div className="h-10 leading-10 border mb-2 pl-3 cursor-pointer"
+          onClick={() => {
+            PopupAPI.changeState(APP_STATE.TOPACCOUNT_TREND)
+          }}
+        >TopAccount</div>
+        <div className="h-10 leading-10 border mb-2 pl-3 cursor-pointer"
+          onClick={() => {
+            PopupAPI.changeState(APP_STATE.ACTIVEACCOUNT_TREND)
+          }}
+        >ActiveAccount</div>
+        <div className="h-10 leading-10 border mb-2 pl-3 cursor-pointer"
+          onClick={() => {
+            PopupAPI.changeState(APP_STATE.TOPPROFIT_TREND)
+          }}
+        >Top Profit</div>
       </div>
     </div>
   )
