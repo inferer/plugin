@@ -47,8 +47,8 @@ const Popup: React.FC<{
     return (
       <div className="w-360">
         <div className={`${appState === APP_STATE.SEARCH ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
-          {/* <Search onChangeState={onChangeState} appState={appState} /> */}
-          <TrendAnalysisOne searchNum={0} address={''} appState={0} pageStack={[]} />
+          <Search onChangeState={onChangeState} appState={appState} />
+          {/* <TrendAnalysisOne searchNum={0} address={''} appState={0} pageStack={[]} /> */}
         </div>
         {/* <div className={`${appState === APP_STATE.TICKET ? 'pop-in-enter-active' : 'pop-in-enter'}`}>
           <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => navOnClick(APP_STATE.SEARCH)} />
