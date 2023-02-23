@@ -469,3 +469,115 @@
     }
   }
 }
+
+.ranking-item {
+  height: 64px;
+  margin-bottom: 12px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+
+  .img-icon {
+    width: 24px;
+    height: 24px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+  }
+
+  .item-tip {
+    width: 50px;
+    height: 14px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+  }
+
+  &.item1 {
+    background-image: url('./images/rankings/bg1.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip1.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon1.png');
+    }
+  }
+
+  &.item2 {
+    background-image: url('./images/rankings/bg2.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip2.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon2.png');
+    }
+  }
+
+  &.item3 {
+    background-image: url('./images/rankings/bg3.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip3.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon3.png');
+    }
+  }
+
+  &.item4 {
+    background-image: url('./images/rankings/bg4.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip4.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon4.png');
+    }
+  }
+
+  &.item5 {
+    background-image: url('./images/rankings/bg5.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip5.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon5.png');
+    }
+  }
+
+  &.item6 {
+    background-image: url('./images/rankings/bg6.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip6.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon6.png');
+    }
+  }
+
+  &.item7 {
+    background-image: url('./images/rankings/bg7.png');
+
+    .item-tip {
+      background-image: url('./images/rankings/tip7.png');
+    }
+
+    .img-icon {
+      background-image: url('./images/rankings/icon7.png');
+    }
+  }
+
+  &:hover {
+    background-image: url('./images/rankings/hover_bg.png');
+  }
+}
