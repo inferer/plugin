@@ -9,7 +9,7 @@ const { PopupAPI } = require('../../../../api')
 const DemoPng = require('./images/demo.png');
 const SharePng = require('./images/share.png');
 
-const TopAccountTrend: React.FC<any> = () => {
+const TopAccountTrend: React.FC<any> = ({ goToTicket }) => {
   const [isLoading, setIsLoading] = useState(false)
   const listRef = useRef<HTMLDivElement | null>(null)
   const pageNoRef = useRef<number>(0)
@@ -47,7 +47,9 @@ const TopAccountTrend: React.FC<any> = () => {
       >
         {
           new Array(20).fill('*').map((item, index) => {
-            return <TrendItem2 key={index} from={APP_STATE.TOPACCOUNT_TREND} index={index} />
+            return <TrendItem2 key={index} from={APP_STATE.TOPACCOUNT_TREND} index={index}
+              goToTicket={goToTicket}
+            />
           })
         }
 

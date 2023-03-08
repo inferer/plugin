@@ -80,7 +80,7 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
           PopupAPI.changeState(APP_STATE.POPULARCOLL_TREND)
         }
       }} />
-      <div className="page-content pt-3">
+      <div className="page-content page-content-nofooter pt-3">
         <ProjectInfo />
         <VolumePrice />
         <InfererScore />

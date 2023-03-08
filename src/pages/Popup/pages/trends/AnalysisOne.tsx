@@ -17,13 +17,15 @@ export type FeedBackProps = {
   searchNum: number,
   address: string,
   appState: number,
-  pageStack: number[]
+  pageStack: number[],
+  goToTicket: (e: any) => void
 }
 
 const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   searchNum,
   appState,
-  pageStack
+  pageStack,
+  goToTicket
 }) => {
   const intl = useIntl()
   const title = intl.formatMessage({ id: 'title.analysis', defaultMessage: 'ANALYSIS' })
@@ -71,14 +73,16 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
     <div className="w-360 page-root page-trend page-analysis">
       <PageHeader title={title} onBack={() => {
         const from = localStorage.getItem('page-from')
-        PopupAPI.changeState(APP_STATE.PRICECOLL_TREND)
+        PopupAPI.changeState(Number(from))
       }} />
-      <div className="page-content pt-3">
+      <div className="page-content page-content-nofooter pt-3">
         <ProjectInfo />
         <AvgPrice />
         <HistoryOne />
         <OwnerOne />
-        <GoAnl />
+        <GoAnl goToTicket={() => {
+          goToTicket({ address: '0x3924b7681c6110fcd3628164388c3307f79d1059', chainid: 1 })
+        }} />
         <NftColl />
       </div>
     </div>

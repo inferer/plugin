@@ -11,10 +11,12 @@ const AddressPng = require('../images/address.png');
 
 const TrendItem: React.FC<{
   from: number,
-  index: number
+  index: number,
+  goToTicket?: (e: any) => void
 }> = ({
   from,
-  index
+  index,
+  goToTicket
 }) => {
     return (
       <div className=" relative price-item top-account-item mb-3 cursor-pointer">
@@ -24,6 +26,7 @@ const TrendItem: React.FC<{
             localStorage.setItem('page-from', String(from))
             const toPage = (from === APP_STATE.POPULARCOLL_TREND || from === APP_STATE.PRICECOLL_TREND) ? APP_STATE.ANALYSIS_TREND : APP_STATE.ANALYSISONE_TREND
             PopupAPI.changeState(toPage)
+            goToTicket && goToTicket({ address: '0x3924b7681c6110fcd3628164388c3307f79d1059' })
           }}
         >
           <div className="img-wrap flex items-center justify-center">

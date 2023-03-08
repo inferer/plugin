@@ -125,11 +125,29 @@ const TicketInfer: React.FC<{
         <PageHeader title={'INFERER'} onBack={() => {
           if (toTxInfer === 'collection') {
             localStorage.setItem('ticketinfer_from', 'ticketinfer')
+          } else if (toTxInfer === 'AnalysisOne') {
+            localStorage.setItem('ticketinfer_from', 'AnalysisOne')
           } else {
             localStorage.setItem('ticketinfer_from', '')
           }
-
-          PopupAPI.changeState(toTxInfer === 'collection' ? APP_STATE.COLLECTION : APP_STATE.TICKET)
+          let backPage = APP_STATE.TICKET
+          if (toTxInfer === 'collection') {
+            backPage = APP_STATE.COLLECTION
+          }
+          if (toTxInfer === 'AnalysisOne') {
+            backPage = APP_STATE.ANALYSISONE_TREND
+          }
+          if (toTxInfer === 'TopAccount') {
+            backPage = APP_STATE.TOPACCOUNT_TREND
+          }
+          if (toTxInfer === 'TopProfit') {
+            backPage = APP_STATE.TOPPROFIT_TREND
+          }
+          if (toTxInfer === 'ActiveAccount') {
+            backPage = APP_STATE.ACTIVEACCOUNT_TREND
+          }
+          // PopupAPI.changeState(toTxInfer === 'collection' ? APP_STATE.COLLECTION : APP_STATE.TICKET)
+          PopupAPI.changeState(backPage)
         }} />
         <div className={`search-loading absolute ${isLoading ? '' : 'hide'}`} style={{ left: 20, top: 212 }}>
           <img src={loading2Png} alt="" style={{ width: 320, height: 182 }} />
@@ -154,7 +172,7 @@ const TicketInfer: React.FC<{
             <div className=" flex flex-col justify-center items-center" style={{ marginTop: 70 }}>
               <img src={nodataPng} alt="" style={{ width: 150, height: 150 }} />
               <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)', marginTop: 10 }}>No result yet, or maybe</div>
-              <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)'}}>it’s a contract</div>
+              <div className=" text-center" style={{ color: 'rgba(63, 70, 100, 0.3)' }}>it’s a contract</div>
             </div>)
         }
 

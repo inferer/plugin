@@ -15,7 +15,7 @@ const TrendItem: React.FC<{
 }) => {
     return (
       <div className=" relative price-item mb-3 cursor-pointer">
-        <div className={`flex justify-center items-center absolute left-0 top-0 num font-bold text-base num${index + 1}`}>No.{index + 1}</div>
+        <div className={`flex justify-center items-center absolute left-0 top-0 num font-bold italic text-base num${index + 1}`}>No.{index + 1}</div>
         <div className="price-item-content flex items-center"
           onClick={() => {
             localStorage.setItem('page-from', String(from))
