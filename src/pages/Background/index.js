@@ -130,6 +130,14 @@ const backgroundScript = {
         }
       )
     })
+    duplex.on('getTopActiveUsers', async (e) => {
+      const data = await this.service.getTopActiveUsers(e.data)
+      e.resolve(data)
+    })
+    duplex.on('execApiTrends', async (e) => {
+      const data = await this.service.execApiTrends(e.data)
+      e.resolve(data)
+    })
   },
   bindTabDuplex() {
     duplex.on('tabRequest', async ({ hostname, resolve, data: request }) => {

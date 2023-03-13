@@ -16,3 +16,7 @@ export function transformTime(timestamp: number) {
 export function randomString() {
   return Math.random().toString(36).slice(-10);
 }
+
+export function formatAddress(address: string = '') {
+  return address.slice(0, 4) + '...' + address.slice(-4)
+}

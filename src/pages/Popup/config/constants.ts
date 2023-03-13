@@ -25,4 +25,5 @@ export const APP_STATE = {
   TRENDS_INDEX: 30,
 }
 
-export const API_URL = 'http://119.8.117.37:12999'
+// export const API_URL = 'http://119.8.117.37:12999'
+export const API_URL = 'http://49.234.51.249:8792'

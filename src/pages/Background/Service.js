@@ -378,6 +378,25 @@ class Service extends EventEmitter {
       return false
     }
   }
+
+  async getTopActiveUsers(data = {}) {
+    try {
+      const res = await fetcher('/api/trends/getTopActiveUsers', { user_id: this.profileUserInfo.user_id, page_size: 20, ...data })
+      return res
+    } catch (e) {
+      return false
+    }
+  }
+
+  async execApiTrends(data = { action: '', params: {} }) {
+    const action = data.action
+    try {
+      const res = await fetcher(`/api/trends/${action}`, { user_id: this.profileUserInfo.user_id, page_size: 20, ...data.params })
+      return res
+    } catch (e) {
+      return false
+    }
+  }
 }
 
 export default new Service()

@@ -99,6 +99,12 @@ export default {
   getCloseTime() {
     return this.duplex.send('getCloseTime')
   },
+  getTopActiveUsers() {
+    return this.duplex.send('getTopActiveUsers')
+  },
+  execApiTrends(data) {
+    return this.duplex.send('execApiTrends', data)
+  },
 
 
 }
