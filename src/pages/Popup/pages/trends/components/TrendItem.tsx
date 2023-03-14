@@ -50,7 +50,7 @@ const TrendItem: React.FC<{
                 {
                   (from === APP_STATE.POPULARCOLL_TREND ||
                     from === APP_STATE.POPULARONE_TREND
-                  ) && itemData?.nums
+                  ) && (itemData?.nums || itemData?.transaction_num)
                 }
               </div>
             </div>
