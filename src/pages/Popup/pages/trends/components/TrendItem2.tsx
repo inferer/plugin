@@ -28,7 +28,6 @@ const TrendItem: React.FC<{
           onClick={() => {
             localStorage.setItem('page-from', String(from))
             const toPage = (from === APP_STATE.POPULARCOLL_TREND || from === APP_STATE.PRICECOLL_TREND) ? APP_STATE.ANALYSIS_TREND : APP_STATE.ANALYSISONE_TREND
-            PopupAPI.changeState(toPage)
             goToTicket && goToTicket({ address: itemData?.holder_address })
           }}
         >

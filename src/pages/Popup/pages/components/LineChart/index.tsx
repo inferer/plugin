@@ -15,10 +15,11 @@ type EChartsOption = echarts.ComposeOption<
 
 var option: EChartsOption;
 
-const LineChartT: React.FC<{ lineData: any }> = ({
-  lineData
+const LineChartT: React.FC<{ lineData: any, id?: string }> = ({
+  lineData,
+  id
 }) => {
-  const id = randomString()
+  const domId = id || randomString()
   const chartWrapId = randomString()
   const chartTipId = randomString()
   const [serieData, setSerieData] = useState<{ name: string, value: number }>({ name: '', value: 0 })
@@ -29,12 +30,13 @@ const LineChartT: React.FC<{ lineData: any }> = ({
 
   const chartWrapRef = useRef<any>(null)
   const chartTipRef = useRef<any>(null)
+  const chartInsRef = useRef<any>(null)
 
   useEffect(() => {
     option = {
       grid: {
         left: 0,
-        top: 0,
+        top: 10,
         bottom: 30,
         right: 0
       },
@@ -48,7 +50,7 @@ const LineChartT: React.FC<{ lineData: any }> = ({
           show: false
         },
         axisLabel: {
-          interval: 1,
+          interval: 0,
           fontSize: '10px',
           color: '#7F8792'
         }
@@ -56,50 +58,51 @@ const LineChartT: React.FC<{ lineData: any }> = ({
       yAxis: {
         type: 'value',
         show: false,
-        min: 120,
-        max: 250
+        // min: 120,
+        // max: 250
       },
       series: [
 
       ]
     };
-
-    var chartDom = document.getElementById(id);
-    if (chartDom) {
-      var myChart = echarts.init(chartDom);
-      option && myChart.setOption({
-        ...option,
-        ...{ xAxis: { ...option.xAxis, data: lineData?.xAxis?.data || ['Jan', 'Fab', 'Mar', 'Apr', 'May', 'Jun'] } },
-        series: lineData.series
-      });
-      // myChart.getZr().on('mouseover', (params) => {
-      //   console.log(params)
-      // })
-      myChart.on('mouseover', (params) => {
-        console.log(params.event?.event)
-        const originEvent = params.event?.event as any
-        setEventPos({ clientX: originEvent.clientX, clientY: originEvent.clientY })
-        setdataIndex(params.dataIndex)
-        setSerieData({ name: params.name, value: Number(params.value) })
-        const tipDom = chartTipRef.current
-        const rect = tipDom?.getBoundingClientRect();
-        const chartDom = chartWrapRef.current
-        const chartRect = chartDom?.getBoundingClientRect()
-        if (rect && chartRect) {
-          let left = 0
-          left = originEvent.zrX - (rect?.width / 2)
-          if (left < 0) {
-            left = 0
+    if (id && lineData.series.length > 0) {
+      var chartDom = document.getElementById(id);
+      if (chartDom) {
+        !chartInsRef.current && (chartInsRef.current = echarts.init(chartDom));
+        option && chartInsRef.current.setOption({
+          ...option,
+          ...{ xAxis: { ...option.xAxis, data: lineData?.xAxis?.data || ['Jan', 'Fab', 'Mar', 'Apr', 'May', 'Jun'] } },
+          series: lineData.series
+        });
+        // myChart.getZr().on('mouseover', (params) => {
+        //   console.log(params)
+        // })
+        chartInsRef.current.on('mouseover', (params: any) => {
+          console.log(params.event?.event)
+          const originEvent = params.event?.event as any
+          setEventPos({ clientX: originEvent.clientX, clientY: originEvent.clientY })
+          setdataIndex(params.dataIndex)
+          setSerieData({ name: params.name, value: Number(params.value) })
+          const tipDom = chartTipRef.current
+          const rect = tipDom?.getBoundingClientRect();
+          const chartDom = chartWrapRef.current
+          const chartRect = chartDom?.getBoundingClientRect()
+          if (rect && chartRect) {
+            let left = 0
+            left = originEvent.zrX - (rect?.width / 2)
+            if (left < 0) {
+              left = 0
+            }
+            if (left > chartRect?.width - rect?.width) {
+              left = chartRect?.width - rect?.width
+            }
+            setTipPos({ left: left, top: originEvent.zrY - rect?.height / 2, opacity: 1 })
           }
-          if (left > chartRect?.width - rect?.width) {
-            left = chartRect?.width - rect?.width
-          }
-          setTipPos({ left: left, top: originEvent.zrY - rect?.height / 2, opacity: 1 })
-        }
-      })
-
+        })
+      }
     }
-  }, [lineData, overTip])
+
+  }, [lineData, overTip, id])
 
   return (
     <div

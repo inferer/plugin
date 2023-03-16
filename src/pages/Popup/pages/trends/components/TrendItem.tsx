@@ -22,6 +22,7 @@ const TrendItem: React.FC<{
         <div className="price-item-content flex items-center"
           onClick={() => {
             localStorage.setItem('page-from', String(from))
+            localStorage.setItem('analysis_address', itemData?.token_address)
             const toPage = (from === APP_STATE.POPULARCOLL_TREND || from === APP_STATE.PRICECOLL_TREND) ? APP_STATE.ANALYSIS_TREND : APP_STATE.ANALYSISONE_TREND
             PopupAPI.changeState(toPage)
           }}

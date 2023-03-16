@@ -35,38 +35,31 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
   const [focus, setFocus] = useState(false)
   const [feedSuccess, setFeedSuccess] = useState(false)
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value)
-  }
+  const [isLoading, setIsLoading] = useState(false)
+  const [pageData, setPageData] = useState<any>({})
 
-  const handeFocus = (flag: boolean) => {
-    setFocus(flag)
-  }
-
-  const handleFeedBack = async () => {
-    if (!address) {
-      Toast.show('Please connect wallet')
-      return
-    }
-    const res = await PopupAPI.feedBack({
-      address: address,
-      content: text,
-      chainid: 1
+  const getInitData = () => {
+    setIsLoading(true)
+    const analysis_address = localStorage.getItem('analysis_address') || ''
+    PopupAPI.execApiTrends({
+      action: 'getCollAnalysisByAddress',
+      params: {
+        address: analysis_address
+      }
+    }).then((res: any) => {
+      if (res.code === 0) {
+        setPageData(res.data || {})
+      }
+      setIsLoading(false)
     })
-    if (res.status === 200) {
-      setFeedSuccess(true)
-    } else {
-      Toast.show({
-        content: 'Submit failed',
-        position: "bottom"
-      })
-    }
   }
+
   useEffect(() => {
-    if (appState === APP_STATE.FEEDBACK) {
-      const address = localStorage.getItem('search_address') ?? ''
-      setAddress(address)
-      setFeedSuccess(false)
+    if (appState === APP_STATE.ANALYSIS_TREND) {
+      setIsLoading(false)
+      getInitData()
+    } else {
+      setIsLoading(false)
     }
   }, [appState])
 
@@ -82,9 +75,14 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
       }} />
       <div className="page-content page-content-nofooter pt-3">
         <ProjectInfo />
-        <VolumePrice />
+        <VolumePrice
+          volumeMonthHistory={pageData.volumeMonthHistory}
+          priceMonthHistory={pageData.priceMonthHistory}
+        />
         <InfererScore />
-        <HoldingAmount />
+        <HoldingAmount
+          itemData={pageData.holderPrecent}
+        />
         <InfererLabels />
       </div>
     </div>

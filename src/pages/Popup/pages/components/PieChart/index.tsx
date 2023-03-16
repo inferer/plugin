@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts/core';
 import {
   TooltipComponent,
@@ -25,10 +25,17 @@ type EChartsOption = echarts.ComposeOption<
 
 var option: EChartsOption;
 
-const PieChartT = () => {
+const PieChartT = ({
+  dataList
+}: any) => {
   const id = randomString()
-
+  const chartRef = useRef<any>(null)
   useEffect(() => {
+    if (dataList.length <= 0) return
+
+    const keys = Object.keys(dataList)
+    const newData = keys.map(key => ({ value: Number(dataList[key]), name: key }))
+
     option = {
       color: ['#48AEF5', '#FE7B77', '#D080FF', '#FFB859'],
       grid: {
@@ -72,22 +79,23 @@ const PieChartT = () => {
           labelLine: {
             show: false
           },
-          data: [
-            { value: 1048, name: '1' },
-            { value: 735, name: '2-3' },
-            { value: 580, name: '4-10' },
-            { value: 484, name: '>10' }
-          ]
+          // data: [
+          //   { value: 1048, name: '1' },
+          //   { value: 735, name: '2-3' },
+          //   { value: 580, name: '4-10' },
+          //   { value: 484, name: '>10' }
+          // ]
+          data: newData
         }
       ]
     };
 
     var chartDom = document.getElementById(id);
     if (chartDom) {
-      var myChart = echarts.init(chartDom);
-      option && myChart.setOption(option);
+      !chartRef.current && (chartRef.current = echarts.init(chartDom));
+      option && chartRef.current.setOption(option);
     }
-  }, [])
+  }, [dataList])
 
   return (
     <div id={id} className="" style={{ height: '70px', width: '70px' }}>

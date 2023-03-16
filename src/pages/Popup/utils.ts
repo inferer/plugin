@@ -20,3 +20,22 @@ export function randomString() {
 export function formatAddress(address: string = '') {
   return address.slice(0, 4) + '...' + address.slice(-4)
 }
+
+export const numMonth: any = {
+  '01': 'Jan',
+  '02': 'Feb',
+  '03': 'Mar',
+  '04': 'Apr',
+  '05': 'May',
+  '06': 'Jun',
+  '07': 'Jul',
+  '08': 'Aug',
+  '09': 'Sep',
+  '10': 'Oct',
+  '11': 'Nov',
+  '12': 'Dec',
+}
+
+export function num2Month(num: string) {
+  return numMonth[num]
+}
