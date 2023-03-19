@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const LikePng = require('../images/dup.png');
 const Like1Png = require('../images/dup1.png');
@@ -18,48 +18,68 @@ const InfoPng = require('../images/info.png');
 
 
 export const Like: React.FC<{
-  isLike?: boolean
+  likeCount: number
+  isLike?: boolean,
+  isUnlike?: boolean,
+  onClick?: () => void
 }> = ({
-  isLike
+  likeCount,
+  isLike,
+  isUnlike,
+  onClick
 }) => {
     const [hover, setHover] = useState(false)
     const handleHover = () => {
-      setHover(true)
+      !isUnlike && setHover(true)
     }
     const handleLeave = () => {
-      setHover(false)
+      !isUnlike && setHover(false)
     }
     return (
       <div
+        onClick={e => {
+          e.stopPropagation()
+          onClick && onClick()
+        }}
         onMouseEnter={handleHover}
         onMouseLeave={handleLeave}
-        className={`flex items-center cursor-pointer like-wrap ${isLike || hover ? 'is-like' : ''}`}>
+        className={`flex items-center cursor-pointer like-wrap ${isLike || hover ? 'is-like' : ''} ${isUnlike ? ' opacity-70' : ''}`}>
         <img src={isLike || hover ? Like1Png : LikePng} alt="" />
-        <div className={`text ${isLike || hover ? 'up' : ''}`}>888</div>
+        <div className={`text ${isLike || hover ? 'up' : ''}`}>{likeCount}</div>
       </div>
     )
   }
 
 
 export const UnLike: React.FC<{
-  isLike?: boolean
+  unlikeCount: number
+  isLike?: boolean,
+  isUnlike?: boolean,
+  onClick?: () => void
 }> = ({
-  isLike
+  unlikeCount,
+  isLike,
+  isUnlike,
+  onClick
 }) => {
     const [hover, setHover] = useState(false)
     const handleHover = () => {
-      setHover(true)
+      !isLike && setHover(true)
     }
     const handleLeave = () => {
-      setHover(false)
+      !isLike && setHover(false)
     }
     return (
       <div
+        onClick={e => {
+          e.stopPropagation()
+          onClick && onClick()
+        }}
         onMouseEnter={handleHover}
         onMouseLeave={handleLeave}
-        className={`flex items-center cursor-pointer like-wrap ${isLike || hover ? 'is-like' : ''}`}>
-        <img src={isLike || hover ? Down2Png : DownPng} alt="" />
-        <div className={`text ${isLike || hover ? 'down' : ''}`}>222</div>
+        className={`flex items-center cursor-pointer like-wrap ${isUnlike || hover ? 'is-like' : ''} ${isLike ? ' opacity-70' : ''}`}>
+        <img src={isUnlike || hover ? Down2Png : DownPng} alt="" />
+        <div className={`text ${isUnlike || hover ? 'down' : ''}`}>{unlikeCount}</div>
       </div>
     )
   }
@@ -82,19 +102,24 @@ export const StarList: React.FC<{
   }
 
 export const CollectIcon: React.FC<{
+  value: boolean,
   onClick?: () => void
 }> = ({
+  value,
   onClick
 }) => {
     const [active, setActive] = useState(false)
+    useEffect(() => {
+      setActive(value)
+    }, [value])
     return (
       <div className='icon-wrap cursor-pointer shrink-0'
         onClick={e => {
           e.stopPropagation()
           onClick && onClick()
         }}
-        onMouseEnter={() => setActive(true)}
-        onMouseLeave={() => setActive(false)}
+        onMouseEnter={() => setActive(value || true)}
+        onMouseLeave={() => setActive(value || false)}
       >
         <img src={active ? Collect2Png : CollectPng} alt="" />
       </div>

@@ -47,7 +47,7 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
         address: analysis_address
       }
     }).then((res: any) => {
-      if (res.code === 0) {
+      if (res.status === 200) {
         setPageData(res.data || {})
       }
       setIsLoading(false)

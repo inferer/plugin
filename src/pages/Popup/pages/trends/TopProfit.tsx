@@ -21,7 +21,7 @@ const TopProfitTrend: React.FC<any> = ({ goToTicket, appState }) => {
     PopupAPI.execApiTrends({
       action: 'getTopProfitRatios'
     }).then((res: any) => {
-      if (res.code === 0) {
+      if (res.status === 200) {
         setPageDataList(res.data || [])
       }
       setIsLoading(false)

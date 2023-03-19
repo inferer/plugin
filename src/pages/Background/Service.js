@@ -124,7 +124,6 @@ class Service extends EventEmitter {
     this.chainid = data.chainid
   }
   setMatchAddress(data) {
-    console.log(data)
     this.matchAddress = data
     this.emit('setMatchAddress', data);
   }
@@ -389,9 +388,32 @@ class Service extends EventEmitter {
   }
 
   async execApiTrends(data = { action: '', params: {} }) {
+    console.log('execApiTrends params: ', data)
+    const action = data.action
+    const user_address = await StorageService.getStorage('address') || ''
+    try {
+      const res = await fetcher(`/api/trends/${action}`, {
+        userid: this.profileUserInfo.user_id,
+        chainid: this.chainid,
+        user_address,
+        page_size: 20,
+        ...data.params
+      })
+      return res
+    } catch (e) {
+      return false
+    }
+  }
+
+  async execApiPost(data = { action: '', params: {} }) {
     const action = data.action
     try {
-      const res = await fetcher(`/api/trends/${action}`, { user_id: this.profileUserInfo.user_id, page_size: 20, ...data.params })
+      const res = await poster(`/api/trends/${action}`, {
+        userid: this.profileUserInfo.user_id,
+        chainid: this.chainid,
+        user_address: await StorageService.getStorage('address') || '',
+        ...data.params
+      })
       return res
     } catch (e) {
       return false

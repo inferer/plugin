@@ -33,6 +33,8 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   const [text, setText] = useState('')
   const [focus, setFocus] = useState(false)
   const [feedSuccess, setFeedSuccess] = useState(false)
+  const [nftData, setNftData] = useState<any>({})
+  const [nftBaseInfo, setNftBaseInfo] = useState<any>({})
 
   const [isLoading, setIsLoading] = useState(false)
   const [pageData, setPageData] = useState<any>({})
@@ -40,17 +42,32 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   const getInitData = () => {
     setIsLoading(true)
     const analysis_address = localStorage.getItem('analysis_address') || ''
+    const analysis_item: any = JSON.parse(localStorage.getItem('analysis_item') || JSON.stringify({}))
+
+    setNftData(analysis_item)
+    PopupAPI.execApiTrends({
+      action: 'getNftBaseInfo',
+      params: {
+        token_id: analysis_item.token_id,
+        nft_address: analysis_item.token_address
+      }
+    }).then((res: any) => {
+      setNftBaseInfo(res.data || {})
+    })
+
     PopupAPI.execApiTrends({
       action: 'getAnalysisByAddress',
       params: {
-        address: analysis_address
+        address: analysis_item.token_address
       }
     }).then((res: any) => {
-      if (res.code === 0) {
+      if (res.status === 200) {
         setPageData(res.data || {})
       }
       setIsLoading(false)
     })
+
+
   }
 
   useEffect(() => {
@@ -69,7 +86,10 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
         PopupAPI.changeState(Number(from))
       }} />
       <div className="page-content page-content-nofooter pt-3">
-        <ProjectInfo />
+        <ProjectInfo
+          nftData={nftData}
+          nftBaseInfo={nftBaseInfo}
+        />
         <AvgPrice
           priceMonthHistory={pageData.priceMonthHistory}
         />

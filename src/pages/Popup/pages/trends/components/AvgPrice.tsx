@@ -31,7 +31,7 @@ export const AvgPrice: React.FC<any> = ({
       <div className="avgprice-wrap p-3">
         <TTitle text="Price" tips="NFT transaction price in last 6 months" />
         <div className="flex items-baseline mt-1">
-          <div className="text-base font-bold color-b2">{priceAvg.toFixed(3)} ETH</div>
+          <div className="text-base font-bold color-b2">{priceAvg.toFixed(1)} ETH</div>
           <div className="text-xs ml-1" style={{ color: '#7F8792' }}>(Avg)</div>
         </div>
         <LineChartT

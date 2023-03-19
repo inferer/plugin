@@ -138,6 +138,10 @@ const backgroundScript = {
       const data = await this.service.execApiTrends(e.data)
       e.resolve(data)
     })
+    duplex.on('execApiPost', async (e) => {
+      const data = await this.service.execApiPost(e.data)
+      e.resolve(data)
+    })
   },
   bindTabDuplex() {
     duplex.on('tabRequest', async ({ hostname, resolve, data: request }) => {

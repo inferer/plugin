@@ -7,6 +7,11 @@ const { PopupAPI } = require('../../../../../api')
 const DemoPng = require('../images/demo.png');
 const SharePng = require('../images/share.png');
 
+export const formatName = (name: string) => {
+  if (name.length <= 18) return name
+  return name.slice(0, 16) + '...'
+}
+
 const TrendItem: React.FC<{
   itemData?: any,
   from: number,
@@ -23,17 +28,20 @@ const TrendItem: React.FC<{
           onClick={() => {
             localStorage.setItem('page-from', String(from))
             localStorage.setItem('analysis_address', itemData?.token_address)
+            localStorage.setItem('analysis_item', JSON.stringify(itemData || {}))
             const toPage = (from === APP_STATE.POPULARCOLL_TREND || from === APP_STATE.PRICECOLL_TREND) ? APP_STATE.ANALYSIS_TREND : APP_STATE.ANALYSISONE_TREND
             PopupAPI.changeState(toPage)
           }}
         >
           <div className="img-wrap">
-            <img src={DemoPng} className="w-full h-full" alt="" />
+            <img src={itemData.series_img_url || itemData.NFT_img_url || DemoPng} className="w-full h-full" alt="" />
           </div>
           <div className="flex-1" style={{ paddingLeft: 9 }}>
             <div className="flex justify-between">
               <div>
-                <div className="text-sm font-bold" style={{ color: '#3F4664' }}>Meme Team (100)</div>
+                <div className="text-sm font-bold" style={{ color: '#3F4664' }}>
+                  {(itemData.series_name || itemData.NFT_name) ? formatName(itemData.series_name || itemData.NFT_name) : 'Meme Team (100)'}
+                </div>
                 <div className="flex items-center">
                   <div className="text-sm" style={{ color: '#7F8792' }}>By</div>
                   <div className="text-sm font-bold" style={{ color: '#3F4664', marginLeft: 6, marginRight: 6 }}>

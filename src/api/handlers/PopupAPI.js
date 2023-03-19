@@ -105,6 +105,9 @@ export default {
   execApiTrends(data) {
     return this.duplex.send('execApiTrends', data)
   },
+  execApiPost(data) {
+    return this.duplex.send('execApiPost', data)
+  },
 
 
 }

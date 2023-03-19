@@ -21,7 +21,7 @@ const PriceOneTrend: React.FC<any> = ({ appState }) => {
     PopupAPI.execApiTrends({
       action: 'getTopPrice'
     }).then((res: any) => {
-      if (res.code === 0) {
+      if (res.status === 200) {
         setPageDataList(res.data || [])
       }
       setIsLoading(false)

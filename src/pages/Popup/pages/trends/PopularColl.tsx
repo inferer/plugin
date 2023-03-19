@@ -18,7 +18,7 @@ const PopularCollTrend: React.FC<any> = ({ appState }) => {
     PopupAPI.execApiTrends({
       action: 'getTopPopularColl'
     }).then((res: any) => {
-      if (res.code === 0) {
+      if (res.status === 200) {
         setPageDataList(res.data || [])
       }
       setIsLoading(false)
