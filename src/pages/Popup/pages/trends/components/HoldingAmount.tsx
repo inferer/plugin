@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { randomString } from "../../../utils";
+import { formatNumber, randomString } from "../../../utils";
 import PieChartT from "../../components/PieChart";
 import { TTitle } from "./components";
 
 const HoldingAmount: React.FC<any> = ({
+  infererAnalysis = { holder_address_count: 0 },
   itemData = []
 }) => {
   const [precentData, setPrecentData] = useState({
@@ -67,7 +68,7 @@ const HoldingAmount: React.FC<any> = ({
 
         </div>
       </div>
-      <div className="text-xs color-b2 holding-amount" style={{ marginTop: '2px' }}>2.34k Holders</div>
+      <div className="text-xs color-b2 holding-amount" style={{ marginTop: '2px' }}>{formatNumber(infererAnalysis.holder_address_count)} Holders</div>
 
     </div>
   )

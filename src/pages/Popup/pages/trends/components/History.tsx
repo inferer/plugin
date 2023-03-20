@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { formatAddress, transformTime } from "../../../utils";
 import { TTitle } from "./components";
 
 const demoData = [
@@ -9,9 +10,21 @@ const demoData = [
   { time: '05/19', from: '0x8eb8.....3f23', to: '0x8eb8.....3f23', price: '0.078' },
 ]
 
-const HistoryOne: React.FC<any> = () => {
+const HistoryOne: React.FC<any> = ({
+  txHistory = []
+}) => {
   const [list, setList] = useState(demoData)
-
+  useEffect(() => {
+    if (txHistory && txHistory.length > 0) {
+      const tmpList = txHistory.map((_item: any) => {
+        return {
+          ..._item,
+          time: transformTime(_item.time * 1000).slice(7, 12)
+        }
+      })
+      setList(tmpList)
+    }
+  }, [txHistory])
   return (
     <div className="box-wrap mt-3" style={{ paddingBottom: '10px' }}>
       <TTitle text="History" tips="" />
@@ -25,11 +38,11 @@ const HistoryOne: React.FC<any> = () => {
         {
           list.map((item, index) => {
             return (
-              <div key={item.time} className={`flex items-center history-content ${index % 2 === 1 ? 'bg-1' : ''}`}
+              <div key={item.from + index} className={`flex items-center history-content ${index % 2 === 1 ? 'bg-1' : ''}`}
               >
                 <div className="history-item item-time">{item.time}</div>
-                <div className="history-item item-from">{item.from}</div>
-                <div className="history-item item-to">{item.to}</div>
+                <div className="history-item item-from">{formatAddress(item.from)}</div>
+                <div className="history-item item-to">{formatAddress(item.to)}</div>
                 <div className=" item-price">{item.price}<span style={{ paddingLeft: '2px', color: '#3F4664' }}>ETH</span></div>
               </div>
             )

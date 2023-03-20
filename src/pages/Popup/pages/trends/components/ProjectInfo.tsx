@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BuyIcon, CollectIcon, Like, MsgIcon, ShareIcon, StarList, TTitle, UnLike } from "./components";
 import { Toast } from 'antd-mobile'
+import { APP_STATE } from "../../../config/constants";
 const DemoPng = require('../images/demo.png');
 const { PopupAPI } = require('../../../../../api')
 
@@ -10,6 +11,7 @@ const randomStar = () => {
 }
 
 const ProjectInfo: React.FC<any> = ({
+  from,
   nftData = {},
   nftBaseInfo = {}
 }) => {
@@ -41,7 +43,7 @@ const ProjectInfo: React.FC<any> = ({
             onClick={() => {
 
               !isUnlike && PopupAPI.execApiPost({
-                action: 'collectNft',
+                action: nftData.token_id ? 'collectNft' : 'collectNftColl',
                 params: {
                   column: 'is_like',
                   is_like: !isLike,
@@ -68,7 +70,7 @@ const ProjectInfo: React.FC<any> = ({
             isUnlike={isUnlike}
             onClick={() => {
               !isLike && PopupAPI.execApiPost({
-                action: 'collectNft',
+                action: nftData.token_id ? 'collectNft' : 'collectNftColl',
                 params: {
                   column: 'is_unlike',
                   is_unlike: !isUnlike,
@@ -100,12 +102,27 @@ const ProjectInfo: React.FC<any> = ({
               <StarList score={starNums} />
             </div>
           </div>
-          <div>
-            <div className="color-image font-bold right-price">
-              {(nftData.price / 1600).toFixed(1)}
+          {
+            (from === APP_STATE.PRICEONE_TREND ||
+              from === APP_STATE.PRICECOLL_TREND) &&
+            <div>
+              <div className="color-image font-bold right-price">
+                {(nftData.price / 1600).toFixed(1)}
+              </div>
+              <div className="color-image text-xs font-bold text-right">ETH</div>
             </div>
-            <div className="color-image text-xs font-bold text-right">ETH</div>
-          </div>
+          }
+          {
+            (from === APP_STATE.POPULARONE_TREND ||
+              from === APP_STATE.POPULARCOLL_TREND) &&
+            <div>
+              <div className="color-image font-bold right-price">
+                {nftData.nums || nftData.transaction_num}
+              </div>
+              <div className="color-image text-xs font-bold text-right">transfers</div>
+            </div>
+          }
+
         </div>
         <div className="flex justify-end">
           <div className=" rounded flex justify-between items-center space-x-3 " style={{ background: '#F8F9FF', width: 175, height: 28, padding: '0 12px' }}>
@@ -114,7 +131,7 @@ const ProjectInfo: React.FC<any> = ({
               onClick={() => {
                 // 
                 PopupAPI.execApiPost({
-                  action: 'collectNft',
+                  action: nftData.token_id ? 'collectNft' : 'collectNftColl',
                   params: {
                     column: 'is_fav',
                     is_fav: !isFav,

@@ -35,6 +35,7 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   const [feedSuccess, setFeedSuccess] = useState(false)
   const [nftData, setNftData] = useState<any>({})
   const [nftBaseInfo, setNftBaseInfo] = useState<any>({})
+  const [pageFrom, setPageFrom] = useState(0)
 
   const [isLoading, setIsLoading] = useState(false)
   const [pageData, setPageData] = useState<any>({})
@@ -58,7 +59,8 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
     PopupAPI.execApiTrends({
       action: 'getAnalysisByAddress',
       params: {
-        address: analysis_item.token_address
+        address: analysis_item.token_address,
+        token_id: analysis_item.token_id,
       }
     }).then((res: any) => {
       if (res.status === 200) {
@@ -71,6 +73,7 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   }
 
   useEffect(() => {
+    setPageFrom(Number(localStorage.getItem('page-from') || ''))
     if (appState === APP_STATE.ANALYSISONE_TREND) {
       setIsLoading(false)
       getInitData()
@@ -87,17 +90,19 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
       }} />
       <div className="page-content page-content-nofooter pt-3">
         <ProjectInfo
+          from={pageFrom}
           nftData={nftData}
           nftBaseInfo={nftBaseInfo}
         />
         <AvgPrice
           priceMonthHistory={pageData.priceMonthHistory}
         />
-        <HistoryOne />
-        <OwnerOne />
+        <HistoryOne
+          txHistory={pageData.txHistory}
+        />
+        <OwnerOne ownerInfo={pageData.ownerInfo} />
         <GoAnl goToTicket={() => {
           const analysis_address = localStorage.getItem('analysis_address') || ''
-          console.log(analysis_address, 11111111)
           analysis_address && goToTicket({ address: analysis_address, chainid: 1 })
         }} />
         <NftColl />

@@ -34,6 +34,9 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
   const [text, setText] = useState('')
   const [focus, setFocus] = useState(false)
   const [feedSuccess, setFeedSuccess] = useState(false)
+  const [pageFrom, setPageFrom] = useState(0)
+  const [nftData, setNftData] = useState<any>({})
+  const [nftBaseInfo, setNftBaseInfo] = useState<any>({})
 
   const [isLoading, setIsLoading] = useState(false)
   const [pageData, setPageData] = useState<any>({})
@@ -41,6 +44,18 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
   const getInitData = () => {
     setIsLoading(true)
     const analysis_address = localStorage.getItem('analysis_address') || ''
+    const analysis_item: any = JSON.parse(localStorage.getItem('analysis_item') || JSON.stringify({}))
+
+    setNftData(analysis_item)
+    PopupAPI.execApiTrends({
+      action: 'getNFTCollBaseInfo',
+      params: {
+        nft_address: analysis_item.token_address
+      }
+    }).then((res: any) => {
+      setNftBaseInfo(res.data || {})
+    })
+
     PopupAPI.execApiTrends({
       action: 'getCollAnalysisByAddress',
       params: {
@@ -55,6 +70,7 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
   }
 
   useEffect(() => {
+    setPageFrom(Number(localStorage.getItem('page-from') || ''))
     if (appState === APP_STATE.ANALYSIS_TREND) {
       setIsLoading(false)
       getInitData()
@@ -74,13 +90,20 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
         }
       }} />
       <div className="page-content page-content-nofooter pt-3">
-        <ProjectInfo />
+        <ProjectInfo
+          nftData={nftData}
+          nftBaseInfo={nftBaseInfo}
+          from={pageFrom}
+        />
         <VolumePrice
           volumeMonthHistory={pageData.volumeMonthHistory}
           priceMonthHistory={pageData.priceMonthHistory}
         />
-        <InfererScore />
+        <InfererScore
+          infererAnalysis={pageData.infererAnalysis}
+        />
         <HoldingAmount
+          infererAnalysis={pageData.infererAnalysis}
           itemData={pageData.holderPrecent}
         />
         <InfererLabels />

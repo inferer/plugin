@@ -1,5 +1,7 @@
 import React from "react";
+import { formatAddress } from "../../../utils";
 import { TTitle } from "./components";
+import { formatName } from "./TrendItem";
 
 const NftPng = require('../images/nft-asset.png')
 const BridgePng = require('../images/bridge.png')
@@ -8,28 +10,30 @@ const HoldPng = require('../images/hold.png')
 const CopyPng = require('../images/copy.png')
 const SharePng = require('../images/share.png')
 
-const OwnerOne: React.FC<any> = () => {
+const OwnerOne: React.FC<any> = ({
+  ownerInfo
+}) => {
   return (
     <div className="box-wrap mt-3" style={{ paddingBottom: '4px' }}>
       <TTitle text="Owner" tips="" />
       <div className="flex owner-wrap mt-2 cursor-pointer">
         <div className="owner-img flex items-center justify-center">
-          <img src={NftPng} alt="" />
+          <img src={ownerInfo?.img_url || NftPng} alt="" />
         </div>
         <div className="flex-1 ml-3">
           <div className="flex items-center mb-2">
             <img className="img-left" src={BridgePng} alt="" />
-            <div className="text-xs font-bold">BridgetheDivide</div>
+            <div className="text-xs font-bold">{ownerInfo?.user_name ? formatName(ownerInfo.user_name) : 'BridgetheDivide'} </div>
             <img className="img-right" src={SharePng} alt="" />
           </div>
           <div className="flex items-center mb-2">
             <img className="img-left" src={AddressPng} alt="" />
-            <div className="text-xs font-bold">0x8eb8.....3f23</div>
+            <div className="text-xs font-bold">{formatAddress(ownerInfo?.holder_address)}</div>
             <img className="img-right" src={CopyPng} alt="" />
           </div>
           <div className="flex items-center">
             <img className="img-left" src={HoldPng} alt="" />
-            <div className="text-xs">Hold 239 Reddit NFTs</div>
+            <div className="text-xs">Hold {ownerInfo?.nft_nums || 0} Reddit NFTs</div>
           </div>
           <div className="flex mt-2 flex-wrap">
             <div className="infer-label">
