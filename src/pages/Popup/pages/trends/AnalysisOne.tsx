@@ -105,7 +105,10 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
           const analysis_address = localStorage.getItem('analysis_address') || ''
           analysis_address && goToTicket({ address: analysis_address, chainid: 1 })
         }} />
-        <NftColl />
+        <NftColl
+          nftData={nftData}
+          nftSeriesInfo={pageData.nftSeriesInfo}
+        />
       </div>
     </div>
   )

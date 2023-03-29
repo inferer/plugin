@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BuyIcon, CollectIcon, Like, MsgIcon, ShareIcon, StarList, TTitle, UnLike } from "./components";
 import { Toast } from 'antd-mobile'
-import { APP_STATE } from "../../../config/constants";
+import { APP_STATE, redditBuyUrl, redditChatUrl, redditShareUrl } from "../../../config/constants";
+import { formatName } from "./TrendItem";
+import { openBrowser } from "../../../utils";
 const DemoPng = require('../images/demo.png');
 const { PopupAPI } = require('../../../../../api')
 
@@ -34,7 +36,7 @@ const ProjectInfo: React.FC<any> = ({
   return (
     <div className=" bg-white rounded p-3 flex">
       <div className="big-img">
-        <img src={nftData.NFT_img_url || DemoPng} alt="" />
+        <img src={nftData.NFT_img_url || nftData.series_img_url || DemoPng} alt="" />
         <div className="left-text flex justify-between items-center">
           <Like
             isLike={isLike}
@@ -96,7 +98,7 @@ const ProjectInfo: React.FC<any> = ({
         <div className="flex justify-between">
           <div>
             <div className=" text-xs font-bold">
-              {nftData.NFT_name || 'Meme Team (100)'}
+              {formatName(nftData.NFT_name || nftData.series_name || 'Meme Team (100)')}
             </div>
             <div className="mt-1">
               <StarList score={starNums} />
@@ -107,7 +109,7 @@ const ProjectInfo: React.FC<any> = ({
               from === APP_STATE.PRICECOLL_TREND) &&
             <div>
               <div className="color-image font-bold right-price">
-                {(nftData.price / 1600).toFixed(1)}
+                {(nftData?.price || 0).toFixed(1)}
               </div>
               <div className="color-image text-xs font-bold text-right">ETH</div>
             </div>
@@ -155,11 +157,23 @@ const ProjectInfo: React.FC<any> = ({
               }}
             />
             <div className="icon-line"></div>
-            <ShareIcon />
+            <ShareIcon
+              onClick={() => {
+                openBrowser(redditShareUrl + (nftData?.NFT_creator || nftData?.series_creator || ''))
+              }}
+            />
             <div className="icon-line"></div>
-            <BuyIcon />
+            <BuyIcon
+              onClick={() => {
+                openBrowser(redditBuyUrl + `${nftData.token_address}/${nftData?.token_id || 0}`)
+              }}
+            />
             <div className="icon-line"></div>
-            <MsgIcon />
+            <MsgIcon
+              onClick={() => {
+                openBrowser(redditChatUrl + `${nftData?.NFT_creator || nftData?.series_creator}/submit`)
+              }}
+            />
           </div>
         </div>
       </div>

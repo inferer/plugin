@@ -54,7 +54,7 @@ const TrendItem: React.FC<{
                 (from === APP_STATE.TOPACCOUNT_TREND
                 ) &&
                 <div className="color-image font-bold right-price" style={{ fontSize: 32, lineHeight: '42px' }}>
-                  {Number(itemData?.volume / 1200).toFixed(2)}
+                  {Number(itemData?.volume / 1600).toFixed(2)}
                 </div>
               }
               {

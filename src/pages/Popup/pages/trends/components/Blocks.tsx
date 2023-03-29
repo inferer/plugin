@@ -54,7 +54,7 @@ export const VolumePrice: React.FC<any> = ({
       <div className="volume-wrap p-3">
         <TTitle text="Volume" tips="NFT transaction volume in last 6 months" />
         <div className="flex items-baseline mt-1">
-          <div className="text-base font-bold color-b2">{volumeTotal.toFixed(1)} ETH</div>
+          <div className="text-base font-bold color-b2">{(volumeTotal / 16000).toFixed(1)} ETH</div>
           <div className="text-xs ml-1" style={{ color: '#7F8792' }}>(Total)</div>
         </div>
         <div>
@@ -82,7 +82,7 @@ export const VolumePrice: React.FC<any> = ({
       <div className="volume-wrap p-3">
         <TTitle text="Price" tips="NFT transaction price in last 6 months" />
         <div className="flex items-baseline mt-1">
-          <div className="text-base font-bold color-b2">{priceAvg.toFixed(1)} ETH</div>
+          <div className="text-base font-bold color-b2">{(priceAvg / 1600).toFixed(1)} ETH</div>
           <div className="text-xs ml-1" style={{ color: '#7F8792' }}>(Avg)</div>
         </div>
         <div>

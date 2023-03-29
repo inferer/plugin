@@ -11,11 +11,12 @@ const InfererScore: React.FC<any> = ({
   const [per1, setPer1] = useState(0)
   useEffect(() => {
     const holderCount = infererAnalysis?.holder_address_count || 1;
-    setPer5(infererAnalysis?.score5_count / holderCount * 100)
-    setPer4(infererAnalysis?.score4_count / holderCount * 100)
-    setPer3(infererAnalysis?.score3_count / holderCount * 100)
-    setPer2(infererAnalysis?.score2_count / holderCount * 100)
-    setPer1(infererAnalysis?.score1_count / holderCount * 100)
+    const scoreCount = infererAnalysis?.score5_count + infererAnalysis?.score4_count + infererAnalysis?.score3_count + infererAnalysis?.score2_count + infererAnalysis?.score1_count
+    setPer5(infererAnalysis?.score5_count / scoreCount * 100)
+    setPer4(infererAnalysis?.score4_count / scoreCount * 100)
+    setPer3(infererAnalysis?.score3_count / scoreCount * 100)
+    setPer2(infererAnalysis?.score2_count / scoreCount * 100)
+    setPer1(infererAnalysis?.score1_count / scoreCount * 100)
   }, [infererAnalysis])
   return (
     <div className="box-wrap mt-3">

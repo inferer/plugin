@@ -1,3 +1,4 @@
+import { Toast } from "antd-mobile";
 import React from "react";
 import { formatAddress } from "../../../utils";
 import { TTitle } from "./components";
@@ -29,7 +30,15 @@ const OwnerOne: React.FC<any> = ({
           <div className="flex items-center mb-2">
             <img className="img-left" src={AddressPng} alt="" />
             <div className="text-xs font-bold">{formatAddress(ownerInfo?.holder_address)}</div>
-            <img className="img-right" src={CopyPng} alt="" />
+            <img className="img-right" src={CopyPng} alt=""
+              onClick={(e) => {
+                e.stopPropagation()
+                navigator.clipboard.writeText(ownerInfo?.holder_address)
+                  .then(() => {
+                    Toast.show({ content: 'Copied', position: 'bottom' })
+                  })
+              }}
+            />
           </div>
           <div className="flex items-center">
             <img className="img-left" src={HoldPng} alt="" />

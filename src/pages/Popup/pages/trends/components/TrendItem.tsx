@@ -45,16 +45,16 @@ const TrendItem: React.FC<{
                 <div className="flex items-center">
                   <div className="text-sm" style={{ color: '#7F8792' }}>By</div>
                   <div className="text-sm font-bold" style={{ color: '#3F4664', marginLeft: 6, marginRight: 6 }}>
-                    {formatAddress(itemData?.token_address)}
+                    {(itemData?.series_creator || itemData?.NFT_creator) && formatName(itemData?.series_creator || itemData?.NFT_creator)}
                   </div>
                   <img src={SharePng} style={{ width: 10, height: 10 }} className=" cursor-pointer" alt="" />
                 </div>
               </div>
-              <div className="color-image font-bold right-price" style={{ fontSize: 32, lineHeight: '42px' }}>
+              <div className="color-image font-bold right-price" style={{ fontSize: 24, lineHeight: '42px' }}>
                 {
                   (from === APP_STATE.PRICECOLL_TREND ||
                     from === APP_STATE.PRICEONE_TREND
-                  ) && Number(itemData?.price / 1200).toFixed(2)
+                  ) && Number(itemData?.price).toFixed(1)
                 }
                 {
                   (from === APP_STATE.POPULARCOLL_TREND ||

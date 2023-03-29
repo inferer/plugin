@@ -19,7 +19,7 @@ const HistoryOne: React.FC<any> = ({
       const tmpList = txHistory.map((_item: any) => {
         return {
           ..._item,
-          time: transformTime(_item.time * 1000).slice(7, 12)
+          time: transformTime(_item.time * 1000).slice(6, 12)
         }
       })
       setList(tmpList)
