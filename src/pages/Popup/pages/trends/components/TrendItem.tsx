@@ -1,6 +1,6 @@
 import React from "react";
-import { APP_STATE } from "../../../config/constants";
-import { formatAddress } from "../../../utils";
+import { APP_STATE, redditUserUrl } from "../../../config/constants";
+import { formatAddress, formatNumber, openBrowser } from "../../../utils";
 
 const { PopupAPI } = require('../../../../../api')
 
@@ -8,8 +8,8 @@ const DemoPng = require('../images/demo.png');
 const SharePng = require('../images/share.png');
 
 export const formatName = (name: string) => {
-  if (name.length <= 18) return name
-  return name.slice(0, 16) + '...'
+  if (name.length <= 12) return name
+  return name.slice(0, 12) + '...'
 }
 
 const TrendItem: React.FC<{
@@ -47,14 +47,19 @@ const TrendItem: React.FC<{
                   <div className="text-sm font-bold" style={{ color: '#3F4664', marginLeft: 6, marginRight: 6 }}>
                     {(itemData?.series_creator || itemData?.NFT_creator) && formatName(itemData?.series_creator || itemData?.NFT_creator)}
                   </div>
-                  <img src={SharePng} style={{ width: 10, height: 10 }} className=" cursor-pointer" alt="" />
+                  <img src={SharePng} style={{ width: 10, height: 10 }} className=" cursor-pointer" alt=""
+                    onClick={e => {
+                      e.stopPropagation()
+                      openBrowser(redditUserUrl + `${itemData?.series_creator || itemData?.NFT_creator}`)
+                    }}
+                  />
                 </div>
               </div>
-              <div className="color-image font-bold right-price" style={{ fontSize: 24, lineHeight: '42px' }}>
+              <div className="color-image font-bold right-price" style={{ fontSize: 32, lineHeight: '42px' }}>
                 {
                   (from === APP_STATE.PRICECOLL_TREND ||
                     from === APP_STATE.PRICEONE_TREND
-                  ) && Number(itemData?.price).toFixed(1)
+                  ) && <><span className=" text-xs" style={{ marginRight: 2 }}>$</span>{formatNumber(Number(itemData?.price))}</>
                 }
                 {
                   (from === APP_STATE.POPULARCOLL_TREND ||
@@ -66,7 +71,7 @@ const TrendItem: React.FC<{
             {
               (from === APP_STATE.PRICECOLL_TREND ||
                 from === APP_STATE.PRICEONE_TREND
-              ) && <div className="color-image text-xs font-bold text-right">ETH</div>
+              ) && <div className="color-image text-xs font-bold text-right"></div>
             }
             {
               (from === APP_STATE.POPULARCOLL_TREND ||

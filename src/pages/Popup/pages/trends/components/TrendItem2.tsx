@@ -1,6 +1,8 @@
+import { Toast } from "antd-mobile";
 import React from "react";
-import { APP_STATE } from "../../../config/constants";
-import { formatAddress } from "../../../utils";
+import { APP_STATE, redditUserUrl } from "../../../config/constants";
+import { formatAddress, formatNumber, openBrowser } from "../../../utils";
+import { formatName } from "./TrendItem";
 
 const { PopupAPI } = require('../../../../../api')
 
@@ -32,29 +34,51 @@ const TrendItem: React.FC<{
           }}
         >
           <div className="img-wrap flex items-center justify-center">
-            <img src={DemoPng} className="" alt="" />
+            <img src={itemData.img_url || DemoPng} className="" alt="" />
           </div>
           <div className="flex-1" style={{ paddingLeft: 9 }}>
             <div className="flex justify-between">
               <div>
                 <div className="flex items-center">
                   <img src={BridgePng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
-                  <div className="text-xs font-bold" style={{ color: '#3F4664', paddingLeft: '6px', paddingRight: '6px' }}>jjuniorxljjunio...</div>
-                  <img src={SharePng} style={{ width: '10px', height: '10px' }} className=" cursor-pointer" alt="" />
+                  {
+                    itemData?.user_name ?
+                      <>
+                        <div className="text-xs font-bold" style={{ color: '#3F4664', paddingLeft: '6px', paddingRight: '6px' }}>
+                          {formatName(itemData?.user_name)}
+                        </div>
+                        <img src={SharePng} style={{ width: '10px', height: '10px' }} className=" cursor-pointer" alt=""
+                          onClick={e => {
+                            e.stopPropagation()
+                            openBrowser(redditUserUrl + `${itemData.user_name}`)
+                          }}
+                        />
+                      </> :
+                      <div className="text-xs" style={{ color: '#7F8792', paddingLeft: '6px' }}>{'unknown'} </div>
+                  }
+
                 </div>
                 <div className="flex items-center mt-2">
                   <img src={AddressPng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
                   <div className="text-xs font-bold" style={{ color: '#3F4664', marginLeft: 6, marginRight: 6 }}>
                     {formatAddress(itemData?.holder_address)}
                   </div>
-                  <img src={CopyPng} style={{ width: 12, height: 12 }} className=" cursor-pointer" alt="" />
+                  <img src={CopyPng} style={{ width: 12, height: 12 }} className=" cursor-pointer" alt=""
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      navigator.clipboard.writeText(itemData?.holder_address)
+                        .then(() => {
+                          Toast.show({ content: 'Copied', position: 'bottom' })
+                        })
+                    }}
+                  />
                 </div>
               </div>
               {
                 (from === APP_STATE.TOPACCOUNT_TREND
                 ) &&
                 <div className="color-image font-bold right-price" style={{ fontSize: 32, lineHeight: '42px' }}>
-                  {Number(itemData?.volume / 1600).toFixed(2)}
+                  <span className=" text-xs" style={{ marginRight: 2 }}>$</span>{formatNumber(Number(itemData?.volume))}
                 </div>
               }
               {
@@ -67,10 +91,9 @@ const TrendItem: React.FC<{
               {
                 from === APP_STATE.TOPPROFIT_TREND && (
                   <div className="color-image font-bold right-price flex items-baseline" style={{ fontSize: 32, lineHeight: '42px' }}>
-                    {/* <div style={{ fontSize: 16 }}>+</div>
-                    56.2
-                    <div style={{ fontSize: 16 }}>%</div> */}
-                    {itemData?.NFT_counts}
+                    <div style={{ fontSize: 16 }}>+</div>
+                    {(itemData.wealth_appreciation * 100).toFixed(0)}
+                    <div style={{ fontSize: 16 }}>%</div>
                   </div>
                 )
               }
@@ -78,7 +101,7 @@ const TrendItem: React.FC<{
             </div>
             {
               (from === APP_STATE.TOPACCOUNT_TREND
-              ) && <div className="color-image text-xs font-bold text-right">ETH</div>
+              ) && <div className="color-image text-xs font-bold text-right"></div>
             }
             {
               (from === APP_STATE.ACTIVEACCOUNT_TREND

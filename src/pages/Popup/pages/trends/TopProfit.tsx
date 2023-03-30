@@ -52,7 +52,7 @@ const TopProfitTrend: React.FC<any> = ({ goToTicket, appState }) => {
   return (
     <div className="w-360 page-root page-trend">
       <PageHeader
-        title={'Active account'}
+        title={'TOP PROFIT ratio'}
         tip={
           <ul className="list-decimal list-outside tip-list pl-4">
             <li>Top profit ratio ranking focuses on users with most earning ratios on chain.</li>

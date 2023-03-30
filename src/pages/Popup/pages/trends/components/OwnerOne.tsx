@@ -1,6 +1,7 @@
 import { Toast } from "antd-mobile";
 import React from "react";
-import { formatAddress } from "../../../utils";
+import { redditChatUrl, redditUserUrl } from "../../../config/constants";
+import { formatAddress, openBrowser } from "../../../utils";
 import { TTitle } from "./components";
 import { formatName } from "./TrendItem";
 
@@ -24,8 +25,19 @@ const OwnerOne: React.FC<any> = ({
         <div className="flex-1 ml-3">
           <div className="flex items-center mb-2">
             <img className="img-left" src={BridgePng} alt="" />
-            <div className="text-xs font-bold">{ownerInfo?.user_name ? formatName(ownerInfo.user_name) : 'BridgetheDivide'} </div>
-            <img className="img-right" src={SharePng} alt="" />
+            {
+              ownerInfo?.user_name ?
+                <>
+                  <div className="text-xs font-bold">{formatName(ownerInfo.user_name)} </div>
+                  <img className="img-right" src={SharePng} alt=""
+                    onClick={e => {
+                      e.stopPropagation()
+                      openBrowser(redditUserUrl + `${ownerInfo.user_name}`)
+                    }}
+                  />
+                </> :
+                <div className="text-xs" style={{ color: '#7F8792' }}>{'unknown'} </div>
+            }
           </div>
           <div className="flex items-center mb-2">
             <img className="img-left" src={AddressPng} alt="" />

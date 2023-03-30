@@ -3,7 +3,7 @@ import { BuyIcon, CollectIcon, Like, MsgIcon, ShareIcon, StarList, TTitle, UnLik
 import { Toast } from 'antd-mobile'
 import { APP_STATE, redditBuyUrl, redditChatUrl, redditShareUrl } from "../../../config/constants";
 import { formatName } from "./TrendItem";
-import { openBrowser } from "../../../utils";
+import { formatNumber, openBrowser } from "../../../utils";
 const DemoPng = require('../images/demo.png');
 const { PopupAPI } = require('../../../../../api')
 
@@ -109,9 +109,9 @@ const ProjectInfo: React.FC<any> = ({
               from === APP_STATE.PRICECOLL_TREND) &&
             <div>
               <div className="color-image font-bold right-price">
-                {(nftData?.price || 0).toFixed(1)}
+                <span className="text-xs" style={{ marginRight: 2 }}>$</span>{formatNumber(nftData?.price || 0)}
               </div>
-              <div className="color-image text-xs font-bold text-right">ETH</div>
+              {/* <div className="color-image text-xs font-bold text-right">$</div> */}
             </div>
           }
           {
@@ -159,7 +159,7 @@ const ProjectInfo: React.FC<any> = ({
             <div className="icon-line"></div>
             <ShareIcon
               onClick={() => {
-                openBrowser(redditShareUrl + (nftData?.NFT_creator || nftData?.series_creator || ''))
+                openBrowser(redditShareUrl + (nftData?.NFT_creator || nftData?.series_creator || '') + '/submit')
               }}
             />
             <div className="icon-line"></div>
@@ -171,7 +171,7 @@ const ProjectInfo: React.FC<any> = ({
             <div className="icon-line"></div>
             <MsgIcon
               onClick={() => {
-                openBrowser(redditChatUrl + `${nftData?.NFT_creator || nftData?.series_creator}/submit`)
+                openBrowser(redditChatUrl + `${nftData?.NFT_creator || nftData?.series_creator}`)
               }}
             />
           </div>
