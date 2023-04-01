@@ -36,6 +36,7 @@ import TrendAnalysisOne from './pages/trends/AnalysisOne';
 import TopAccountTrend from './pages/trends/TopAccount';
 import ActiveAccountTrend from './pages/trends/ActiveAccount';
 import TopProfitTrend from './pages/trends/TopProfit';
+import Tickets from './pages/tickets';
 
 const { PopupAPI } = require('../../api')
 
@@ -204,6 +205,13 @@ const Popup: React.FC<PopupProps> = (props) => {
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
         >
           <FeedBack searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
+        </div>
+        <div className={`pop-root-page ${appState === APP_STATE.TICKET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+          <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => {
+            localStorage.setItem("from", "tickets")
+            PopupAPI.changeState(APP_STATE.SEARCH)
+          }
+          } />
         </div>
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.COLLECTION || pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Collection appState={appState} searchNum={searchNum}

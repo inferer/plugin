@@ -107,9 +107,12 @@ const Collection: React.FC<any> = ({ appState, onChangeState, toSearch }) => {
 
   return (
     <div className="w-360 page-root collection-page tickets-page">
-      <div className="page-title">
+      {/* <div className="page-title">
         TICKETS
-      </div>
+      </div> */}
+      <PageHeader title="TICKETS" onBack={() => {
+        PopupAPI.changeState(APP_STATE.SETTING)
+      }} />
       <div className="page-content pt-3 home-page-content"
         ref={listRef}
         onScroll={() => onSroll()}

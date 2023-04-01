@@ -20,7 +20,7 @@ const InfererScore: React.FC<any> = ({
   }, [infererAnalysis])
   return (
     <div className="box-wrap mt-3">
-      <TTitle text="Inferer Analysis" tips="" />
+      <TTitle text="Inferer Analysis" tips="Full analysis on all Coll. holders" />
       <div className="flex justify-between mt-3">
         <div className="" style={{ width: '160px' }}>
           <div className="flex items-center" style={{ marginBottom: '2px' }}>

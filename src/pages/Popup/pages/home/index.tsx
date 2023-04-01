@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { APP_STATE } from '../../config/constants';
 import Search from '../search';
 import Tickets from '../tickets';
@@ -31,6 +31,7 @@ const Popup: React.FC<{
   onClickRecommend: (data: any) => void
   onClickLabels: (data: any) => void
 }> = ({
+  appState: appState2,
   onChangeState,
   onTicketChangeState,
   onClickRecommend,
@@ -44,6 +45,14 @@ const Popup: React.FC<{
       setAppState(type)
       // PopupAPI.changeState(type)
     }
+    useEffect(() => {
+      const from = localStorage.getItem('from')
+      if (from === 'tickets') {
+        setAppState(APP_STATE.SEARCH)
+        localStorage.removeItem('from')
+      }
+    }, [appState2])
+
     return (
       <div className="w-360">
         <div className={`${appState === APP_STATE.SEARCH ? 'pop-in-enter-active' : 'pop-in-enter'}`}>

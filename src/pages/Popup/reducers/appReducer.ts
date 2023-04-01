@@ -20,10 +20,9 @@ export const appReucer = createReducer(initialState, (builder) => {
 
   builder.addCase(setAppState, (state, { payload }: any) => {
     state.appState = payload
-
     switch (state.appState) {
       case APP_STATE.SEARCH:
-      case APP_STATE.TICKET:
+      // case APP_STATE.TICKET:
       case APP_STATE.RECOMMEND:
       case APP_STATE.LABELS:
       case APP_STATE.SETTING:

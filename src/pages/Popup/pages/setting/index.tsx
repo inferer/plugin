@@ -7,6 +7,7 @@ const { PopupAPI } = require('../../../../api')
 
 const leftPng = require('./images/left.png')
 const walletPng = require('./images/wallet.png')
+const ticketPng = require('./images/ticket.png')
 const favPng = require('./images/fav.png')
 const searchPng = require('./images/search.png')
 const languagePng = require('./images/language.png')
@@ -35,6 +36,20 @@ const Setting: React.FC<any> = () => {
               <div className="">
                 <div className="item-text1 font-bold">Wallet</div>
                 <div className="item-text2">Wallet settings</div>
+              </div>
+            </div>
+            <img src={leftPng} style={{ width: 6, height: 8 }} alt="" />
+          </div>
+          <div className="setting-item flex justify-between items-center"
+            onClick={() => onItemClick(APP_STATE.TICKET)}
+          >
+            <div className="flex items-center ">
+              <div className="flex icon-box justify-center items-center mr-3">
+                <img src={ticketPng} alt="" />
+              </div>
+              <div className="">
+                <div className="item-text1 font-bold">Tickets</div>
+                <div className="item-text2">Search tickets history</div>
               </div>
             </div>
             <img src={leftPng} style={{ width: 6, height: 8 }} alt="" />
