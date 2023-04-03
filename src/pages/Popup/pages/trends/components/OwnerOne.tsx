@@ -13,7 +13,8 @@ const CopyPng = require('../images/copy.png')
 const SharePng = require('../images/share.png')
 
 const OwnerOne: React.FC<any> = ({
-  ownerInfo
+  ownerInfo,
+  infererLabels = []
 }) => {
   return (
     <div className="box-wrap mt-3" style={{ paddingBottom: '4px' }}>
@@ -57,7 +58,16 @@ const OwnerOne: React.FC<any> = ({
             <div className="text-xs">Hold {ownerInfo?.nft_nums || 0} Reddit NFTs</div>
           </div>
           <div className="flex mt-2 flex-wrap">
-            <div className="infer-label">
+            {
+              infererLabels.slice(0, 4).map((label: any) => {
+                return (
+                  <div key={label.label_name} className="infer-label">
+                    <div className="color-image">{label.label_name}</div>
+                  </div>
+                )
+              })
+            }
+            {/* <div className="infer-label">
               <div className="color-image">Defi Staker</div>
             </div>
             <div className="infer-label">
@@ -68,7 +78,7 @@ const OwnerOne: React.FC<any> = ({
             </div>
             <div className="infer-label">
               <div className="color-image">ENS User</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

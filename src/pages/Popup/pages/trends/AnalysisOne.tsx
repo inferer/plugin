@@ -100,7 +100,10 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
         <HistoryOne
           txHistory={pageData.txHistory}
         />
-        <OwnerOne ownerInfo={pageData.ownerInfo} />
+        <OwnerOne
+          ownerInfo={pageData.ownerInfo}
+          infererLabels={pageData.infererLabels}
+        />
         <GoAnl goToTicket={() => {
           const analysis_address = localStorage.getItem('analysis_address') || ''
           analysis_address && goToTicket({ address: analysis_address, chainid: 1 })

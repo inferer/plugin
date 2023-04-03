@@ -106,7 +106,9 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
           infererAnalysis={pageData.infererAnalysis}
           itemData={pageData.holderPrecent}
         />
-        <InfererLabels />
+        <InfererLabels
+          infererLabels={pageData.infererLabels}
+        />
       </div>
     </div>
   )
