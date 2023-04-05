@@ -21,8 +21,28 @@ const TxInfo: React.FC<TxInfoProps> = ({
 }) => {
   const intl = useIntl()
   // const title = intl.formatMessage({ id: 'title.txinfo', defaultMessage: 'TX INFO' })
-  const txinfoList = Object.keys(txinfoData.data).map(key => ({ key, data: txinfoData.data[key] }))
-
+  let txinfoList: any[] = []
+  Object.keys(txinfoData.data).map(key => {
+    let obj: any = {}
+    if (typeof txinfoData.data[key] === 'string' || typeof txinfoData.data[key] === 'number') {
+      obj['key'] = key
+      obj['data'] = txinfoData.data[key]
+      txinfoList.push({
+        key,
+        data: txinfoData.data[key]
+      })
+    } else {
+      Object.keys(txinfoData.data[key]).map(key2 => {
+        obj['key'] = key2
+        obj['data'] = txinfoData.data[key][key2]
+        txinfoList.push({
+          key: key2,
+          data: txinfoData.data[key][key2]
+        })
+      })
+    }
+    return obj
+  })
   return (
     <div className="w-360 page-root search-page " style={{ backgroundImage: 'none' }}>
       <PageHeader title={txinfoData.key} onBack={() => PopupAPI.changeState('searchpage' === toTxInfo ? APP_STATE.SEARCH : APP_STATE.TICKETINFER)} />
