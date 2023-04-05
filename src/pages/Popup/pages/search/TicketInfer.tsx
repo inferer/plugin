@@ -131,6 +131,12 @@ const TicketInfer: React.FC<{
             localStorage.setItem('ticketinfer_from', '')
           }
           let backPage = APP_STATE.TICKET
+          if (toTxInfer === 'Labels') {
+            backPage = APP_STATE.LABELS
+          }
+          if (toTxInfer === 'Recommend') {
+            backPage = APP_STATE.RECOMMEND
+          }
           if (toTxInfer === 'collection') {
             backPage = APP_STATE.COLLECTION
           }

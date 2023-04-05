@@ -105,7 +105,7 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
           infererLabels={pageData.infererLabels}
         />
         <GoAnl goToTicket={() => {
-          const analysis_address = localStorage.getItem('analysis_address') || ''
+          const analysis_address = pageData?.ownerInfo?.holder_address
           analysis_address && goToTicket({ address: analysis_address, chainid: 1 })
         }} />
         <NftColl

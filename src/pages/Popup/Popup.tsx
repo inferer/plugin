@@ -93,7 +93,15 @@ const Popup: React.FC<PopupProps> = (props) => {
     setTicketInfo({ level: 0, searchList: [], ticket_level: '' })
     setRecommendData(data)
     setToTxInfo('')
-    setToTxInfer('')
+    setToTxInfer('Recommend')
+    PopupAPI.changeState(APP_STATE.TICKETINFER)
+  }
+  const onClickLabels = (data: any) => {
+    localStorage.setItem('search_address', data.address)
+    setTicketInfo({ level: 0, searchList: [], ticket_level: '' })
+    setRecommendData(data)
+    setToTxInfo('')
+    setToTxInfer('Labels')
     PopupAPI.changeState(APP_STATE.TICKETINFER)
   }
   const onCollectionClick = (data: any) => {
@@ -133,7 +141,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           <Home appState={appState} onChangeState={onChangeState}
             onTicketChangeState={onTicketChangeState}
             onClickRecommend={onClickRecommend}
-            onClickLabels={onClickRecommend}
+            onClickLabels={onClickLabels}
             address={address}
           />
         </div>
