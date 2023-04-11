@@ -72,7 +72,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   }
   const onChangeState2 = (appState: number, data: any) => {
     setTxinfoData(data)
-    setToTxInfo('')
+    setToTxInfo('Tickets')
     PopupAPI.changeState(appState)
   }
   const onTicketChangeState = (appState: number, searchRet: any) => {

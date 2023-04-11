@@ -44,7 +44,7 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
     setIsLoading(true)
     const analysis_address = localStorage.getItem('analysis_address') || ''
     const analysis_item: any = JSON.parse(localStorage.getItem('analysis_item') || JSON.stringify({}))
-
+    console.log(analysis_item, 3333333333)
     setNftData(analysis_item)
     PopupAPI.execApiTrends({
       action: 'getNftBaseInfo',

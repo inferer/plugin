@@ -25,10 +25,10 @@ const OwnerOne: React.FC<any> = ({
         </div>
         <div className="flex-1 ml-3">
           <div className="flex items-center mb-2">
-            <img className="img-left" src={BridgePng} alt="" />
             {
               ownerInfo?.user_name ?
                 <>
+                  <img className="img-left" src={BridgePng} alt="" />
                   <div className="text-xs font-bold">{formatName(ownerInfo.user_name)} </div>
                   <img className="img-right" src={SharePng} alt=""
                     onClick={e => {
@@ -36,8 +36,8 @@ const OwnerOne: React.FC<any> = ({
                       openBrowser(redditUserUrl + `${ownerInfo.user_name}`)
                     }}
                   />
-                </> :
-                <div className="text-xs" style={{ color: '#7F8792' }}>{'unknown'} </div>
+                </> : null
+              // <div className="text-xs" style={{ color: '#7F8792' }}>{'unknown'} </div>
             }
           </div>
           <div className="flex items-center mb-2">

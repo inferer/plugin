@@ -27,6 +27,7 @@ export const APP_STATE = {
 }
 
 // export const API_URL = 'http://119.8.117.37:12999'
+// export const API_URL = 'http://119.8.117.37:12997'
 export const API_URL = 'http://49.234.51.249:8792'
 
 export const redditUserUrl = 'https://www.reddit.com/user/'

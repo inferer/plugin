@@ -40,10 +40,10 @@ const TrendItem: React.FC<{
             <div className="flex justify-between">
               <div>
                 <div className="flex items-center">
-                  <img src={BridgePng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
                   {
                     itemData?.user_name ?
                       <>
+                        <img src={BridgePng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
                         <div className="text-xs font-bold" style={{ color: '#3F4664', paddingLeft: '6px', paddingRight: '6px' }}>
                           {formatName(itemData?.user_name)}
                         </div>
@@ -53,8 +53,8 @@ const TrendItem: React.FC<{
                             openBrowser(redditUserUrl + `${itemData.user_name}`)
                           }}
                         />
-                      </> :
-                      <div className="text-xs" style={{ color: '#7F8792', paddingLeft: '6px' }}>{'unknown'} </div>
+                      </> : null
+                    // <div className="text-xs" style={{ color: '#7F8792', paddingLeft: '6px' }}>{'unknown'} </div>
                   }
 
                 </div>

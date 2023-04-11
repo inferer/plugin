@@ -13,7 +13,15 @@ const randomStar = () => {
 }
 
 const randomCount = () => {
-  return parseInt(String(Math.random() * 200)) + 300
+  return parseInt(String(Math.random() * 100)) + 100
+}
+
+const randomCount20 = () => {
+  return parseInt(String(Math.random() * 19)) + 1
+}
+
+const randomCount5 = () => {
+  return parseInt(String(Math.random() * 4)) + 1
 }
 
 const ProjectInfo: React.FC<any> = ({
@@ -34,7 +42,7 @@ const ProjectInfo: React.FC<any> = ({
     setisLike(nftBaseInfo.is_like)
     setisUnlike(nftBaseInfo.is_unlike)
     setLikeCount((nftBaseInfo.likeCount || 0) + randomCount())
-    setUnlikeCount((nftBaseInfo.unlikeCount || 0) + randomCount())
+    setUnlikeCount((nftBaseInfo.unlikeCount || 0) + (nftData.index < 5 ? randomCount5() : randomCount20()))
   }, [nftBaseInfo])
 
   return (
