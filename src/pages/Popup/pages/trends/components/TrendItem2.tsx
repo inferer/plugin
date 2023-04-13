@@ -39,26 +39,23 @@ const TrendItem: React.FC<{
           <div className="flex-1" style={{ paddingLeft: 9 }}>
             <div className="flex justify-between">
               <div>
-                <div className="flex items-center">
-                  {
-                    itemData?.user_name ?
-                      <>
-                        <img src={BridgePng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
-                        <div className="text-xs font-bold" style={{ color: '#3F4664', paddingLeft: '6px', paddingRight: '6px' }}>
-                          {formatName(itemData?.user_name)}
-                        </div>
-                        <img src={SharePng} style={{ width: '10px', height: '10px' }} className=" cursor-pointer" alt=""
-                          onClick={e => {
-                            e.stopPropagation()
-                            openBrowser(redditUserUrl + `${itemData.user_name}`)
-                          }}
-                        />
-                      </> : null
-                    // <div className="text-xs" style={{ color: '#7F8792', paddingLeft: '6px' }}>{'unknown'} </div>
-                  }
-
-                </div>
-                <div className="flex items-center mt-2">
+                {
+                  itemData?.user_name ?
+                    <div className="flex items-center">
+                      <img src={BridgePng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
+                      <div className="text-xs font-bold" style={{ color: '#3F4664', paddingLeft: '6px', paddingRight: '6px' }}>
+                        {formatName(itemData?.user_name)}
+                      </div>
+                      <img src={SharePng} style={{ width: '10px', height: '10px' }} className=" cursor-pointer" alt=""
+                        onClick={e => {
+                          e.stopPropagation()
+                          openBrowser(redditUserUrl + `${itemData.user_name}`)
+                        }}
+                      />
+                    </div> : null
+                  // <div className="text-xs" style={{ color: '#7F8792', paddingLeft: '6px' }}>{'unknown'} </div>
+                }
+                <div className={`flex items-center ${itemData?.user_name ? 'mt-2' : ''}`}>
                   <img src={AddressPng} style={{ width: 14, height: 14 }} className=" cursor-pointer" alt="" />
                   <div className="text-xs font-bold" style={{ color: '#3F4664', marginLeft: 6, marginRight: 6 }}>
                     {formatAddress(itemData?.holder_address)}

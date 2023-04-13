@@ -214,7 +214,9 @@ const Popup: React.FC<PopupProps> = (props) => {
         >
           <FeedBack searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
         </div>
-        <div className={`pop-root-page ${appState === APP_STATE.TICKET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+        <div className={`pop-root-page 
+          ${pageStack[0] === APP_STATE.TICKET ||
+            pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <Tickets appState={appState} onChangeState={onTicketChangeState} toSearch={() => {
             localStorage.setItem("from", "tickets")
             PopupAPI.changeState(APP_STATE.SEARCH)
