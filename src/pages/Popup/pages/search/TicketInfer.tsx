@@ -57,7 +57,6 @@ const TicketInfer: React.FC<{
           setNodata(false)
 
           const searchRet = await PopupAPI.searchByAddress({ address: recommendData.address, chainid: recommendData.chainid })
-          console.log(searchRet)
           if (searchRet.status === 200 && searchRet.result) {
             const info = searchRet.result.info || {}
             const infoList = Object.keys(info).map(key => ({ key, data: info[key] }))
@@ -75,7 +74,7 @@ const TicketInfer: React.FC<{
         }
       }
       fetch()
-    }, [recommendData.address])
+    }, [recommendData])
     const collectTicket = useCallback(async () => {
       if (collected) {
         await cancelCollectTicket()
@@ -83,7 +82,7 @@ const TicketInfer: React.FC<{
       }
       const collectRes = await PopupAPI.collectTicket({
         collect_address: recommendData.address || newTicketInfo.address,
-        chainid: 1,
+        chainid: recommendData.chainid || 1,
         ticket_id: newTicketInfo.ticket_id,
         ticket_level: newTicketInfo.ticket_level
       })
@@ -99,14 +98,13 @@ const TicketInfer: React.FC<{
           position: 'bottom'
         })
       }
-    }, [recommendData.address, newTicketInfo, collected])
+    }, [recommendData, newTicketInfo, collected])
     const cancelCollectTicket = useCallback(async () => {
       const collectRes = await PopupAPI.cancelCollectTicket({
         collect_address: recommendData.address || newTicketInfo.address,
-        chainid: 1,
+        chainid: recommendData.chainid || 1,
         ticket_id: newTicketInfo.ticket_id
       })
-      console.log(collectRes)
       if (collectRes.status === 200) {
         setCollected(false)
         Toast.show({
@@ -119,7 +117,7 @@ const TicketInfer: React.FC<{
           position: 'bottom'
         })
       }
-    }, [recommendData.address, newTicketInfo])
+    }, [recommendData, newTicketInfo])
     return (
       <div className='page-root search-page inferer'>
         <PageHeader title={'INFERER'} onBack={() => {

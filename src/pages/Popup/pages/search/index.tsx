@@ -67,7 +67,7 @@ const Search: React.FC<{
     const resultRef = useRef<HTMLDivElement | null>(null)
 
     const onSearch = async () => {
-      const chainid = localStorage.getItem('chainid')
+      let chainid = localStorage.getItem('chainid')
       if (!focus && address.length <= 0) {
         setFocus(true)
         return
@@ -95,6 +95,7 @@ const Search: React.FC<{
       }
       setCollected(false)
       setIsLoading(true)
+
 
       const searchRet = await PopupAPI.searchByAddress({ address, chainid: Number(chainid) })
       localStorage.setItem('search_address', address)

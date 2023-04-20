@@ -172,7 +172,7 @@ class Service extends EventEmitter {
       this.feedAddress = address.address
       const chainid = address.chainid ?? 1
 
-      const res = await fetcher(chainid === 1 ? '/api/infer' : '/api/platon/infer',
+      const res = await fetcher(chainid === 1 ? '/api/infer' : chainid === 137 ? '/api/polygon/infer' : '/api/platon/infer',
         { user_id: this.profileUserInfo.user_id, address: address.address })
       if (res.status === 200) {
         // 判断是否存在
@@ -282,7 +282,7 @@ class Service extends EventEmitter {
     try {
       let res = { status: 200 }
       if (this.profileUserInfo.user_id) {
-        res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
+        res = await poster('/plugin/collectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: data.chainid || this.chainid })
       } else {
         // 判断是否已收藏
         const collectTicket = await StorageService.getStorage('collectTicket') || []
@@ -309,7 +309,7 @@ class Service extends EventEmitter {
     try {
       let res = { status: 200 }
       if (this.profileUserInfo.user_id) {
-        res = await poster('/plugin/cancelCollectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: this.chainid })
+        res = await poster('/plugin/cancelCollectTicket', { user_id: this.profileUserInfo.user_id, ...data, chainid: data.chainid || this.chainid })
       } else {
 
       }
@@ -388,7 +388,6 @@ class Service extends EventEmitter {
   }
 
   async execApiTrends(data = { action: '', params: {} }) {
-    console.log('execApiTrends params: ', data)
     const action = data.action
     const user_address = await StorageService.getStorage('address') || ''
     try {
