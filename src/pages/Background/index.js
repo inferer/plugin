@@ -4,7 +4,8 @@ import Service from './Service'
 import StorageService from './StorageService'
 
 
-
+let windowId = null
+let redditSearchAddress = ''
 
 const duplex = new MessageDuplex.Host();
 
@@ -216,6 +217,55 @@ const backgroundScript = {
             uuid
           })
           break
+        case 'commonRequest':
+          if (data.action === 'queryUserInfoByName') {
+            const res = await this.service.execApiPost({ action: 'getAccountInfoByName', params: { names: data.names } })
+            resolve({
+              success: true,
+              data: res && res.data && res.data.users || [],
+              uuid
+            })
+          } else if (data.action === 'openSearch') {
+            if (windowId && redditSearchAddress === data.address) {
+              resolve({
+                success: true,
+                data: 'success',
+                uuid
+              })
+              return
+            }
+            chrome.management.getSelf(
+              function (info) {
+                if (windowId) {
+                  chrome.windows.remove(windowId)
+                  windowId = null
+                  redditSearchAddress = ''
+                }
+                redditSearchAddress = data.address
+                chrome.windows.create({
+                  focused: true,
+                  width: 360,
+                  height: 632,
+                  type: 'popup',
+                  url: 'popup.html?address=' + data.address + '&from=' + data.from,
+                  left: 1500,
+                  top: 0
+                },
+                  (data) => {
+                    windowId = data.id
+
+                  })
+
+              }
+            )
+          } else {
+            resolve({
+              success: true,
+              data: 'success',
+              uuid
+            })
+          }
+          break
 
       }
 
@@ -261,6 +311,13 @@ chrome.runtime.onInstalled.addListener(function () {
     });
   })
 
+  chrome.windows.onRemoved.addListener(function (id) {
+    if (windowId === id) {
+      windowId = null
+      redditSearchAddress = ''
+    }
+  })
+
 });
 chrome.contextMenus.onClicked.addListener(function (data) {
   console.log(data)
@@ -275,9 +332,6 @@ chrome.contextMenus.onClicked.addListener(function (data) {
         url: 'popup.html?address=' + backgroundScript.menuAddress,
         left: 1500,
         top: 0
-
-        // incognito: true,
-        // setSelfAsOpener: true
       },
         () => {
 

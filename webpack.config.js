@@ -192,6 +192,15 @@ var options = {
       chunks: ['panel'],
       cache: false,
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/pages/Content/content.styles.css',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
   ],
   infrastructureLogging: {
     level: 'info',

@@ -1,0 +1,14 @@
+.inferer-author-p {
+  display: flex;
+  align-items: center;
+}
+
+.inferer-logo-wrap {
+  margin-left: 4px;
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.inferer-logo-wrap:hover {
+  opacity: 0.8;
+}

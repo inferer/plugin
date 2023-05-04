@@ -3,6 +3,7 @@ import jQuery from '../../assets/js/jquery-3.6.0.min.js';
 import EventChannel from '../../MessageDuplex/EventChannel'
 import RequestHandler from '../../MessageDuplex/RequestHandler';
 import './modules/WallectConnect'
+import reddit from './modules/reddit'
 
 export const matchAddress = (injectPlugin) => {
   document.addEventListener('selectionchange', function (e) {
@@ -61,8 +62,9 @@ const injectPlugin = {
     this._bindEvents();
     matchAddress(injectPlugin)
 
-    this.request('init').then((params) => {
+    reddit.init(this.request)
 
+    this.request('init').then((params) => {
     }).catch(err => {
       console.log('Failed to initialise Plugin', err);
     });
@@ -79,6 +81,9 @@ const injectPlugin = {
     };
     injectPlugin.extension.connectChange = (address) => {
       this.connectChange(address)
+    };
+    injectPlugin.extension.commonRequest = (data, callback) => {
+      this.commonRequest(data, callback)
     };
     window.injectPlugin = injectPlugin;
   },
@@ -177,6 +182,15 @@ const injectPlugin = {
       addressList
     }).then(res => {
       console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  commonRequest(data, callback) {
+    this.request('commonRequest', {
+      ...data
+    }).then(res => {
+      callback && callback(res)
     }).catch(err => {
       console.log(err)
     })

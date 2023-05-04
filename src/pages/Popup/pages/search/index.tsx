@@ -38,6 +38,16 @@ const isLatAddress = (address: string) => {
   return address.startsWith('lat') && address.length === 42
 }
 
+const getUrlParams = (url: string) => {
+  const pattern = /(\w+|[\u4e00-\u9fa5]+)=(\w+|[\u4e00-\u9fa5]+)/ig;
+  let result: { [key: string]: string } = {};
+  // @ts-ignore
+  url.replace(pattern, ($, $1, $2) => {
+    result[$1] = $2;
+  })
+  return result
+}
+
 export const levelInfo = {
   'exceptional': 5.0,
   'very good': 4.0,
@@ -72,7 +82,10 @@ const Search: React.FC<{
         setFocus(true)
         return
       }
-      if (Number(chainid) === 1) {
+      if (localStorage.getItem('searchFrom') === 'reddit') {
+        chainid = '137'
+      }
+      if (Number(chainid) === 1 || Number(chainid) === 137) {
         if (isAddress(address)) {
           setIsValidAddress(true)
         } else {
@@ -115,7 +128,7 @@ const Search: React.FC<{
       }
       setShowResult(true)
       setIsLoading(false)
-
+      localStorage.removeItem('searchFrom')
     }
 
     const collectTicket = useCallback(async () => {
@@ -186,9 +199,13 @@ const Search: React.FC<{
       if (window.location.search.indexOf('address=') > -1) {
         setShowInput(true)
         setTimeout(() => {
-          const arr = window.location.search.split('=')
-          if (arr[1]) {
-            setAddress(arr[1])
+          // const arr = window.location.search.split('=')
+          const params = getUrlParams(window.location.href)
+          if (params.address) {
+            if (params.from) {
+              localStorage.setItem('searchFrom', params.from)
+            }
+            setAddress(params.address)
             setFocus(true)
             if (searchRef.current) {
               searchRef.current.click()
