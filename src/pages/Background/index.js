@@ -225,6 +225,13 @@ const backgroundScript = {
               data: res && res.data && res.data.users || [],
               uuid
             })
+          } else if (data.action === 'queryRankData') {
+            const res = await this.service.execApiTrends({ action: data.params.action })
+            resolve({
+              success: true,
+              data: res && res.data || [],
+              uuid
+            })
           } else if (data.action === 'openSearch') {
             if (windowId && redditSearchAddress === data.address) {
               resolve({

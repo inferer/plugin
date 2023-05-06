@@ -4,6 +4,8 @@ import EventChannel from '../../MessageDuplex/EventChannel'
 import RequestHandler from '../../MessageDuplex/RequestHandler';
 import './modules/WallectConnect'
 import reddit from './modules/reddit'
+import rank from './modules/rank'
+// document.querySelector('#IDCARD_OVERFLOW_DROPDOWN_ID').parentElement.parentElement.parentElement
 
 export const matchAddress = (injectPlugin) => {
   document.addEventListener('selectionchange', function (e) {
@@ -62,6 +64,7 @@ const injectPlugin = {
     this._bindEvents();
     matchAddress(injectPlugin)
 
+    rank.init(this.request)
     reddit.init(this.request)
 
     this.request('init').then((params) => {

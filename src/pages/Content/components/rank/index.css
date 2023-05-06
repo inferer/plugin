@@ -1,0 +1,11 @@
+.inferer-rank-list {
+  height: 623px;
+  overflow: auto;
+}
+
+.inferer-rank-title {
+  font-weight: 500;
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 12px;
+}

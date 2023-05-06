@@ -12,3 +12,13 @@
 .inferer-logo-wrap:hover {
   opacity: 0.8;
 }
+
+.inferer-rank-wrap {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  margin-top: 16px;
+  box-sizing: border-box;
+}
