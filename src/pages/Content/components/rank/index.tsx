@@ -5,22 +5,65 @@ import '../../../Popup/reddit.scss'
 import './trends.scss'
 import TrendItem from './TrendItem';
 import { APP_STATE } from '../../../Popup/config/constants';
+import TrendItem2 from './TrendItem2';
 
-const RankList = ({ title }: any) => {
+const pageList = [APP_STATE.PRICEONE_TREND, APP_STATE.POPULARONE_TREND, APP_STATE.PRICECOLL_TREND, APP_STATE.POPULARCOLL_TREND, APP_STATE.TOPACCOUNT_TREND, APP_STATE.ACTIVEACCOUNT_TREND, APP_STATE.TOPPROFIT_TREND]
+
+const apiList = {
+  [APP_STATE.PRICEONE_TREND]: 'getTopPrice',
+  [APP_STATE.POPULARONE_TREND]: 'getTopPopular',
+  [APP_STATE.PRICECOLL_TREND]: 'getTopPriceColl',
+  [APP_STATE.POPULARCOLL_TREND]: 'getTopPopularColl',
+  [APP_STATE.TOPACCOUNT_TREND]: 'getTopAccounts',
+  [APP_STATE.ACTIVEACCOUNT_TREND]: 'getTopActiveUsers',
+  [APP_STATE.TOPPROFIT_TREND]: 'getTopProfitRatios',
+}
+
+const titleList = {
+  [APP_STATE.PRICEONE_TREND]: 'Top Price Avatar',
+  [APP_STATE.POPULARONE_TREND]: 'Top Popular Avatar',
+  [APP_STATE.PRICECOLL_TREND]: 'Top Price Avatar(Coll.)',
+  [APP_STATE.POPULARCOLL_TREND]: 'Top Popular Avatar(Coll.)',
+  [APP_STATE.TOPACCOUNT_TREND]: 'Top Accounts',
+  [APP_STATE.ACTIVEACCOUNT_TREND]: 'Top Active Users',
+  [APP_STATE.TOPPROFIT_TREND]: 'Top Profit Ratios',
+}
+
+const randomIndex = () => {
+  return parseInt(String(Math.random() * 7))
+}
+
+const RankList = () => {
   const [nowTime, setNowTime] = useState('')
   const [pageDataList, setPageDataList] = useState([])
+  const [pageIndex, setPageIndex] = useState(0)
+  const [title, setTitle] = useState('')
 
   useEffect(() => {
+    const pageNo = pageList[randomIndex()]
+    // const pageNo = APP_STATE.TOPPROFIT_TREND
+    const pageApi = apiList[pageNo]
+    const pageTitle = titleList[pageNo]
+
+    setTitle(pageTitle)
+    setPageIndex(pageNo)
+
     // @ts-ignore
     window.injectPlugin.extension.commonRequest({
       action: 'queryRankData',
       params: {
-        action: 'getTopPrice'
+        action: pageApi
       }
     }, (res: any) => {
       setPageDataList(res)
     })
   }, [])
+
+  const ItemCom = (pageIndex === APP_STATE.PRICEONE_TREND ||
+    pageIndex === APP_STATE.POPULARONE_TREND ||
+    pageIndex === APP_STATE.PRICECOLL_TREND ||
+    pageIndex === APP_STATE.POPULARCOLL_TREND) ? TrendItem : TrendItem2
+
   return (
     <div className="OptionsContainer">
       <div className='inferer-rank-title flex items-center'>
@@ -48,16 +91,34 @@ const RankList = ({ title }: any) => {
             </defs>
           </svg>
         </span>
-        Top Price Avatar
+        {title}
       </div>
       <div className='inferer-rank-list'>
         {
           pageDataList.map((item: any, index) => {
-            return <TrendItem
-              key={item.token_address + index}
+            return <ItemCom
+              key={(item.token_address || item.holder_address) + index}
               itemData={item}
-              from={APP_STATE.PRICEONE_TREND}
-              index={index} />
+              from={pageIndex}
+              index={index}
+            />
+            // (pageIndex === APP_STATE.PRICEONE_TREND ||
+            //   pageIndex === APP_STATE.POPULARONE_TREND ||
+            //   pageIndex === APP_STATE.PRICECOLL_TREND ||
+            //   pageIndex === APP_STATE.POPULARCOLL_TREND)
+            //   ?
+            //   <TrendItem
+            //     key={item.token_address + index}
+            //     itemData={item}
+            //     from={pageIndex}
+            //     index={index} /> :
+            //   <TrendItem2
+            //     key={item.token_address + index}
+            //     itemData={item}
+            //     from={pageIndex}
+            //     index={index} />
+
+
           })
         }
       </div>

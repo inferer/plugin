@@ -1,17 +1,46 @@
-import jQuery from '../../../assets/js/jquery-3.6.0.min.js';
 import { logoSvg } from './domConfig.js';
-const $ = jQuery;
+import React from 'react';
+import { render } from 'react-dom';
+import UserInfo from '../components/userInfo'
+
 
 const reddit = {
   request: null,
   init(request) {
-    if (window.location.href.indexOf('reddit.com') > -1 && window.location.href.indexOf('/comments') > -1) {
-      this.request = request
-      window.infererAuthors = []
-      this.setInfererLogo()
+    setInterval(() => {
+      if (window.preHref !== window.location.href)
+        if (window.location.href.indexOf('reddit.com') > -1 && window.location.href.indexOf('/comments') > -1) {
+          this.request = request
+          window.infererAuthors = []
+          window.preHref = window.location.href
+          this.setInfererLogo()
+        }
+    }, 150)
+
+  },
+  showUserInfo(currentDom, { user_name, holder_address, left, top }) {
+    if (!document.querySelector('#inferer-userinfo')) {
+      const divDom = document.createElement('div')
+      divDom.id = 'inferer-userinfo'
+      divDom.classList.add('inferer-userinfo-wrap')
+      // divDom.style.left = left + 'px'
+      // divDom.style.top = top - 5 + 'px'
+      divDom.addEventListener('mouseleave', e => {
+        e.stopPropagation()
+        divDom.remove()
+      })
+      // document.body.append(divDom)
+      currentDom.append(divDom)
+      setTimeout(() => {
+        render(
+          <UserInfo userName={user_name} userAddress={holder_address} />,
+          window.document.querySelector('#inferer-userinfo')
+        );
+      }, 100)
     }
   },
   setInfererLogo() {
+    const that = this;
     const request = this.request
     let isqueryInfererUser = false
     function queryInfererUser() {
@@ -35,15 +64,24 @@ const reddit = {
               divDom.setAttribute("data-username", user.user_name)
               divDom.setAttribute("data-holder_address", user.holder_address)
               divDom.innerHTML = logoSvg
-              divDom.addEventListener("click", async () => {
+              // divDom.addEventListener("click", async () => {
+              //   const user_name = divDom.getAttribute("data-username")
+              //   const holder_address = divDom.getAttribute("data-holder_address")
+              //   console.log(user_name, holder_address)
+              //   window.injectPlugin.extension.commonRequest({
+              //     action: 'openSearch',
+              //     address: holder_address,
+              //     from: 'reddit'
+              //   })
+              // })
+              divDom.addEventListener("mouseenter", (e) => {
                 const user_name = divDom.getAttribute("data-username")
                 const holder_address = divDom.getAttribute("data-holder_address")
                 console.log(user_name, holder_address)
-                window.injectPlugin.extension.commonRequest({
-                  action: 'openSearch',
-                  address: holder_address,
-                  from: 'reddit'
-                })
+                const rect = divDom.getBoundingClientRect()
+
+                e.stopPropagation()
+                that.showUserInfo(divDom, { user_name, holder_address, left: rect.left, top: rect.top })
               })
               author.parentElement.parentElement.parentElement.after(divDom)
             }
@@ -57,7 +95,7 @@ const reddit = {
     }
 
     let timer = setInterval(() => {
-      if ($('[data-testid="post-comment-header"]').length > 0 && document.querySelector('[data-testid="comment_author_link"]')) {
+      if (document.querySelector('[data-testid="post-comment-header"]') && document.querySelector('[data-testid="comment_author_link"]')) {
         clearInterval(timer)
         timer = null
         setTimeout(async () => {
@@ -66,7 +104,13 @@ const reddit = {
 
       }
     }, 300);
-
+    if (document.querySelector('#overlayScrollContainer')) {
+      document.querySelector('#overlayScrollContainer').addEventListener('scroll', function () {
+        if (!isqueryInfererUser) {
+          queryInfererUser()
+        }
+      })
+    }
     window.addEventListener('scroll', function () {
       if (!isqueryInfererUser) {
         queryInfererUser()

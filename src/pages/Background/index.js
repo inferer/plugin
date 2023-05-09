@@ -232,6 +232,20 @@ const backgroundScript = {
               data: res && res.data || [],
               uuid
             })
+          } else if (data.action === 'queryUserInfo') {
+            const res = await this.service.execApiTrends({ action: data.params.action, params: { address: data.params.address } })
+            resolve({
+              success: true,
+              data: res && res.data || {},
+              uuid
+            })
+          } else if (data.action === 'searchByAddress') {
+            const res = await this.service.searchByAddress({ address: data.params.address, chainid: data.params.chainid })
+            resolve({
+              success: true,
+              data: res && res.result || {},
+              uuid
+            })
           } else if (data.action === 'openSearch') {
             if (windowId && redditSearchAddress === data.address) {
               resolve({

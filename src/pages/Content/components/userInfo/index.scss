@@ -1,0 +1,135 @@
+.inferer-userinfo-content {
+  background: #F8F9FF;
+
+  .inferer-title {
+    color: #3F4664;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .user-header {
+    width: 100%;
+    height: 152px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+
+    .inferer-logo {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .user-title {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 26px;
+      /* identical to box height, or 118% */
+
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      background: linear-gradient(134.29deg, #3555FF 15.33%, #A157FF 76.26%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .user-address {
+      color: #949EAC;
+      font-weight: 700;
+      font-size: 12px;
+      margin-top: 8px;
+
+    }
+  }
+
+  .ranking-wrap {
+    height: 94px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+
+    .text1 {
+      color: #3F4664;
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .text2 {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 21px;
+      /* identical to box height */
+
+
+      color: #3F4664;
+    }
+
+  }
+
+  .details-wrap {
+    height: 170px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+
+    .box {
+      height: 37px;
+      background-color: #EEF4FF;
+
+      &.px-3 {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+
+    .details-icon {
+      width: 14px;
+      height: 14px;
+      margin-right: 6px;
+    }
+
+    .text1 {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+
+      color: #7F8792;
+    }
+
+    .text2 {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 150%;
+      color: #3F4664;
+    }
+  }
+
+  .labels-wrap {
+    min-height: 105px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+
+
+  }
+}

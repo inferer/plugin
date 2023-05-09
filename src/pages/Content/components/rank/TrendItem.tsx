@@ -26,7 +26,6 @@ const TrendItem: React.FC<{
             localStorage.setItem('analysis_address', itemData?.token_address)
             localStorage.setItem('analysis_item', JSON.stringify({ ...itemData, index } || {}))
             const toPage = (from === APP_STATE.POPULARCOLL_TREND || from === APP_STATE.PRICECOLL_TREND) ? APP_STATE.ANALYSIS_TREND : APP_STATE.ANALYSISONE_TREND
-            // PopupAPI.changeState(toPage)
 
             openBrowser(redditUserUrl + `${itemData?.series_creator || itemData?.NFT_creator}`)
           }}

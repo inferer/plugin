@@ -7,11 +7,18 @@
   margin-left: 4px;
   margin-right: 4px;
   cursor: pointer;
+  position: relative;
+  z-index: 9999;
 }
 
+.inferer-logo-wrap svg {
+  cursor: pointer;
+}
+
+/* 
 .inferer-logo-wrap:hover {
   opacity: 0.8;
-}
+} */
 
 .inferer-rank-wrap {
   width: 100%;
@@ -21,4 +28,15 @@
   background-color: #fff;
   margin-top: 16px;
   box-sizing: border-box;
+}
+
+.inferer-userinfo-wrap {
+  padding-top: 30px;
+  width: 360px;
+  height: 630px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  cursor: auto;
 }
