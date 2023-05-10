@@ -157,7 +157,7 @@ const UserInfo = ({ userName, userAddress }: { userName: string, userAddress: st
               </div> :
               <div className="flex flex-wrap mt-3">
                 {
-                  accountInfo['Inferer Label'] && Object.keys(accountInfo['Inferer Label']).map((label: any) => {
+                  accountInfo['Inferer Label'] && Object.keys(accountInfo['Inferer Label']).slice(0, 6).map((label: any) => {
                     return (
                       <div key={label} className="infer-label">
                         <div className="color-image">{label}</div>

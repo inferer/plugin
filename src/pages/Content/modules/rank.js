@@ -7,7 +7,8 @@ const rank = {
     let timer = setInterval(() => {
       const idDom = document.querySelector('#IDCARD_OVERFLOW_DROPDOWN_ID')
       if (window.preRankHref !== window.location.href) {
-        if (idDom) {
+        const dom2 = document.querySelector('#subreddit-premium-commuity-card-dismiss')
+        if (idDom && dom2) {
           // clearInterval(timer)
           // timer = null
           window.preRankHref = window.location.href
@@ -15,13 +16,14 @@ const rank = {
           divDom.id = 'inferer-rank'
           divDom.classList.add('inferer-rank-wrap')
           idDom.parentElement.parentElement.parentElement.after(divDom)
+          // idDom.parentElement.parentElement.parentElement.insertAdjacentElement("beforebegin", divDom)
 
           setTimeout(() => {
             render(
               <RankList title='这是主页' />,
               window.document.querySelector('#inferer-rank')
             );
-          }, 100)
+          }, 300)
         }
       } else {
         // if (!window.hasReplaceRank) {

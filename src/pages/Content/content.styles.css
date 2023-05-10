@@ -8,7 +8,7 @@
   margin-right: 4px;
   cursor: pointer;
   position: relative;
-  z-index: 9999;
+  /* z-index: 99; */
 }
 
 .inferer-logo-wrap svg {
@@ -33,10 +33,10 @@
 .inferer-userinfo-wrap {
   padding-top: 30px;
   width: 360px;
-  height: 630px;
+  min-height: 630px;
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 999;
+  z-index: 999999;
   cursor: auto;
 }
