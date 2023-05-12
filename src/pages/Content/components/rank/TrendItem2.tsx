@@ -19,11 +19,11 @@ const TrendItem: React.FC<{
 }) => {
     return (
       <div className=" relative price-item top-account-item mb-3 cursor-pointer">
-        <div className={`flex justify-center items-center absolute left-0 top-0 num font-bold italic text-base num${index + 1}`}>R.{index + 1}</div>
+        <div className={`flex justify-center items-center absolute left-0 top-0 num font-bold text-base num${index + 1}`}>R{index + 1}</div>
         <div className="price-item-content flex items-center"
           onClick={(e) => {
             e.stopPropagation()
-            itemData.user_name && openBrowser(redditUserUrl + `${itemData.user_name}`)
+
           }}
         >
           <div className="img-wrap flex items-center justify-center">
@@ -41,7 +41,8 @@ const TrendItem: React.FC<{
                       </div>
                       <img src={SharePng} style={{ width: '10px', height: '10px' }} className=" cursor-pointer" alt=""
                         onClick={e => {
-                          // e.stopPropagation()
+                          e.stopPropagation()
+                          itemData.user_name && openBrowser(redditUserUrl + `${itemData.user_name}`)
                         }}
                       />
                     </div> : null

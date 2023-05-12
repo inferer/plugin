@@ -6,6 +6,7 @@ import './trends.scss'
 import TrendItem from './TrendItem';
 import { APP_STATE } from '../../../Popup/config/constants';
 import TrendItem2 from './TrendItem2';
+import { morePng } from '../image';
 
 const pageList = [APP_STATE.PRICEONE_TREND, APP_STATE.POPULARONE_TREND, APP_STATE.PRICECOLL_TREND, APP_STATE.POPULARCOLL_TREND, APP_STATE.TOPACCOUNT_TREND, APP_STATE.ACTIVEACCOUNT_TREND, APP_STATE.TOPPROFIT_TREND]
 
@@ -55,7 +56,7 @@ const RankList = () => {
         action: pageApi
       }
     }, (res: any) => {
-      setPageDataList(res)
+      setPageDataList(res.slice(0, 5))
     })
   }, [])
 
@@ -102,25 +103,19 @@ const RankList = () => {
               from={pageIndex}
               index={index}
             />
-            // (pageIndex === APP_STATE.PRICEONE_TREND ||
-            //   pageIndex === APP_STATE.POPULARONE_TREND ||
-            //   pageIndex === APP_STATE.PRICECOLL_TREND ||
-            //   pageIndex === APP_STATE.POPULARCOLL_TREND)
-            //   ?
-            //   <TrendItem
-            //     key={item.token_address + index}
-            //     itemData={item}
-            //     from={pageIndex}
-            //     index={index} /> :
-            //   <TrendItem2
-            //     key={item.token_address + index}
-            //     itemData={item}
-            //     from={pageIndex}
-            //     index={index} />
-
-
           })
         }
+      </div>
+      <div className=' cursor-pointer' onClick={e => {
+        e.stopPropagation()
+        // @ts-ignore
+        window.injectPlugin.extension.commonRequest({
+          action: 'openSearch',
+          address: '',
+          from: 'reddit'
+        })
+      }}>
+        <img src={morePng} className='w-full' style={{ height: 48 }} alt="" />
       </div>
     </div>
   );

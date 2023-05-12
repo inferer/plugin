@@ -9,7 +9,7 @@ const reddit = {
   init(request) {
     setInterval(() => {
       if (window.preHref !== window.location.href)
-        if (window.location.href.indexOf('reddit.com') > -1 && window.location.href.indexOf('/comments') > -1) {
+        if (window.location.href.indexOf('www.reddit.com/r/') > -1) {
           this.request = request
           window.infererAuthors = []
           window.preHref = window.location.href

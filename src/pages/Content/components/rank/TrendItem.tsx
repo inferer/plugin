@@ -19,7 +19,7 @@ const TrendItem: React.FC<{
 }) => {
     return (
       <div className=" relative price-item mb-3 cursor-pointer">
-        <div className={`flex justify-center items-center absolute left-0 top-0 num font-bold italic text-base num${index + 1}`}>R{index + 1}</div>
+        <div className={`flex justify-center items-center absolute left-0 top-0 num font-bold text-base num${index + 1}`}>R{index + 1}</div>
         <div className="price-item-content flex items-center"
           onClick={() => {
             localStorage.setItem('page-from', String(from))
@@ -27,7 +27,7 @@ const TrendItem: React.FC<{
             localStorage.setItem('analysis_item', JSON.stringify({ ...itemData, index } || {}))
             const toPage = (from === APP_STATE.POPULARCOLL_TREND || from === APP_STATE.PRICECOLL_TREND) ? APP_STATE.ANALYSIS_TREND : APP_STATE.ANALYSISONE_TREND
 
-            openBrowser(redditUserUrl + `${itemData?.series_creator || itemData?.NFT_creator}`)
+
           }}
         >
           <div className="img-wrap">
@@ -47,6 +47,7 @@ const TrendItem: React.FC<{
                   <img src={SharePng} style={{ width: 10, height: 10 }} className=" cursor-pointer" alt=""
                     onClick={e => {
                       e.stopPropagation()
+                      openBrowser(redditUserUrl + `${itemData?.series_creator || itemData?.NFT_creator}`)
                     }}
                   />
                 </div>

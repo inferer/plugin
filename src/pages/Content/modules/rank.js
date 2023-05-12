@@ -6,37 +6,45 @@ const rank = {
   init() {
     let timer = setInterval(() => {
       const idDom = document.querySelector('#IDCARD_OVERFLOW_DROPDOWN_ID')
-      if (window.preRankHref !== window.location.href) {
-        const dom2 = document.querySelector('#subreddit-premium-commuity-card-dismiss')
-        if (idDom && dom2) {
-          // clearInterval(timer)
-          // timer = null
-          window.preRankHref = window.location.href
-          const divDom = document.createElement('div')
-          divDom.id = 'inferer-rank'
-          divDom.classList.add('inferer-rank-wrap')
-          idDom.parentElement.parentElement.parentElement.after(divDom)
-          // idDom.parentElement.parentElement.parentElement.insertAdjacentElement("beforebegin", divDom)
-
-          setTimeout(() => {
-            render(
-              <RankList title='这是主页' />,
-              window.document.querySelector('#inferer-rank')
-            );
-          }, 300)
+      const descriptionDom = document.querySelectorAll('[data-testid="no-edit-description-block"]')
+      // OptionsContainer
+      if (document.querySelector('#inferer-rank')) {
+        if (!document.querySelector('#inferer-rank').querySelector('.price-item')) {
+          render(
+            <RankList title='这是主页' />,
+            window.document.querySelector('#inferer-rank')
+          );
         }
-      } else {
-        // if (!window.hasReplaceRank) {
-        //   const idDom2 = document.querySelector('#subreddit-premium-commuity-card-dismiss')
-        //   const rankDom = document.querySelector('#inferer-rank')
-        //   if (idDom2 && idDom && rankDom) {
-        //     window.hasReplaceRank = true
-        //     idDom.parentElement.parentElement.parentElement.insertAdjacentElement('afterend', rankDom)
-        //   }
-        // }
+
+        return
+      }
+      if (idDom) {
+        this.insertRank(idDom.parentElement.parentElement.parentElement)
+      } else if (descriptionDom.length > 0) {
+        const dom = descriptionDom[descriptionDom.length - 1]
+        this.insertRank(dom.parentElement.parentElement.parentElement)
       }
 
     }, 150);
+  },
+  insertRank(targtElement) {
+    if (window.preRankHref !== window.location.href) {
+
+      setTimeout(() => {
+        if (document.querySelector('#inferer-rank')) {
+          window.preRankHref = window.location.href
+          return
+        }
+        const divDom = document.createElement('div')
+        divDom.id = 'inferer-rank'
+        divDom.classList.add('inferer-rank-wrap')
+        targtElement.after(divDom)
+        render(
+          <RankList title='这是主页' />,
+          window.document.querySelector('#inferer-rank')
+        );
+      }, 1000)
+    }
   }
 }
 

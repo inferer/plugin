@@ -196,11 +196,11 @@ const Search: React.FC<{
     const [showInput, setShowInput] = useState(false)
     const [showInput2, setShowInput2] = useState(false)
     useEffect(() => {
-      if (window.location.search.indexOf('address=') > -1) {
+      const params = getUrlParams(window.location.href)
+      if (window.location.search.indexOf('address=') > -1 && params.address) {
         setShowInput(true)
         setTimeout(() => {
           // const arr = window.location.search.split('=')
-          const params = getUrlParams(window.location.href)
           if (params.address) {
             if (params.from) {
               localStorage.setItem('searchFrom', params.from)
