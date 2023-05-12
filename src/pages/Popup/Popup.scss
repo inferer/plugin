@@ -63,6 +63,10 @@ body,
   top: 0;
   left: 100%;
   opacity: 1;
+
+  &.popupn-page {
+    transition: all 0s;
+  }
 }
 
 .pop-root-page-in {
@@ -94,6 +98,15 @@ body,
   z-index: 999;
   opacity: 1;
 }
+
+// .popupn-root {
+//   .pop-out-enter-active,
+//   .pop-out-leave-active,
+//   .pop-in-enter-active,
+//   .pop-in-leave-active {
+//     transition: all 0s;
+//   }
+// }
 
 .pop-out-enter {
   opacity: 0;

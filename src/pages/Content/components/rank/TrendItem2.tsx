@@ -24,6 +24,13 @@ const TrendItem: React.FC<{
           onClick={(e) => {
             e.stopPropagation()
 
+            // @ts-ignore
+            itemData?.holder_address && window.injectPlugin.extension.commonRequest({
+              action: 'openTicket',
+              to: from,
+              from: 'reddit',
+              address: itemData?.holder_address
+            })
           }}
         >
           <div className="img-wrap flex items-center justify-center">

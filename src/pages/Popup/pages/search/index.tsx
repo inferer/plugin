@@ -38,7 +38,7 @@ const isLatAddress = (address: string) => {
   return address.startsWith('lat') && address.length === 42
 }
 
-const getUrlParams = (url: string) => {
+export const getUrlParams = (url: string) => {
   const pattern = /(\w+|[\u4e00-\u9fa5]+)=(\w+|[\u4e00-\u9fa5]+)/ig;
   let result: { [key: string]: string } = {};
   // @ts-ignore

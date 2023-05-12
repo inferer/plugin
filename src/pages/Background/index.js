@@ -279,6 +279,33 @@ const backgroundScript = {
 
               }
             )
+          } else if (data.action === 'openAnalysis' || data.action === 'openTicket') {
+            // localStorage.setItem('analysis_item', JSON.stringify(data.analysis_item))
+            // console.log(encodeURIComponent(JSON.stringify(data.analysis_item)))
+            this.service.analysis_item = data.analysis_item || data.address
+
+            chrome.management.getSelf(
+              function (info) {
+                if (windowId) {
+                  chrome.windows.remove(windowId)
+                  windowId = null
+                }
+                chrome.windows.create({
+                  focused: true,
+                  width: 360,
+                  height: 632,
+                  type: 'popup',
+                  url: 'popupn.html?from=' + data.from + '&to=' + data.to,
+                  left: 1500,
+                  top: 0
+                },
+                  (data) => {
+                    windowId = data.id
+
+                  })
+
+              }
+            )
           } else {
             resolve({
               success: true,

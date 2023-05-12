@@ -1,6 +1,6 @@
 import { Toast } from 'antd-mobile'
 import React, { useCallback, useEffect, useState } from 'react'
-import { levelInfo } from '.'
+import { getUrlParams, levelInfo } from '.'
 import { APP_STATE } from '../../config/constants'
 import Loading from '../components/Loading'
 import PageHeader from '../components/PageHeader'
@@ -118,9 +118,19 @@ const TicketInfer: React.FC<{
         })
       }
     }, [recommendData, newTicketInfo])
+
+    const [showBack, setShowBack] = useState(true)
+
+    useEffect(() => {
+      const params = getUrlParams(window.location.href)
+      if (params.from === 'reddit') {
+        setShowBack(false)
+      }
+    }, [getUrlParams])
+
     return (
       <div className='page-root search-page inferer'>
-        <PageHeader title={'INFERER'} onBack={() => {
+        <PageHeader showBack={showBack} title={'INFERER'} onBack={() => {
           if (toTxInfer === 'collection') {
             localStorage.setItem('ticketinfer_from', 'ticketinfer')
           } else if (toTxInfer === 'AnalysisOne') {

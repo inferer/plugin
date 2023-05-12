@@ -389,6 +389,11 @@ class Service extends EventEmitter {
 
   async execApiTrends(data = { action: '', params: {} }) {
     const action = data.action
+
+    if (action === 'get_analysis_item') {
+      return this.analysis_item
+    }
+
     const user_address = await StorageService.getStorage('address') || ''
     try {
       const res = await fetcher(`/api/trends/${action}`, {

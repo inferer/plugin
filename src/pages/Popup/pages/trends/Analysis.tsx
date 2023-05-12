@@ -10,6 +10,7 @@ import InfererScore from "./components/InfererScore";
 import HoldingAmount from "./components/HoldingAmount";
 import InfererLabels from "./components/InfererLabels";
 import ProjectInfo from "./components/ProjectInfo";
+import { getUrlParams } from "../search";
 
 const { PopupAPI } = require('../../../../api')
 const userPng = require('../setting/images/user.png')
@@ -79,9 +80,18 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
     }
   }, [appState])
 
+  const [showBack, setShowBack] = useState(true)
+
+  useEffect(() => {
+    const params = getUrlParams(window.location.href)
+    if (params.from === 'reddit') {
+      setShowBack(false)
+    }
+  }, [getUrlParams])
+
   return (
     <div className="w-360 page-root page-trend page-analysis">
-      <PageHeader title={title} onBack={() => {
+      <PageHeader showBack={showBack} title={title} onBack={() => {
         const from = localStorage.getItem('page-from')
         if (Number(from) === APP_STATE.PRICECOLL_TREND) {
           PopupAPI.changeState(APP_STATE.PRICECOLL_TREND)

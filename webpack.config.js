@@ -39,6 +39,7 @@ var options = {
     newtab: path.join(__dirname, 'src', 'pages', 'Newtab', 'index.jsx'),
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.jsx'),
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
+    popupn: path.join(__dirname, 'src', 'pages', 'Popup', 'indexn.jsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
     injectPlugin: path.join(__dirname, 'src', 'pages', 'Content', 'injectPlugin.js'),
@@ -177,6 +178,13 @@ var options = {
       template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
       filename: 'popup.html',
       chunks: ['popup'],
+      cache: false,
+      inject: 'body'
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
+      filename: 'popupn.html',
+      chunks: ['popupn'],
       cache: false,
       inject: 'body'
     }),

@@ -10,6 +10,7 @@ import HistoryOne from "./components/History";
 import OwnerOne from "./components/OwnerOne";
 import GoAnl from "./components/GoAnl";
 import NftColl from "./components/NftColl";
+import { getUrlParams } from "../search";
 
 const { PopupAPI } = require('../../../../api')
 
@@ -81,9 +82,18 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
     }
   }, [appState])
 
+  const [showBack, setShowBack] = useState(true)
+
+  useEffect(() => {
+    const params = getUrlParams(window.location.href)
+    if (params.from === 'reddit') {
+      setShowBack(false)
+    }
+  }, [getUrlParams])
+
   return (
     <div className="w-360 page-root page-trend page-analysis">
-      <PageHeader title={title} onBack={() => {
+      <PageHeader showBack={showBack} title={title} onBack={() => {
         const from = localStorage.getItem('page-from')
         PopupAPI.changeState(Number(from))
       }} />

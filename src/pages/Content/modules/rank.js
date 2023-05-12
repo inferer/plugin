@@ -9,14 +9,16 @@ const rank = {
       const descriptionDom = document.querySelectorAll('[data-testid="no-edit-description-block"]')
       // OptionsContainer
       if (document.querySelector('#inferer-rank')) {
-        if (!document.querySelector('#inferer-rank').querySelector('.price-item')) {
-          render(
-            <RankList title='这是主页' />,
-            window.document.querySelector('#inferer-rank')
-          );
+        if (!document.querySelector('#inferer-rank').querySelector('.inferer-rank-title')) {
+          // console.log(111111111)
+          // render(
+          //   <RankList title='这是主页' />,
+          //   window.document.querySelector('#inferer-rank')
+          // );
+          document.querySelector('#inferer-rank').remove()
+          window.preRankHref = ''
         }
 
-        return
       }
       if (idDom) {
         this.insertRank(idDom.parentElement.parentElement.parentElement)
@@ -29,7 +31,6 @@ const rank = {
   },
   insertRank(targtElement) {
     if (window.preRankHref !== window.location.href) {
-
       setTimeout(() => {
         if (document.querySelector('#inferer-rank')) {
           window.preRankHref = window.location.href
@@ -43,7 +44,7 @@ const rank = {
           <RankList title='这是主页' />,
           window.document.querySelector('#inferer-rank')
         );
-      }, 1000)
+      }, 300)
     }
   }
 }

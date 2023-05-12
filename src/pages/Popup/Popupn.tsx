@@ -138,7 +138,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   useEffect(() => {
     const params = getUrlParams(window.location.href)
     if (params.from === 'reddit') {
-      if (Number(params.to) === APP_STATE.PRICEONE_TREND) {
+      if (Number(params.to) === APP_STATE.PRICEONE_TREND || Number(params.to) === APP_STATE.POPULARONE_TREND) {
         PopupAPI.execApiTrends({
           action: 'get_analysis_item'
         }).then((res: any) => {
@@ -147,84 +147,40 @@ const Popup: React.FC<PopupProps> = (props) => {
           PopupAPI.changeState(APP_STATE.ANALYSISONE_TREND)
         })
       }
+      if (Number(params.to) === APP_STATE.PRICECOLL_TREND || Number(params.to) === APP_STATE.POPULARCOLL_TREND) {
+        PopupAPI.execApiTrends({
+          action: 'get_analysis_item'
+        }).then((res: any) => {
+          localStorage.setItem('page-from', params.to)
+          localStorage.setItem('analysis_item', JSON.stringify({ ...res }))
+          PopupAPI.changeState(APP_STATE.ANALYSISONE_TREND)
+        })
+      }
+      if (Number(params.to) === APP_STATE.TOPACCOUNT_TREND) {
+        PopupAPI.execApiTrends({
+          action: 'get_analysis_item'
+        }).then((res: any) => {
+          localStorage.setItem('page-from', params.to)
+          onTopAccountClick({ address: res })
+        })
+      }
     }
   }, [getUrlParams])
 
   return (
     <IntlProvider locale={props.language || 'en'} messages={messages[props.language]}>
-      <>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.HOME ? 'pop-root-page-in' : 'pop-root-page-out'}`}>
-          <Home appState={appState} onChangeState={onChangeState}
-            onTicketChangeState={onTicketChangeState}
-            onClickRecommend={onClickRecommend}
-            onClickLabels={onClickLabels}
-            address={address}
-          />
-        </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.LANGUAGE ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <Language language={language} />
-        </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.SETSEARCH ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <SetSearch searchNum={searchNum} />
-        </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.WALLET ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <Wallet searchNum={searchNum} address={address} />
-        </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.PRICECOLL_TREND ||
-            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
-            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <PriceCollTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
-        </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.PRICEONE_TREND ||
-            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
-            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <PriceOneTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
-        </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.POPULARCOLL_TREND ||
-            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
-            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <PopularCollTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
-        </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.POPULARONE_TREND ||
-            pageStack[0] === APP_STATE.ANALYSIS_TREND ||
-            pageStack[0] === APP_STATE.ANALYSISONE_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <PopularOneTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
-        </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.ANALYSIS_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
+      <div className='popupn-root'>
+        <div className={`pop-root-page popupn-page ${pageStack[0] === APP_STATE.ANALYSIS_TREND ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <TrendAnalysis searchNum={searchNum} address={address} appState={appState} pageStack={pageStack} />
         </div>
-        <div className={`pop-root-page 
+        <div className={`pop-root-page popupn-page
           ${pageStack[0] === APP_STATE.ANALYSISONE_TREND ||
             pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
           <TrendAnalysisOne searchNum={searchNum} address={address} appState={appState} pageStack={pageStack}
             goToTicket={onAnalysisOneClick}
           />
         </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.TOPACCOUNT_TREND ||
-            pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <TopAccountTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack}
-            goToTicket={onTopAccountClick}
-          />
-        </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.ACTIVEACCOUNT_TREND ||
-            pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <ActiveAccountTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack}
-            goToTicket={onActiveAccountClick}
-          />
-        </div>
-        <div className={`pop-root-page 
-          ${pageStack[0] === APP_STATE.TOPPROFIT_TREND ||
-            pageStack[0] === APP_STATE.TICKETINFER ? 'pop-root-page-in' : 'pop-root-page-right'}`}>
-          <TopProfitTrend searchNum={searchNum} address={address} appState={appState} pageStack={pageStack}
-            goToTicket={onTopProfitClick}
-          />
-        </div>
+
         <div className={`pop-root-page ${pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 999, background: '#ffffff', opacity: 1 }}
         >
@@ -249,7 +205,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         >
           <TxInfo language={language} txinfoData={txinfoData} toTxInfo={toTxInfo} />
         </div>
-        <div className={`pop-root-page ${pageStack[0] === APP_STATE.TICKETINFER || pageStack[0] === APP_STATE.TXINFO || pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
+        <div className={`pop-root-page popupn-page ${pageStack[0] === APP_STATE.TICKETINFER || pageStack[0] === APP_STATE.TXINFO || pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 900, background: '#ffffff', opacity: 1 }}
         >
           <TicketInfer
@@ -263,7 +219,7 @@ const Popup: React.FC<PopupProps> = (props) => {
             }}
             searchList={ticketInfo.searchList ?? []} />
         </div>
-      </>
+      </div>
     </IntlProvider>
   )
 };
