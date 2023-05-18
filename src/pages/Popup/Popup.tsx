@@ -147,6 +147,9 @@ const Popup: React.FC<PopupProps> = (props) => {
           PopupAPI.changeState(APP_STATE.ANALYSISONE_TREND)
         })
       }
+      if (Number(params.to) === APP_STATE.TRENDS_INDEX) {
+        PopupAPI.changeState(APP_STATE.TRENDS_INDEX)
+      }
     }
   }, [getUrlParams])
 

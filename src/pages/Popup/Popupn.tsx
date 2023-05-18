@@ -153,7 +153,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         }).then((res: any) => {
           localStorage.setItem('page-from', params.to)
           localStorage.setItem('analysis_item', JSON.stringify({ ...res }))
-          PopupAPI.changeState(APP_STATE.ANALYSISONE_TREND)
+          PopupAPI.changeState(APP_STATE.ANALYSIS_TREND)
         })
       }
       if (Number(params.to) === APP_STATE.TOPACCOUNT_TREND) {

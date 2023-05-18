@@ -42,7 +42,7 @@ const RankList = () => {
 
   useEffect(() => {
     const pageNo = pageList[randomIndex()]
-    // const pageNo = APP_STATE.TOPPROFIT_TREND
+    // const pageNo = APP_STATE.PRICECOLL_TREND
     const pageApi = apiList[pageNo]
     const pageTitle = titleList[pageNo]
 
@@ -110,9 +110,10 @@ const RankList = () => {
         e.stopPropagation()
         // @ts-ignore
         window.injectPlugin.extension.commonRequest({
-          action: 'openSearch',
+          action: 'openRank',
           address: '',
-          from: 'reddit'
+          from: 'reddit',
+          to: APP_STATE.TRENDS_INDEX
         })
       }}>
         <img src={morePng} className='w-full' style={{ height: 48 }} alt="" />

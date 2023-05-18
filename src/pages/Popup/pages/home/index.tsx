@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { APP_STATE } from '../../config/constants';
-import Search from '../search';
+import Search, { getUrlParams } from '../search';
 import Tickets from '../tickets';
 import Setting from '../setting';
 import Recommend from '../recommend'
@@ -52,6 +52,15 @@ const Popup: React.FC<{
         localStorage.removeItem('from')
       }
     }, [appState2])
+
+    useEffect(() => {
+      const params = getUrlParams(window.location.href)
+      if (params.from === 'reddit') {
+        if (Number(params.to) === APP_STATE.TRENDS_INDEX) {
+          setAppState(APP_STATE.TRENDS_INDEX)
+        }
+      }
+    }, [getUrlParams])
 
     return (
       <div className="w-360">

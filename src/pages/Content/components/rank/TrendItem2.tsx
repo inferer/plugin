@@ -35,6 +35,7 @@ const TrendItem: React.FC<{
         >
           <div className="img-wrap flex items-center justify-center">
             <img src={itemData.img_url || DemoPng} className="" alt="" />
+            <div className="img-bg"></div>
           </div>
           <div className="flex-1" style={{ paddingLeft: 9 }}>
             <div className="flex justify-between">
@@ -71,43 +72,47 @@ const TrendItem: React.FC<{
                   />
                 </div>
               </div>
-              {
-                (from === APP_STATE.TOPACCOUNT_TREND
-                ) &&
-                <div className="color-image font-bold right-price" style={{ fontSize: 24, lineHeight: '42px' }}>
-                  <span className=" text-xs" style={{ marginRight: 2 }}>$</span>{formatNumber(Number(itemData?.volume))}
-                </div>
-              }
-              {
-                (from === APP_STATE.ACTIVEACCOUNT_TREND
-                ) &&
-                <div className="color-image font-bold right-price" style={{ fontSize: 24, lineHeight: '42px' }}>
-                  {itemData?.transaction_num}
-                </div>
-              }
-              {
-                from === APP_STATE.TOPPROFIT_TREND && (
-                  <div className="color-image font-bold right-price flex items-baseline" style={{ fontSize: 24, lineHeight: '42px' }}>
-                    <div style={{ fontSize: 16 }}>+</div>
-                    {(itemData.wealth_appreciation * 100).toFixed(0)}
-                    <div style={{ fontSize: 16 }}>%</div>
+              <div>
+                {
+                  (from === APP_STATE.TOPACCOUNT_TREND
+                  ) &&
+                  <div className="color-image font-bold right-price" style={{ fontSize: 24, lineHeight: '29px' }}>
+                    <span className=" text-xs" style={{ marginRight: 2 }}>$</span>{formatNumber(Number(itemData?.volume))}
                   </div>
-                )
-              }
+                }
+                {
+                  (from === APP_STATE.ACTIVEACCOUNT_TREND
+                  ) &&
+                  <div className="color-image font-bold right-price" style={{ fontSize: 24, lineHeight: '29px' }}>
+                    {itemData?.transaction_num}
+                  </div>
+                }
+                {
+                  from === APP_STATE.TOPPROFIT_TREND && (
+                    <div className="color-image font-bold right-price flex items-baseline" style={{ fontSize: 24, lineHeight: '29px' }}>
+                      <div style={{ fontSize: 16 }}>+</div>
+                      {(itemData.wealth_appreciation * 100).toFixed(0)}
+                      <div style={{ fontSize: 16 }}>%</div>
+                    </div>
+                  )
+                }
+                {
+                  (from === APP_STATE.TOPACCOUNT_TREND
+                  ) && <div className="color-image text-xs font-bold text-right"></div>
+                }
+                {
+                  (from === APP_STATE.ACTIVEACCOUNT_TREND
+                  ) && <div className="color-image text-xs font-bold text-right">transfers</div>
+                }
+                {
+                  (from === APP_STATE.TOPPROFIT_TREND
+                  ) && <div className="color-image text-xs font-bold text-right opacity-0">transfers</div>
+                }
+              </div>
+
 
             </div>
-            {
-              (from === APP_STATE.TOPACCOUNT_TREND
-              ) && <div className="color-image text-xs font-bold text-right"></div>
-            }
-            {
-              (from === APP_STATE.ACTIVEACCOUNT_TREND
-              ) && <div className="color-image text-xs font-bold text-right">transfers</div>
-            }
-            {
-              (from === APP_STATE.TOPPROFIT_TREND
-              ) && <div className="color-image text-xs font-bold text-right opacity-0">transfers</div>
-            }
+
           </div>
         </div>
 

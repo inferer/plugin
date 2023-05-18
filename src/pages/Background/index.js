@@ -279,6 +279,38 @@ const backgroundScript = {
 
               }
             )
+          } else if (data.action === 'openRank') {
+            if (windowId) {
+              resolve({
+                success: true,
+                data: 'success',
+                uuid
+              })
+              return
+            }
+            chrome.management.getSelf(
+              function (info) {
+                if (windowId) {
+                  chrome.windows.remove(windowId)
+                  windowId = null
+                }
+                redditSearchAddress = data.address
+                chrome.windows.create({
+                  focused: true,
+                  width: 360,
+                  height: 632,
+                  type: 'popup',
+                  url: 'popup.html?from=' + data.from + '&to=' + data.to,
+                  left: 1500,
+                  top: 0
+                },
+                  (data) => {
+                    windowId = data.id
+
+                  })
+
+              }
+            )
           } else if (data.action === 'openAnalysis' || data.action === 'openTicket') {
             // localStorage.setItem('analysis_item', JSON.stringify(data.analysis_item))
             // console.log(encodeURIComponent(JSON.stringify(data.analysis_item)))
