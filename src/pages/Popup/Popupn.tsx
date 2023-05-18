@@ -164,6 +164,22 @@ const Popup: React.FC<PopupProps> = (props) => {
           onTopAccountClick({ address: res })
         })
       }
+      if (Number(params.to) === APP_STATE.ACTIVEACCOUNT_TREND) {
+        PopupAPI.execApiTrends({
+          action: 'get_analysis_item'
+        }).then((res: any) => {
+          localStorage.setItem('page-from', params.to)
+          onActiveAccountClick({ address: res })
+        })
+      }
+      if (Number(params.to) === APP_STATE.TOPPROFIT_TREND) {
+        PopupAPI.execApiTrends({
+          action: 'get_analysis_item'
+        }).then((res: any) => {
+          localStorage.setItem('page-from', params.to)
+          onTopProfitClick({ address: res })
+        })
+      }
     }
   }, [getUrlParams])
 

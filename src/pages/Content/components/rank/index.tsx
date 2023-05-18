@@ -41,8 +41,8 @@ const RankList = () => {
   const [title, setTitle] = useState('')
 
   useEffect(() => {
-    // const pageNo = pageList[randomIndex()]
-    const pageNo = APP_STATE.TOPACCOUNT_TREND
+    const pageNo = pageList[randomIndex()]
+    // const pageNo = APP_STATE.TOPPROFIT_TREND
     const pageApi = apiList[pageNo]
     const pageTitle = titleList[pageNo]
 
