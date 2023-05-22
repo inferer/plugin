@@ -23,7 +23,13 @@ const TrendItem: React.FC<{
         <div className="price-item-content flex items-center"
           onClick={(e) => {
             e.stopPropagation()
-
+            // // @ts-ignore
+            // const globalAddress = window.holder_address
+            // if (globalAddress === itemData?.holder_address) {
+            //   return
+            // }
+            // // @ts-ignore
+            // window.holder_address = itemData?.holder_address
             // @ts-ignore
             itemData?.holder_address && window.injectPlugin.extension.commonRequest({
               action: 'openTicket',

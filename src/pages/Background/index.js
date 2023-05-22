@@ -281,12 +281,9 @@ const backgroundScript = {
             )
           } else if (data.action === 'openRank') {
             if (windowId) {
-              resolve({
-                success: true,
-                data: 'success',
-                uuid
-              })
-              return
+              chrome.windows.remove(windowId)
+              windowId = null
+
             }
             chrome.management.getSelf(
               function (info) {
@@ -311,11 +308,15 @@ const backgroundScript = {
 
               }
             )
+            resolve({
+              success: true,
+              data: 'success',
+              uuid
+            })
           } else if (data.action === 'openAnalysis' || data.action === 'openTicket') {
             // localStorage.setItem('analysis_item', JSON.stringify(data.analysis_item))
             // console.log(encodeURIComponent(JSON.stringify(data.analysis_item)))
             this.service.analysis_item = data.analysis_item || data.address
-
             chrome.management.getSelf(
               function (info) {
                 if (windowId) {
@@ -335,7 +336,6 @@ const backgroundScript = {
                     windowId = data.id
 
                   })
-
               }
             )
           } else {

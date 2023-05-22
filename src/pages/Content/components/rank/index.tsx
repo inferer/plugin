@@ -41,8 +41,8 @@ const RankList = () => {
   const [title, setTitle] = useState('')
 
   useEffect(() => {
-    const pageNo = pageList[randomIndex()]
-    // const pageNo = APP_STATE.PRICECOLL_TREND
+    // const pageNo = pageList[randomIndex()]
+    const pageNo = APP_STATE.TOPACCOUNT_TREND
     const pageApi = apiList[pageNo]
     const pageTitle = titleList[pageNo]
 
@@ -108,6 +108,13 @@ const RankList = () => {
       </div>
       <div className=' cursor-pointer' onClick={e => {
         e.stopPropagation()
+        // @ts-ignore
+        // const globalAddress = window.holder_address
+        // if (globalAddress === 'openRank') {
+        //   return
+        // }
+        // // @ts-ignore
+        // window.holder_address = 'openRank'
         // @ts-ignore
         window.injectPlugin.extension.commonRequest({
           action: 'openRank',

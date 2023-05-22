@@ -33,8 +33,12 @@ const TrendItem: React.FC<{
             goToTicket && goToTicket({ address: itemData?.holder_address })
           }}
         >
+          {/* <div className="img-wrap flex items-center justify-center">
+            <img src={itemData.img_url || DemoPng} className="" alt="" />
+          </div> */}
           <div className="img-wrap flex items-center justify-center">
             <img src={itemData.img_url || DemoPng} className="" alt="" />
+            <div className="img-bg"></div>
           </div>
           <div className="flex-1" style={{ paddingLeft: 9 }}>
             <div className="flex justify-between">
