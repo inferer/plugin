@@ -6,7 +6,7 @@ import './trends.scss'
 import TrendItem from './TrendItem';
 import { APP_STATE } from '../../../Popup/config/constants';
 import TrendItem2 from './TrendItem2';
-import { morePng } from '../image';
+import { morePng, more2Png } from '../image';
 
 const pageList = [APP_STATE.PRICEONE_TREND, APP_STATE.POPULARONE_TREND, APP_STATE.PRICECOLL_TREND, APP_STATE.POPULARCOLL_TREND, APP_STATE.TOPACCOUNT_TREND, APP_STATE.ACTIVEACCOUNT_TREND, APP_STATE.TOPPROFIT_TREND]
 
@@ -65,6 +65,8 @@ const RankList = () => {
     pageIndex === APP_STATE.PRICECOLL_TREND ||
     pageIndex === APP_STATE.POPULARCOLL_TREND) ? TrendItem : TrendItem2
 
+  const [showMore2, setShowMore2] = useState(false)
+
   return (
     <div className="OptionsContainer">
       <div className='inferer-rank-title flex items-center'>
@@ -106,24 +108,33 @@ const RankList = () => {
           })
         }
       </div>
-      <div className=' cursor-pointer' onClick={e => {
-        e.stopPropagation()
-        // @ts-ignore
-        // const globalAddress = window.holder_address
-        // if (globalAddress === 'openRank') {
-        //   return
-        // }
-        // // @ts-ignore
-        // window.holder_address = 'openRank'
-        // @ts-ignore
-        window.injectPlugin.extension.commonRequest({
-          action: 'openRank',
-          address: '',
-          from: 'reddit',
-          to: APP_STATE.TRENDS_INDEX
-        })
-      }}>
-        <img src={morePng} className='w-full' style={{ height: 48 }} alt="" />
+      <div className=' cursor-pointer'
+        onMouseEnter={e => {
+          e.stopPropagation()
+          setShowMore2(true)
+        }}
+        onMouseLeave={e => {
+          e.stopPropagation()
+          setShowMore2(false)
+        }}
+        onClick={e => {
+          e.stopPropagation()
+          // @ts-ignore
+          // const globalAddress = window.holder_address
+          // if (globalAddress === 'openRank') {
+          //   return
+          // }
+          // // @ts-ignore
+          // window.holder_address = 'openRank'
+          // @ts-ignore
+          window.injectPlugin.extension.commonRequest({
+            action: 'openRank',
+            address: '',
+            from: 'reddit',
+            to: APP_STATE.TRENDS_INDEX
+          })
+        }}>
+        <img src={showMore2 ? more2Png : morePng} className='w-full' style={{ height: 48 }} alt="" />
       </div>
     </div>
   );
