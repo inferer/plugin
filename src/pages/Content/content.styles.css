@@ -1,3 +1,23 @@
+@font-face {
+  font-family: Poppins;
+  src: url('https://www.inferer.xyz/fonts/Poppins-Bold.ttf');
+}
+
+@font-face {
+  font-family: DMSans-Bold;
+  src: url('https://www.inferer.xyz/fonts/DMSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: DMSans-BoldItalic;
+  src: url('https://www.inferer.xyz/fonts/DMSans-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: DM Sans;
+  src: url('https://www.inferer.xyz/fonts/DMSans-Regular.ttf');
+}
+
 .inferer-author-p {
   display: flex;
   align-items: center;
@@ -38,5 +58,5 @@
   left: 0;
   top: 0;
   z-index: 999999;
-  cursor: auto;
+  cursor: pointer;
 }

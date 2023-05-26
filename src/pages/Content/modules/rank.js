@@ -11,11 +11,6 @@ const rank = {
         // OptionsContainer
         if (document.querySelector('#inferer-rank')) {
           if (!document.querySelector('#inferer-rank').querySelector('.inferer-rank-title')) {
-            // console.log(111111111)
-            // render(
-            //   <RankList title='这是主页' />,
-            //   window.document.querySelector('#inferer-rank')
-            // );
             document.querySelector('#inferer-rank').remove()
             window.preRankHref = ''
           }
@@ -27,8 +22,12 @@ const rank = {
           const dom = descriptionDom[descriptionDom.length - 1]
           this.insertRank(dom.parentElement.parentElement.parentElement)
         }
+        // if (document.querySelector('#overlayScrollContainer')) {
+        //   if (document.querySelector('#overlayScrollContainer').querySelector('[data-testid="no-edit-description-block"]')?.parentElement) {
+        //     this.insertRank(document.querySelector('#overlayScrollContainer').querySelector('[data-testid="no-edit-description-block"]')?.parentElement)
+        //   }
+        // }
       }
-
 
     }, 150);
   },

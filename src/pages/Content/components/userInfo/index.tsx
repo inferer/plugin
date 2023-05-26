@@ -120,7 +120,7 @@ const UserInfo = ({ userName, userAddress }: { userName: string, userAddress: st
                 <Loading size={20} />
               </div> :
               <div className="mt-5">
-                <div className="box px-3 flex items-center justify-between">
+                <div className="box box-hover px-3 flex items-center justify-between">
                   <div className="flex items-center">
                     <img src={details1Png} className="details-icon " />
                     <div className="text1">Transaction count</div>
