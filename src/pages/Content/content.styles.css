@@ -1,21 +1,26 @@
 @font-face {
   font-family: Poppins;
-  src: url('https://www.inferer.xyz/fonts/Poppins-Bold.ttf');
+  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/Poppins-Bold.ttf');
 }
 
 @font-face {
   font-family: DMSans-Bold;
-  src: url('https://www.inferer.xyz/fonts/DMSans-Bold.ttf');
+  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Bold.ttf');
 }
 
 @font-face {
   font-family: DMSans-BoldItalic;
-  src: url('https://www.inferer.xyz/fonts/DMSans-BoldItalic.ttf');
+  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: DMSans-Medium;
+  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Medium.ttf');
 }
 
 @font-face {
   font-family: DM Sans;
-  src: url('https://www.inferer.xyz/fonts/DMSans-Regular.ttf');
+  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Regular.ttf');
 }
 
 .inferer-author-p {

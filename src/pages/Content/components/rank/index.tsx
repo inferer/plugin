@@ -68,7 +68,7 @@ const RankList = () => {
   const [showMore2, setShowMore2] = useState(false)
 
   return (
-    <div className="OptionsContainer">
+    <div className="OptionsContainer page-trend">
       <div className='inferer-rank-title flex items-center'>
         <span className=' mr-2'>
           <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">

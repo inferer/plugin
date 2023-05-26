@@ -22,11 +22,18 @@ const rank = {
           const dom = descriptionDom[descriptionDom.length - 1]
           this.insertRank(dom.parentElement.parentElement.parentElement)
         }
-        // if (document.querySelector('#overlayScrollContainer')) {
-        //   if (document.querySelector('#overlayScrollContainer').querySelector('[data-testid="no-edit-description-block"]')?.parentElement) {
-        //     this.insertRank(document.querySelector('#overlayScrollContainer').querySelector('[data-testid="no-edit-description-block"]')?.parentElement)
-        //   }
-        // }
+        if (document.querySelector('#overlayScrollContainer')) {
+          if (document.querySelector('#overlayScrollContainer').querySelector('#inferer-rank')) {
+            return
+          }
+          if (document.querySelector('#inferer-rank')) {
+            document.querySelector('#inferer-rank').remove()
+            window.preRankHref = ''
+          }
+          if (document.querySelector('#overlayScrollContainer').querySelector('[data-testid="no-edit-description-block"]')?.parentElement) {
+            this.insertRank(document.querySelector('#overlayScrollContainer').querySelector('[data-testid="no-edit-description-block"]')?.parentElement)
+          }
+        }
       }
 
     }, 150);
