@@ -20,6 +20,34 @@ const fortmatTime = (str: string) => {
   return str ? str.slice(0, -3).replace(',', '') : ''
 }
 
+export const TTitle: React.FC<{
+  text: string,
+  tips?: string
+}> = ({
+  text,
+  tips
+}) => {
+    const [active, setActive] = useState(false)
+    return (
+      <div className=' inferer-title flex items-center relative'
+      >
+        <div className='' style={{ lineHeight: '18px' }}>{text}</div>
+        {
+          tips && <img src={details3Png} className="ml-1 w-3 h-3 cursor-pointer" alt=""
+            onMouseEnter={() => setActive(true)}
+            onMouseLeave={() => setActive(false)}
+          />
+        }
+        {
+          active && <div className='tips-wrap'>
+            {tips}
+          </div>
+        }
+
+      </div>
+    )
+  }
+
 const UserInfo = ({ userName, userAddress }: { userName: string, userAddress: string }) => {
 
   const [accountRank, setaccountRank] = useState<any>({})
@@ -102,7 +130,7 @@ const UserInfo = ({ userName, userAddress }: { userName: string, userAddress: st
         </div>
       </div>
       <div className="p-5">
-        <div style={{ backgroundImage: `url(${bg2Png})` }} className="ranking-wrap p-3">
+        <div style={{ backgroundImage: `url(${bg2Png})` }} className="ranking-wrap p-3 cursor-pointer">
           <div className="inferer-title">Ranking</div>
           <div className="flex justify-between items-center mt-5">
             <div className="flex items-center">
@@ -120,21 +148,21 @@ const UserInfo = ({ userName, userAddress }: { userName: string, userAddress: st
                 <Loading size={20} />
               </div> :
               <div className="mt-5">
-                <div className="box box-hover px-3 flex items-center justify-between">
+                <div className="box box-hover px-3 flex items-center justify-between cursor-pointer">
                   <div className="flex items-center">
                     <img src={details1Png} className="details-icon " />
                     <div className="text1">Transaction count</div>
                   </div>
                   <div className="text2">{accountInfo['User Total Tx Count']}</div>
                 </div>
-                <div style={{ backgroundColor: '#F8F9FF' }} className="box px-3 flex items-center justify-between">
+                <div className="box box2 box-hover px-3 flex items-center justify-between cursor-pointer">
                   <div className="flex items-center">
                     <img src={details2Png} className="details-icon " />
                     <div className="text1">First Tx Timestamp</div>
                   </div>
                   <div className="text2">{fortmatTime(accountInfo['User First Tx Timestamp'])}</div>
                 </div>
-                <div className="box px-3 flex items-center justify-between">
+                <div className="box box-hover px-3 flex items-center justify-between cursor-pointer">
                   <div className="flex items-center">
                     <img src={details2Png} className="details-icon " />
                     <div className="text1">Latest Tx Timestamp</div>
@@ -144,11 +172,12 @@ const UserInfo = ({ userName, userAddress }: { userName: string, userAddress: st
               </div>
           }
         </div>
-        <div style={{ backgroundImage: `url(${bg4Png})` }} className="labels-wrap p-3 mt-5">
-          <div className="inferer-title flex items-center">
+        <div style={{ backgroundImage: `url(${bg4Png})` }} className="labels-wrap p-3 mt-5 cursor-pointer">
+          {/* <div className="inferer-title flex items-center">
             Inferer Labels
             <img src={details3Png} className="w-3 h-3 ml-1" alt="" />
-          </div>
+          </div> */}
+          <TTitle text="Inferer Labels" tips="Top 6 labels in all Coll. holders" />
 
           {
             !accountInfo['Account Balance'] ?

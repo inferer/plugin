@@ -22,6 +22,7 @@ const OwnerOne: React.FC<any> = ({
       <div className="flex owner-wrap mt-2 cursor-pointer">
         <div className="owner-img flex items-center justify-center">
           <img src={ownerInfo?.img_url || NftPng} alt="" />
+          <div className="img-bg"></div>
         </div>
         <div className="flex-1 ml-3">
           <div className="flex items-center mb-2">

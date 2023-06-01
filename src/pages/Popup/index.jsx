@@ -25,6 +25,7 @@ export const app = {
     await this.getAppState()
     this.bindDuplexRequests()
     this.render()
+    localStorage.setItem('hide-page-title', '')
   },
   createStore() {
     this.store = configureStore({

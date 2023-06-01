@@ -42,7 +42,7 @@ const RankList = () => {
 
   useEffect(() => {
     const pageNo = pageList[randomIndex()]
-    // const pageNo = APP_STATE.TOPACCOUNT_TREND
+    // const pageNo = APP_STATE.POPULARCOLL_TREND
     const pageApi = apiList[pageNo]
     const pageTitle = titleList[pageNo]
 
@@ -69,7 +69,7 @@ const RankList = () => {
 
   return (
     <div className="OptionsContainer page-trend">
-      <div className='inferer-rank-title flex items-center'>
+      <div className='inferer-rank-title font-medium flex items-center'>
         <span className=' mr-2'>
           <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="path-2-inside-1_624_2525" fill="white">

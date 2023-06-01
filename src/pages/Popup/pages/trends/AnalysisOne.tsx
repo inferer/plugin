@@ -85,11 +85,12 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
   const [showBack, setShowBack] = useState(true)
 
   useEffect(() => {
+    const hideTitle = localStorage.getItem('hide-page-title')
     const params = getUrlParams(window.location.href)
-    if (params.from === 'reddit') {
+    if (params.from === 'reddit' && hideTitle === 'true' && appState === APP_STATE.ANALYSISONE_TREND) {
       setShowBack(false)
     }
-  }, [getUrlParams])
+  }, [getUrlParams, appState])
 
   return (
     <div className="w-360 page-root page-trend page-analysis">
@@ -115,6 +116,7 @@ const TrendAnalysisOne: React.FC<FeedBackProps> = ({
         />
         <GoAnl goToTicket={() => {
           localStorage.setItem('from', 'ANALYSISONE_TREND')
+          localStorage.setItem('hide-page-title', '')
           const analysis_address = pageData?.ownerInfo?.holder_address
           analysis_address && goToTicket({ address: analysis_address, chainid: 137 })
         }} />

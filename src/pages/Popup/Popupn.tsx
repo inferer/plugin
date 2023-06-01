@@ -134,11 +134,14 @@ const Popup: React.FC<PopupProps> = (props) => {
     setRecommendData({ ...data })
     PopupAPI.changeState(APP_STATE.TICKETINFER)
   }
-
+  const [ticketAni, setTicketAni] = useState(false)
   useEffect(() => {
     const params = getUrlParams(window.location.href)
+
     if (params.from === 'reddit') {
+      localStorage.setItem('hide-page-title', 'true')
       if (Number(params.to) === APP_STATE.PRICEONE_TREND || Number(params.to) === APP_STATE.POPULARONE_TREND) {
+        setTicketAni(true)
         PopupAPI.execApiTrends({
           action: 'get_analysis_item'
         }).then((res: any) => {
@@ -148,10 +151,13 @@ const Popup: React.FC<PopupProps> = (props) => {
         })
       }
       if (Number(params.to) === APP_STATE.PRICECOLL_TREND || Number(params.to) === APP_STATE.POPULARCOLL_TREND) {
+        setTicketAni(true)
+
         PopupAPI.execApiTrends({
           action: 'get_analysis_item'
         }).then((res: any) => {
           localStorage.setItem('page-from', params.to)
+          localStorage.setItem('hide-page-title', 'true')
           localStorage.setItem('analysis_item', JSON.stringify({ ...res }))
           PopupAPI.changeState(APP_STATE.ANALYSIS_TREND)
         })
@@ -221,10 +227,11 @@ const Popup: React.FC<PopupProps> = (props) => {
         >
           <TxInfo language={language} txinfoData={txinfoData} toTxInfo={toTxInfo} />
         </div>
-        <div className={`pop-root-page popupn-page ${pageStack[0] === APP_STATE.TICKETINFER || pageStack[0] === APP_STATE.TXINFO || pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
+        <div className={`pop-root-page ${ticketAni ? '' : ' popupn-page'} ${pageStack[0] === APP_STATE.TICKETINFER || pageStack[0] === APP_STATE.TXINFO || pageStack[0] === APP_STATE.FEEDBACK ? 'pop-root-page-in' : 'pop-root-page-right'}`}
           style={{ zIndex: 900, background: '#ffffff', opacity: 1 }}
         >
           <TicketInfer
+            appState={appState}
             toTxInfer={toTxInfer}
             onChangeState={onChangeState2}
             recommendData={recommendData}

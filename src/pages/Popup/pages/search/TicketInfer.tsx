@@ -16,12 +16,14 @@ const nodataPng = require('../../../../assets/img/nodata.png')
 const { PopupAPI } = require('../../../../api')
 
 const TicketInfer: React.FC<{
+  appState: number,
   toTxInfer: string,
   ticketInfo: { level: any, ticket_level: any, address: any },
   searchList: any[],
   recommendData: any,
   onChangeState: (appState: number, data: any) => void
 }> = ({
+  appState,
   toTxInfer,
   ticketInfo,
   searchList,
@@ -123,10 +125,11 @@ const TicketInfer: React.FC<{
 
     useEffect(() => {
       const params = getUrlParams(window.location.href)
-      if (params.from === 'reddit') {
+      const hideTitle = localStorage.getItem('hide-page-title')
+      if (params.from === 'reddit' && hideTitle === 'true' && appState === APP_STATE.TICKETINFER) {
         setShowBack(false)
       }
-    }, [getUrlParams])
+    }, [getUrlParams, appState])
 
     return (
       <div className='page-root search-page inferer'>

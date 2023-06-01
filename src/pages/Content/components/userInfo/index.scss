@@ -1,6 +1,6 @@
 .inferer-userinfo-content {
   background: #F8F9FF;
-  cursor: pointer;
+  cursor: auto;
 
   .inferer-title {
     color: #3F4664;
@@ -103,7 +103,11 @@
       }
     }
 
-    &:hover .box-hover {
+    .box2 {
+      background-color: #F8F9FF;
+    }
+
+    .box-hover:hover {
       background-color: #D7E4FD;
     }
 

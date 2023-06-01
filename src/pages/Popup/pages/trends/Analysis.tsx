@@ -60,7 +60,7 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
     PopupAPI.execApiTrends({
       action: 'getCollAnalysisByAddress',
       params: {
-        address: analysis_address
+        address: analysis_item.token_address || analysis_address
       }
     }).then((res: any) => {
       if (res.status === 200) {
@@ -83,11 +83,12 @@ const TrendAnalysis: React.FC<FeedBackProps> = ({
   const [showBack, setShowBack] = useState(true)
 
   useEffect(() => {
+    const hideTitle = localStorage.getItem('hide-page-title')
     const params = getUrlParams(window.location.href)
-    if (params.from === 'reddit') {
+    if (params.from === 'reddit' && hideTitle === 'true' && appState === APP_STATE.ANALYSIS_TREND) {
       setShowBack(false)
     }
-  }, [getUrlParams])
+  }, [getUrlParams, appState])
 
   return (
     <div className="w-360 page-root page-trend page-analysis">

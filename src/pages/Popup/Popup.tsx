@@ -136,6 +136,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   }
 
   useEffect(() => {
+    localStorage.setItem('hide-page-title', '')
     const params = getUrlParams(window.location.href)
     if (params.from === 'reddit') {
       if (Number(params.to) === APP_STATE.PRICEONE_TREND) {
@@ -256,6 +257,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           style={{ zIndex: 900, background: '#ffffff', opacity: 1 }}
         >
           <TicketInfer
+            appState={appState}
             toTxInfer={toTxInfer}
             onChangeState={onChangeState2}
             recommendData={recommendData}
