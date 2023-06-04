@@ -1,43 +1,48 @@
 @font-face {
-  font-family: Poppins;
-  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/Poppins-Bold.ttf');
+    font-family: Poppins;
+    src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/Poppins-Bold.ttf');
 }
 
 @font-face {
-  font-family: DMSans-Bold;
-  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Bold.ttf');
+    font-family: Poppins-Medium;
+    src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/Poppins-Medium.ttf');
 }
 
 @font-face {
-  font-family: DMSans-BoldItalic;
-  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-BoldItalic.ttf');
+    font-family: DMSans-Bold;
+    src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Bold.ttf');
 }
 
 @font-face {
-  font-family: DMSans-Medium;
-  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Medium.ttf');
+    font-family: DMSans-BoldItalic;
+    src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-BoldItalic.ttf');
 }
 
 @font-face {
-  font-family: DM Sans;
-  src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Regular.ttf');
+    font-family: DMSans-Medium;
+    src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Medium.ttf');
+}
+
+@font-face {
+    font-family: DM Sans;
+    src: url('https://website-1315068501.cos.ap-nanjing.myqcloud.com/DMSans-Regular.ttf');
 }
 
 .inferer-author-p {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .inferer-logo-wrap {
-  margin-left: 4px;
-  margin-right: 4px;
-  cursor: pointer;
-  position: relative;
-  /* z-index: 99; */
+    margin-left: 4px;
+    margin-right: 4px;
+    cursor: pointer;
+    position: relative;
+    /* z-index: 99; */
 }
 
 .inferer-logo-wrap svg {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /* 
@@ -46,21 +51,21 @@
 } */
 
 .inferer-rank-wrap {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  margin-top: 16px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 16px;
+    box-sizing: border-box;
 }
 
 .inferer-userinfo-wrap {
-  padding-top: 30px;
-  width: 360px;
-  min-height: 630px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 999999;
+    padding-top: 30px;
+    width: 360px;
+    min-height: 630px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999999;
 }
